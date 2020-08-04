@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import {Grid, Button, TextField} from '@material-ui/core';
+import Fade from 'react-reveal/Fade'
+
 class LoginPage extends Component {
   state = {
     username: '',
@@ -31,58 +34,55 @@ class LoginPage extends Component {
 
   render() {
     return (
-      <div>
-        {this.props.errors.loginMessage && (
-          <h2
-            className="alert"
-            role="alert"
-          >
-            {this.props.errors.loginMessage}
-          </h2>
-        )}
-        <form onSubmit={this.login}>
-          <h1>Login</h1>
-          <div>
-            <label htmlFor="username">
-              Username:
-              <input
-                type="text"
-                name="username"
-                value={this.state.username}
-                onChange={this.handleInputChangeFor('username')}
-              />
-            </label>
+      <Fade>
+        <Grid container>
+          <Grid item xs={12} align='center'>
+            <div style={{backgroundColor: 'cyan'}}>
+            {this.props.errors.loginMessage && (
+              <h2
+                className="alert"
+                role="alert"
+              >
+                {this.props.errors.loginMessage}
+              </h2>
+            )}
+            <form onSubmit={this.login}>
+              <h1>Login</h1>
+              <div>
+    
+                <TextField
+                  variant="filled"
+                  label="username"
+                  inputProps={{maxLength: 80}}
+                  value={this.state.username}
+                  onChange={this.handleInputChangeFor('username')}
+                />
+              </div>
+              <div>
+      
+                  <TextField
+                    variant="filled"
+                    label="password"
+                    inputProps={{maxLength: 1000}}
+                    value={this.state.password}
+                    onChange={this.handleInputChangeFor('password')}
+                  />
+        
+              </div>
+              <div>
+                <Button type="submit" name="submit" variant="contained" color="primary">Log In</Button>
+              </div>
+              <br/>
+              <br/>
+            </form>
+            
+            <Button alignContent='right' size="small" variant="outlined" color="primary" onClick={() => {this.props.dispatch({type: 'SET_TO_REGISTER_MODE'})}}>Register</Button>
+
           </div>
-          <div>
-            <label htmlFor="password">
-              Password:
-              <input
-                type="password"
-                name="password"
-                value={this.state.password}
-                onChange={this.handleInputChangeFor('password')}
-              />
-            </label>
-          </div>
-          <div>
-            <input
-              className="log-in"
-              type="submit"
-              name="submit"
-              value="Log In"
-            />
-          </div>
-        </form>
-        <center>
-          <button
-            type="button"
-            className="link-button"
-            onClick={() => {this.props.dispatch({type: 'SET_TO_REGISTER_MODE'})}}
-          >
-            Register
-          </button>
-        </center>
-      </div>
+          </Grid>
+        </Grid>
+      </Fade>
+    
     );
   }
 }
