@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import NavHome from '../NavHome/NavHome';
 
 import {Grid, Button, TextField} from '@material-ui/core';
 import Fade from 'react-reveal/Fade'
@@ -52,109 +53,121 @@ class LoginPage extends Component {
 
   render() {
     return (
+      <>
+      <NavHome/>
       <Fade delay={200}>
+        {/* Parent container */}
+        <Grid container justify='center'>
+            {/* Spacing for left of main container */}
+            <Grid item xs={0} md={1} lg={2}/>
+            {/* Main container */}
+            <Grid item xs={12} md={10} lg={8}>
 
- 
-            <div style={{backgroundColor: 'lightgreen', marginTop: '5%', borderRadius: '20px', minWidth: '100%', padding: '3%'}}>
+            <div style={{backgroundColor: 'lightgreen', marginTop: '5%', borderRadius: '20px', minWidth: '90%', maxWidth:'100%', padding: '3%'}}>
               <Grid container justify='center' alignItems='center' alignContent='center' spacing={4}>
-              
-              <Grid xs={5} item align='center'>
-                  <div style={{backgroundColor: 'lightblue', height: '80%', borderRadius: '20px'}}> 
-                  {
-                    this.props.errors.loginMessage && 
-                    (<h2 className="alert" role="alert">{this.props.errors.loginMessage}</h2>)
-                  }
-                  <br/>
-                  <h1>Login</h1>
-  
-                  <TextField 
-                    style={{width: '60%'}}
-                    size='small'
-                    variant="filled"
-                    label="Username"
-                    
-                    inputProps={{maxLength: 80}}
-                    value={this.state.username}
-                    onChange={this.handleInputChangeFor('username')}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <AccountCircleTwoToneIcon />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                  <br/>
-                  <TextField
-                    style={{width: '60%', marginTop: '10px'}}
-                    size='small'
-                    variant="filled"
-                    label="Password"
-                    type='password'
-                    inputProps={{maxLength: 1000}}
-                    value={this.state.password}
-                    onChange={this.handleInputChangeFor('password')}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <LockTwoToneIcon/>
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                  <br/>
-                  <Button 
-                    style={{marginTop: '10px'}}
-                    name="submit" 
-                    variant="contained" 
-                    color="primary" 
-                    onClick={this.login}
-                  >
-                      Log In
-                  </Button>
-              
+
+                {/* Login form grid 5/12 */}
+                <Grid xs={5} item align='center'>
+                    <div style={{backgroundColor: 'lightblue', height: '80%', borderRadius: '20px'}}> 
+                    {
+                      this.props.errors.loginMessage && 
+                      (<h2 className="alert" role="alert">{this.props.errors.loginMessage}</h2>)
+                    }
                     <br/>
-                    <br/>
-                  <Button 
-                    align='right'
-                    size="small" 
-                    variant="outlined" 
-                    color="primary" 
-                    onClick={() => {this.props.dispatch({type: 'SET_TO_REGISTER_MODE'})}}
-                  >
-                    New User
-                  </Button>
-                  <br/>
-                  <br/>
-              </div>
-                
-              </Grid>
-              
-              <Grid xs={7} item align='center'>
-                  <div>
-                  
-              
-                    
-                      <Fade>
-                        <img
-                        style={{
-                          position: 'relative',
-                          overflow: 'hidden',
-                          width: '100%',
-                          borderRadius: '20px'
-                        }}
-                        src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Ailurus_fulgens_-_Syracuse_Zoo.jpg"
-                        alt="Red Panda"
-                        />
-                      </Fade>
-                      
-                  </div>
-              </Grid>
-            
-              </Grid>
-            </div>
+                    <h1>Login</h1>
     
+                    <TextField 
+                      style={{width: '60%'}}
+                      size='small'
+                      variant="filled"
+                      label="Username"
+                      
+                      inputProps={{maxLength: 80}}
+                      value={this.state.username}
+                      onChange={this.handleInputChangeFor('username')}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <AccountCircleTwoToneIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                    <br/>
+                    <TextField
+                      style={{width: '60%', marginTop: '10px'}}
+                      size='small'
+                      variant="filled"
+                      label="Password"
+                      type='password'
+                      inputProps={{maxLength: 1000}}
+                      value={this.state.password}
+                      onChange={this.handleInputChangeFor('password')}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <LockTwoToneIcon/>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                    <br/>
+                    <Button 
+                      style={{marginTop: '10px'}}
+                      name="submit" 
+                      variant="contained" 
+                      color="primary" 
+                      onClick={this.login}
+                    >
+                        Log In
+                    </Button>
+                
+                      <br/>
+                      <br/>
+                    <Button 
+                      align='right'
+                      size="small" 
+                      variant="outlined" 
+                      color="primary" 
+                      onClick={() => {this.props.dispatch({type: 'SET_TO_REGISTER_MODE'})}}
+                    >
+                      New User
+                    </Button>
+                    <br/>
+                    <br/>
+                </div>
+                </Grid> {/* End Form Grid */}
+              
+                {/* Picture container 7/12 */}
+                <Grid xs={7} item align='center'>
+                    <div>
+                    
+                
+                      
+                        <Fade>
+                          <img
+                          style={{
+                            position: 'relative',
+                            overflow: 'hidden',
+                            width: '100%',
+                            borderRadius: '20px'
+                          }}
+                          src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Ailurus_fulgens_-_Syracuse_Zoo.jpg"
+                          alt="Red Panda"
+                          />
+                        </Fade>
+                        
+                    </div>
+                </Grid> {/* End picture Grid */}
+              </Grid> {/* End content Grid */}
+            </div>
+
+            </Grid> {/* End main container  */}
+            {/* Spacing on the */}
+            <Grid item xs={0} md={1} lg={2}/>
+        </Grid>
       </Fade>
+      </>
     );
   }
 }

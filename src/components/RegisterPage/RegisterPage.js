@@ -8,6 +8,8 @@ import AccountCircleTwoToneIcon from '@material-ui/icons/AccountCircleTwoTone';
 import LockTwoToneIcon from '@material-ui/icons/LockTwoTone';
 import EmailTwoToneIcon from '@material-ui/icons/EmailTwoTone';
 
+import NavHome from '../NavHome/NavHome';
+
 class RegisterPage extends Component {
   state = {
     username: '',
@@ -18,7 +20,9 @@ class RegisterPage extends Component {
 
   registerUser = (event) => {
     event.preventDefault();
-
+    if(this.state.password !== this.state.reenter_password){
+      
+    }
     if (this.state.username && this.state.password && this.state.email_address) {
       this.props.dispatch({
         type: 'REGISTER',
@@ -28,11 +32,6 @@ class RegisterPage extends Component {
           email_address: this.state.email_address
         },
       });
-      console.log({
-        username: this.state.username,
-        password: this.state.password,
-        email_address: this.state.email_address
-      })
     } else {
       this.props.dispatch({type: 'REGISTRATION_INPUT_ERROR'});
     }
@@ -46,9 +45,15 @@ class RegisterPage extends Component {
 
   render() {
     return (
-      <Fade delay={200}>
+      <>
+        <NavHome/>
+        <Fade delay={200}>
       
-      <div style={{backgroundColor: 'lightgreen', marginTop: '5%', borderRadius: '20px', minWidth: '100%', padding: '3%'}}>
+      <Grid container justify='center'>
+      <Grid item xs={0} md={1} lg={2}/>
+      <Grid item xs={12} md={10} lg={8}>
+
+      <div style={{backgroundColor: 'lightgreen', marginTop: '5%', borderRadius: '20px', minWidth: '80%', padding: '3%'}}>
         <Grid container justify='center' alignItems='center' alignContent='center' spacing={4}>
           <Grid item xs={5} align='center'>
             <div style={{backgroundColor: 'lightblue',  height: '80%', borderRadius: '20px'}}>
@@ -97,7 +102,7 @@ class RegisterPage extends Component {
                   size='small'
                   variant="filled"
                   label="Re-Enter Password"
-                  type='text'
+                  type='password'
                   inputProps={{maxLength: 1000}}
                   value={this.state.reenter_password}
                   onChange={this.handleInputChangeFor('reenter_password')}
@@ -169,13 +174,16 @@ class RegisterPage extends Component {
                 alt="Red Panda"
                 />
               </Fade>
-              
-          </div>
-      </Grid>
 
+                  </div>
+               </Grid>
+              </Grid>
+            </div>
+            </Grid>
+          <Grid item xs={0} md={1} lg={2}/>
         </Grid>
-       </div>
       </Fade>
+      </>
     );
   }
 }

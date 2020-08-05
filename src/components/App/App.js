@@ -8,13 +8,13 @@ import {
 
 import {connect} from 'react-redux';
 
-import Nav from '../Nav/Nav';
+import NavHome from '../NavHome/NavHome';
 import Footer from '../Footer/Footer';
 
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
 
 import AboutPage from '../AboutPage/AboutPage';
-import UserPage from '../UserPage/UserPage';
+import Home from '../Home/Home';
 import InfoPage from '../InfoPage/InfoPage';
 
 import './App.css';
@@ -30,13 +30,7 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Nav />
-
           <Grid container direction="column">
-            <Grid item container>
-              <Grid item xs={0} md={1} lg={2}/>
-              <Grid item xs={12} md={10} lg={8}>
-                <Grid container justify='center'>
                   <Switch>
                   {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
                   <Redirect exact from="/" to="/home" />
@@ -54,7 +48,7 @@ class App extends Component {
                   <ProtectedRoute
                     exact
                     path="/home"
-                    component={UserPage}
+                    component={Home}
                   />
                   {/* This works the same as the other protected route, except that if the user is logged in,
                   they will see the info page instead. */}
@@ -66,10 +60,6 @@ class App extends Component {
                   {/* If none of the other routes matched, we will show a 404. */}
                   <Route render={() => <h1>404</h1>} />
                 </Switch>
-                </Grid>
-              </Grid>
-              <Grid item xs={0} md={1} lg={2}/>
-          </Grid>
         </Grid>
 
 

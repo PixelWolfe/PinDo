@@ -2,12 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import LogOutButton from '../LogOutButton/LogOutButton';
-import './Nav.css';
+import {Grid} from '@material-ui/core';
+import './NavHome.css';
 
-const Nav = (props) => (
+const NavHome = (props) => (
+  <Grid item>
   <div className="nav">
     <Link to="/home">
-      <h2 className="nav-title">Prime Solo Project</h2>
+      <h2 className="nav-title">Home Navbar</h2>
     </Link>
     <div className="nav-right">
       <Link className="nav-link" to="/home">
@@ -31,6 +33,8 @@ const Nav = (props) => (
       </Link>
     </div>
   </div>
+  </Grid>
+  
 );
 
 // Instead of taking everything from state, we just want the user
@@ -42,4 +46,4 @@ const mapStateToProps = state => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps)(Nav);
+export default connect(mapStateToProps)(NavHome);
