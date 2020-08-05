@@ -34,8 +34,8 @@ class App extends Component {
 
           <Grid container direction="column">
             <Grid item container>
-              <Grid item xs={0} xs={1}/>
-              <Grid item xs={12} sm={10} >
+              <Grid item xs={0} md={1} lg={2}/>
+              <Grid item xs={12} md={10} lg={8}>
                 <Grid container justify='center'>
                   <Switch>
                   {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
@@ -68,7 +68,7 @@ class App extends Component {
                 </Switch>
                 </Grid>
               </Grid>
-              <Grid item xs={0} xs={1}/>
+              <Grid item xs={0} md={1} lg={2}/>
           </Grid>
         </Grid>
 
