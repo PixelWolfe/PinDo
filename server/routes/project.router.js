@@ -22,6 +22,25 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 
 router.post('/', rejectUnauthenticated, (req, res) => {
 
+    console.log('req.body',req.body)
+
+    const user_id = req.user.id;
+    const title = req.body.payload.title;
+    const image_url = req.body.payload.image_url;
+    const description = req.body.payload.description;
+
+    const queryString = `
+        INSERT INTO "project" (user_id, title, image_url, description)
+        VALUES ($1,$2,$3,$4)`;
+
+    pool.query(queryString, [user_id, title, image_url, description])
+        .then(response=>{
+            res.sendStatus(201);
+        })
+        .catch(error=>{
+            console.log('Error posting project:', error);
+            res.sendStatus(500);
+        })
 });
 
 router.put('/:id', rejectUnauthenticated, (req,res)=>{
