@@ -5,13 +5,6 @@ import NavHome from '../NavHome/NavHome';
 import {Grid, Button, TextField} from '@material-ui/core';
 import Fade from 'react-reveal/Fade'
 
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
 import InputAdornment from '@material-ui/core/InputAdornment';
 
 import AccountCircleTwoToneIcon from '@material-ui/icons/AccountCircleTwoTone';
@@ -59,7 +52,7 @@ class LoginPage extends Component {
         {/* Parent container */}
         <Grid container justify='center'>
             {/* Spacing for left of main container */}
-            <Grid item xs={0} md={1} lg={2}/>
+            <Grid item md={1} lg={2}/>
             {/* Main container */}
             <Grid item xs={12} md={10} lg={8}>
 
@@ -164,7 +157,7 @@ class LoginPage extends Component {
 
             </Grid> {/* End main container  */}
             {/* Spacing on the */}
-            <Grid item xs={0} md={1} lg={2}/>
+            <Grid item md={1} lg={2}/>
         </Grid>
       </Fade>
       </>

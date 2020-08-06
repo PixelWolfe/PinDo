@@ -6,7 +6,7 @@ import {Grid} from '@material-ui/core';
 import './NavHome.css';
 
 const NavHome = (props) => (
-  <Grid item>
+  <Grid item xs={12}>
   <div className="nav">
     <Link to="/home">
       <h2 className="nav-title">Home Navbar</h2>
