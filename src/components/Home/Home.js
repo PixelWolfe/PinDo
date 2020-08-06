@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import LogOutButton from "../LogOutButton/LogOutButton";
 import {Grid, Button, Icon, TextField} from "@material-ui/core";
 import NavHome from '../NavHome/NavHome';
+import ProjectCard from '../ProjectCard/ProjectCard';
 import Fade from 'react-reveal/Fade';
 
 import MoreTwoToneIcon from '@material-ui/icons/MoreTwoTone';
@@ -14,7 +15,12 @@ import Popup from "reactjs-popup";
 
 import InputAdornment from '@material-ui/core/InputAdornment';
 
+import ReactCardFlip from 'react-card-flip';
+
 import Swal from 'sweetalert2';
+
+import CreateProjectButton from '../CreateProjectButton/CreateProjectButton';
+import CreateProjectPopup from '../CreateProjectPopup/CreateProjectPopup';
 
 class Home extends Component {
 
@@ -37,7 +43,7 @@ class Home extends Component {
       title: '',
       image_url: '',
       description: '',
-      open: false
+      open: false,
     })
   }
 
@@ -48,7 +54,6 @@ class Home extends Component {
   }
 
   createProject= ()=>{
-
     if(!this.state.title){
       Swal.fire('Please include a title for your project!');
       return;
@@ -73,151 +78,24 @@ class Home extends Component {
     return (
       <>
         <NavHome/>
-        <br/>
-        <br/>
-   
         <div style={{minheight: '100vh', backgroundColor: 'green'}}>
-        <Fade delay={200}>
-        <Grid container justify='center' alignItems='center' alignContent='center'>
-
-          <Grid item xs={5} sm={4} md={3} lg={2} align='center'>
-          <div>
-            {JSON.stringify(this.state)}
-          </div>
-          <Button 
-            startIcon={<AddBoxTwoToneIcon/>}
-            variant='contained' 
-            color='primary' 
-            style={{ marginTop: '0px'}}
-            onClick={()=>{
-              this.setState({
-                ...this.state,
-                open: true
-              })
-              console.log("modal closed ");
-            }}
-            >
-            Create a Project
-          </Button> 
-          </Grid>
-        </Grid>
-            
-        <Grid container justify='center' alignItems='center' alignContent='center'> 
-        <Popup open={this.state.open} 
-            position="bottom center"
-            modal
-            isOpen={this.state.open}
-            onClose={()=>this.handleClose()}
-            >
-
-          <Grid item align='center' xs={10}>
-            <div>
-              <h1>It's happening!</h1>
-              <h4 style={{margin: 0}}>Let's get this project started!</h4>
-                <br/>
-              <TextField 
-              style={{width: '60%'}}
-              size='small'
-              variant="filled"
-              label="Title"
-              onChange={this.handleInputChangeFor('title')}
-              inputProps={{maxLength: 80}}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <TitleTwoToneIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <br/>
-            <TextField
-              style={{width: '60%', marginTop: '10px'}}
-              size='small'
-              variant="filled"
-              label="Image Url"
-              type='text'
-              onChange={this.handleInputChangeFor('image_url')}
-              inputProps={{maxLength: 1000}}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <AddPhotoAlternateTwoToneIcon/>
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <TextField
-                style={{width: '60%', marginTop: '10px'}}
-                size='small'
-                variant="filled"
-                label="Description (optional)"
-                type='text'
-                onChange={this.handleInputChangeFor('description')}
-                multiline
-                rows={5}
-                inputProps={{maxLength: 250}}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <DescriptionTwoToneIcon/>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            <br/>
-            <Button 
-              style={{marginTop: '10px'}}
-              name="submit" 
-              variant="contained" 
-              color="primary" 
-              onClick={()=>{
-                this.createProject();
-              }}
-            >    
-              Create Project
-            </Button>
-
-          </div>
-          </Grid>
-          
-      </Popup>
-
-
-
-         {this.props.reduxState.project?
-          this.props.reduxState.project.map((project)=>
-          
-          <Grid key={project.id} item align='center' xs={5} sm={4} md={3} style={{backgroundColor: 'white', margin: '15px'}}>
-            <Grid item align='right'>
-              <Button
-                  startIcon={<MoreTwoToneIcon/>}
-                  variant="outlined"
-                  color="primary"
-                  style={{backgroundColor:'rgb(247, 242, 171)'}}
-               >
-                  Description
-                </Button>
+          <Fade delay={200}>
+            <CreateProjectButton/>  
+            <Grid container justify='center' alignItems='center' alignContent='center'> 
+              <CreateProjectPopup/>
+              {
+                  this.props.reduxState.project?
+                    this.props.reduxState.project.map((project)=>
+                      <Grid key={project.id} item align='center' xs={5} sm={4} md={3} style={{margin: '15px'}}>
+                        <ProjectCard title={project.title} image_url={project.image_url} description={project.description}/>
+                      </Grid>)
+                  :
+                  <>
+                  </>
+                }
             </Grid>
-            <div>
-              <h1>{project.title}</h1>
-                <img 
-                  style={{width:'100%'}}
-                  src={project.image_url}
-                />
-            </div>
-          </Grid>
-         
-         ):
-         <>
-          </>
-      }
-
-     
-
-        </Grid>
-        </Fade>
-      </div>
+          </Fade>
+        </div>
       </>
     )
   }
