@@ -14,6 +14,7 @@ import Popup from "reactjs-popup";
 
 import InputAdornment from '@material-ui/core/InputAdornment';
 
+import Swal from 'sweetalert2';
 
 class Home extends Component {
 
@@ -49,11 +50,11 @@ class Home extends Component {
   createProject= ()=>{
 
     if(!this.state.title){
-      alert('Please include a title for your project!');
+      Swal.fire('Please include a title for your project!');
       return;
     }
     else if(!this.state.image_url){
-      alert('Please include an image for your project!');
+      Swal.fire('Please include an image for your project!');
       return;
     }
     let payload = {title:this.state.title, image_url: this.state.image_url, description: this.state.description};
