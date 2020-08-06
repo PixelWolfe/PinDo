@@ -14,14 +14,14 @@ class CreateProjectPopup extends Component{
         title: '',
         image_url: '',
         description: '',
-        open: this.props.reduxState.popupReducer.open,
+        open: this.props.reduxState.popupReducer.createProject.open,
       }
 
       componentDidUpdate(previousProps){
-        if(previousProps.reduxState.popupReducer.open !== this.props.reduxState.popupReducer.open){
+        if(previousProps.reduxState.popupReducer.createProject.open !== this.props.reduxState.popupReducer.createProject.open){
           this.setState({
             ...this.state,
-            open: this.props.reduxState.popupReducer.open
+            open: this.props.reduxState.popupReducer.createProject.open
           })
         }
       }
@@ -34,7 +34,7 @@ class CreateProjectPopup extends Component{
           image_url: '',
           description: ''
         })
-        this.props.dispatch({type: 'SET_POPUP_BOOLEAN', payload: {open: false}});
+        this.props.dispatch({type: 'SET_CREATE_PROJECT_POPUP_BOOLEAN', payload: {open: false}});
       }
 
       createProject= ()=>{

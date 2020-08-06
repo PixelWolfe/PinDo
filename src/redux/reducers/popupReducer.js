@@ -1,12 +1,24 @@
-const popupReducer = (state = {open: null}, action) => {
+import { combineReducers } from 'redux';
+
+const createProject = (state = {open: null}, action) => {
     switch (action.type) {
-      case 'SET_POPUP_BOOLEAN':
+      case 'SET_CREATE_PROJECT_POPUP_BOOLEAN':
         return action.payload;
       default:
         return state;
     }
   };
   
-  // user will be on the redux state at:
-  // state.user
-  export default popupReducer;
+  const editProject = (state = {open: null}, action) => {
+    switch (action.type) {
+      case 'SET_EDIT_PROJECT_POPUP_BOOLEAN':
+        return action.payload;
+      default:
+        return state;
+    }
+  };
+
+  export default combineReducers({
+    createProject,
+    editProject
+  });

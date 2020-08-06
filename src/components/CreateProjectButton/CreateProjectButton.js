@@ -15,7 +15,7 @@ class CreateProjectButton extends Component{
                         color='primary' 
                         style={{ marginTop: '0px'}}
                         onClick={()=>{
-                            this.props.dispatch({type: 'SET_POPUP_BOOLEAN', payload: {open: true}})
+                            this.props.dispatch({type: 'SET_CREATE_PROJECT_POPUP_BOOLEAN', payload: {open: true}})
                             console.log("modal closed ");
                     }}>
                         Create a Project
