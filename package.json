@@ -19,6 +19,7 @@
     "react-card-flip": "^1.0.11",
     "react-dom": "^16.8.6",
     "react-redux": "^7.1.1",
+    "react-responsive-multi-level-menu": "^2.2.5",
     "react-reveal": "^1.2.2",
     "react-router-dom": "^5.0.0",
     "react-scripts": "^3.4.0",

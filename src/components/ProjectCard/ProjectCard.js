@@ -4,12 +4,14 @@ import ReactCardFlip from 'react-card-flip';
 import {Grid, Button, Icon, TextField} from "@material-ui/core";
 import MoreTwoToneIcon from '@material-ui/icons/MoreTwoTone';
 import EditTwoToneIcon from '@material-ui/icons/EditTwoTone';
+import DeleteForeverTwoToneIcon from '@material-ui/icons/DeleteForeverTwoTone';
 
 import Swal from 'sweetalert2';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import TitleTwoToneIcon from '@material-ui/icons/TitleTwoTone';
 import AddPhotoAlternateTwoToneIcon from '@material-ui/icons/AddPhotoAlternateTwoTone';
 import DescriptionTwoToneIcon from '@material-ui/icons/DescriptionTwoTone';
+
 
 class ProjectCard extends Component{
     state = {
@@ -26,6 +28,13 @@ class ProjectCard extends Component{
           isFlipped: !this.state.isFlipped
         })
       }
+
+    backPressed = ()=>{
+      this.props.dispatch({
+        type: 'UPDATE_PROJECT', payload: {project_id: this.state.project_id,
+        title: this.state.title, image_url: this.state.image_url, description: this.state.description}})
+      this.flipCard();
+    }
 
     updateProject= ()=>{
       if(!this.state.title){
@@ -52,7 +61,18 @@ class ProjectCard extends Component{
             <ReactCardFlip isFlipped={this.state.isFlipped} flipDirection='horizontal'>
 
               <Grid item style={{height: '400px'}}>
+                
                 <div style={{borderRadius:'20px', backgroundColor: 'white'}}>
+                    <Grid item align='right'>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      onClick={this.flipCard}
+                      style={{borderRadius: '0 20px 0 0', backgroundColor:'lightgrey'}}
+                    >
+                      <EditTwoToneIcon/>
+                    </Button>
+                  </Grid>
                   <div style={{overflow: 'hidden', maxHeight: '80%'}}>
                     <h2 style={{paddingLeft: '10px', paddingRight: '10px'}}>{this.state.title}</h2>
                       <img 
@@ -63,13 +83,14 @@ class ProjectCard extends Component{
                   </div>
                   <p>{this.state.description}</p>
                   <Button
-                      startIcon={<EditTwoToneIcon/>}
-                      variant="outlined"
-                      color="primary"
-                      onClick={this.flipCard}
-                  >
-                    Edit Details
-                  </Button>
+                  startIcon={<MoreTwoToneIcon/>}
+                  variant="contained"
+                  color="primary"
+                  style={{bottom: 0}}
+                  onClick={this.flipCard}
+                >
+                 Go To Project
+                </Button>
                   <br/>
                   <br/>
                 </div>
@@ -77,9 +98,18 @@ class ProjectCard extends Component{
 
               <Grid item align='center' style={{backgroundColor: 'white', height: '400px', borderRadius: '20px'}}>
                   <div>
-                  <br/>
-                  <br/>
-                  <br/>
+                  <Grid item align='right'>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      onClick={this.backPressed}
+                      style={{borderRadius: '0 20px 0 0', backgroundColor:'lightgrey'}}
+                    >
+                      Back
+                    </Button>
+                  </Grid>
+                  <h4 style={{marginBottom: '5px'}}>Update your project info below</h4>
+                  <h5 style={{marginTop: '0px', marginBottom: '5px'}}>Press BACK when finished</h5>
                   <TextField 
                     style={{width: '80%'}}
                     size='small'
@@ -87,7 +117,7 @@ class ProjectCard extends Component{
                     label="Title"
                     value={this.state.title}
                     onChange={this.handleInputChangeFor('title')}
-                    inputProps={{maxLength: 80}}
+                    inputProps={{maxLength: 35}}
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
@@ -135,14 +165,16 @@ class ProjectCard extends Component{
                   /> 
                   <br/>
                   <br/>
+                  <h5 style={{marginTop: '8px', marginBottom: '5px'}}>Time to say goodbye?</h5>
+            
                     <Button
-                      startIcon={<MoreTwoToneIcon/>}
-                      variant="outlined"
-                      color="primary"
-                      style={{backgroundColor:'rgb(247, 242, 171)', bottom: 0}}
+                      startIcon={<DeleteForeverTwoToneIcon/>}
+                      variant="contained"
+                      color="secondary"
+
                       onClick={this.flipCard}
                     >
-                     Project
+                      DELETE THIS PROJECT
                     </Button>
                     <br/>
                     <br/>

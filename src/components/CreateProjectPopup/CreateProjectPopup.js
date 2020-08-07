@@ -84,7 +84,7 @@ class CreateProjectPopup extends Component{
             variant="filled"
             label="Title"
             onChange={this.handleInputChangeFor('title')}
-            inputProps={{maxLength: 80}}
+            inputProps={{maxLength: 35}}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
