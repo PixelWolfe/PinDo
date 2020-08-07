@@ -66,8 +66,22 @@ router.put('/', rejectUnauthenticated, (req,res)=>{
         })
 });
 
-router.delete('/:id', rejectUnauthenticated, (req,res)=>{
+router.delete('/', rejectUnauthenticated, (req,res)=>{
 
+    const user_id = req.user.id;
+    const project_id = req.body.project_id;
+    const queryString = `DELETE FROM "project" WHERE user_id = $1 AND id = $2; `;
+
+    pool.query(queryString, [user_id, project_id])
+        .then(response=>{
+            console.log('Success deleting!', response)
+            //update to 204 when all children are also deleted
+            res.sendStatus(200);
+        })
+        .catch(error=>{
+            console.log('Error deleting project board:', error);
+            res.sendStatus(500);
+        })
 });
 
 module.exports = router;

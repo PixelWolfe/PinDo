@@ -36,6 +36,34 @@ class ProjectCard extends Component{
       this.flipCard();
     }
 
+    deleteProject= ()=>{
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'You will not be able to recover this project!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, keep it'
+      }).then((result) => {
+        if (result.value) {
+          Swal.fire(
+            'Deleted!',
+            'Your project has been deleted.',
+            'success'
+          )
+          this.props.dispatch({type:'DELETE_PROJECT', payload:{project_id: this.state.project_id}});
+        // For more information about handling dismissals please visit
+        // https://sweetalert2.github.io/#handling-dismissals
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          Swal.fire(
+            'Cancelled',
+            'Your project is safe :)',
+            'error'
+          )
+        }
+      })
+    }
+
     updateProject= ()=>{
       if(!this.state.title){
         Swal.fire('Please include a title for your project!');
@@ -172,7 +200,7 @@ class ProjectCard extends Component{
                       variant="contained"
                       color="secondary"
 
-                      onClick={this.flipCard}
+                      onClick={this.deleteProject}
                     >
                       DELETE THIS PROJECT
                     </Button>
