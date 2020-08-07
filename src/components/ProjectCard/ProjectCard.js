@@ -11,7 +11,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import TitleTwoToneIcon from '@material-ui/icons/TitleTwoTone';
 import AddPhotoAlternateTwoToneIcon from '@material-ui/icons/AddPhotoAlternateTwoTone';
 import DescriptionTwoToneIcon from '@material-ui/icons/DescriptionTwoTone';
-
+import {withRouter} from 'react-router-dom';
 
 class ProjectCard extends Component{
     state = {
@@ -77,6 +77,11 @@ class ProjectCard extends Component{
       console.log('dispatching to UPDATE_PROJECT with:', payload)
       this.props.dispatch({type: 'UPDATE_PROJECT', payload});
     }
+
+    goToProject=()=>{
+      this.props.history.push(`/info/${this.state.project_id}`);
+
+    }
   
     handleInputChangeFor = propertyName => (event) => {
       this.setState({
@@ -88,7 +93,7 @@ class ProjectCard extends Component{
         return(
             <ReactCardFlip isFlipped={this.state.isFlipped} flipDirection='horizontal'>
 
-              <Grid item style={{height: '400px'}}>
+              <Grid item style={{backgroundColor: 'white', height: '400px', border: '1px solid black',  borderRadius: '20px'}}>
                 
                 <div style={{borderRadius:'20px', backgroundColor: 'white'}}>
                     <Grid item align='right'>
@@ -115,7 +120,7 @@ class ProjectCard extends Component{
                   variant="contained"
                   color="primary"
                   style={{bottom: 0}}
-                  onClick={this.flipCard}
+                  onClick={this.goToProject}
                 >
                  Go To Project
                 </Button>
@@ -124,7 +129,7 @@ class ProjectCard extends Component{
                 </div>
               </Grid> 
 
-              <Grid item align='center' style={{backgroundColor: 'white', height: '400px', borderRadius: '20px'}}>
+              <Grid item align='center' style={{backgroundColor: 'white', height: '400px', border: '1px solid black',  borderRadius: '20px'}}>
                   <div>
                   <Grid item align='right'>
                     <Button
@@ -217,4 +222,4 @@ const mapStateToProps = (reduxState)=>({
     reduxState
 })
 
-export default connect(mapStateToProps)(ProjectCard);
+export default connect(mapStateToProps)(withRouter(ProjectCard));

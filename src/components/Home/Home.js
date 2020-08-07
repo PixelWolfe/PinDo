@@ -23,7 +23,7 @@ class Home extends Component {
     return (
       <>
         <NavHome/>
-        <div style={{minheight: '100vh', backgroundColor: 'green'}}>
+        {JSON.stringify(this.props)}
           <Fade delay={200}>
             <CreateProjectButton/>  
             <Grid container justify='center' alignItems='center' alignContent='center'> 
@@ -45,7 +45,6 @@ class Home extends Component {
               }
             </Grid>
           </Fade>
-        </div>
       </>
     )
   }
