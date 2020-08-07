@@ -9,6 +9,8 @@ import DescriptionTwoToneIcon from '@material-ui/icons/DescriptionTwoTone';
 import TitleTwoToneIcon from '@material-ui/icons/TitleTwoTone';
 import AddPhotoAlternateTwoToneIcon from '@material-ui/icons/AddPhotoAlternateTwoTone';
 
+
+
 class CreateProjectPopup extends Component{
     state = {
         title: '',
@@ -67,81 +69,79 @@ class CreateProjectPopup extends Component{
         <Popup open={this.state.open} 
         position="bottom center"
         modal
+        style={{width: ''}}
         isOpen={this.state.open}
         onClose={()=>this.handleClose()}
         >
-
-      <Grid item align='center' xs={10}>
-        <div>
-          <h1>It's happening!</h1>
-          <h4 style={{margin: 0}}>Let's get this project started!</h4>
-            <br/>
-          <TextField 
-          style={{width: '60%'}}
-          size='small'
-          variant="filled"
-          label="Title"
-          onChange={this.handleInputChangeFor('title')}
-          inputProps={{maxLength: 80}}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <TitleTwoToneIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
-        <br/>
-        <TextField
-          style={{width: '60%', marginTop: '10px'}}
-          size='small'
-          variant="filled"
-          label="Image Url"
-          type='text'
-          onChange={this.handleInputChangeFor('image_url')}
-          inputProps={{maxLength: 1000}}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <AddPhotoAlternateTwoToneIcon/>
-              </InputAdornment>
-            ),
-          }}
-        />
-        <TextField
-            style={{width: '60%', marginTop: '10px'}}
+      <Grid container justify='center' alignContent='center' alignItems='center' style={{}}>
+        <Grid item align='center' xs={12}>
+        <h1>It's happening!</h1>
+        <h4 style={{margin: 0}}>Let's get this project started!</h4>
+          <br/>
+        <TextField 
+            style={{width: '60%'}}
             size='small'
             variant="filled"
-            label="Description (optional)"
-            type='text'
-            onChange={this.handleInputChangeFor('description')}
-            multiline
-            rows={5}
-            inputProps={{maxLength: 250}}
+            label="Title"
+            onChange={this.handleInputChangeFor('title')}
+            inputProps={{maxLength: 80}}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <DescriptionTwoToneIcon/>
+                  <TitleTwoToneIcon />
                 </InputAdornment>
               ),
             }}
           />
-        <br/>
-        <Button 
-          style={{marginTop: '10px'}}
-          name="submit" 
-          variant="contained" 
-          color="primary" 
-          onClick={()=>{
-            this.createProject();
-          }}
-        >    
-          Create Project
-        </Button>
-
-      </div>
+          <br/>
+          <TextField
+            style={{width: '60%', marginTop: '10px'}}
+            size='small'
+            variant="filled"
+            label="Image Url"
+            type='text'
+            onChange={this.handleInputChangeFor('image_url')}
+            inputProps={{maxLength: 1000}}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <AddPhotoAlternateTwoToneIcon/>
+                </InputAdornment>
+              ),
+            }}
+          />
+          <TextField
+              style={{width: '60%', marginTop: '10px'}}
+              size='small'
+              variant="filled"
+              label="Short Description (optional)"
+              type='text'
+              onChange={this.handleInputChangeFor('description')}
+              multiline
+              rows={2}
+              inputProps={{maxLength: 100}}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <DescriptionTwoToneIcon/>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          <br/>
+          <Button 
+            style={{marginTop: '10px'}}
+            name="submit" 
+            variant="contained" 
+            color="primary" 
+            onClick={()=>{
+              this.createProject();
+            }}
+          >    
+            Create Project
+          </Button>
+        </Grid> 
       </Grid>
-      
   </Popup>
             </>
         )

@@ -31,13 +31,18 @@ class Home extends Component {
               {
                   this.props.reduxState.project?
                     this.props.reduxState.project.map((project)=>
-                      <Grid key={project.id} item align='center' xs={5} sm={4} md={3} style={{margin: '15px'}}>
-                        <ProjectCard title={project.title} image_url={project.image_url} description={project.description}/>
+                      <Grid key={project.id} item align='center' xs={10} sm={5} lg={3} style={{margin: '15px'}}>
+                        <ProjectCard 
+                          title={project.title} 
+                          image_url={project.image_url} 
+                          description={project.description}
+                          project_id={project.id}
+                          />
                       </Grid>)
                   :
                   <>
                   </>
-                }
+              }
             </Grid>
           </Fade>
         </div>
