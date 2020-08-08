@@ -6,31 +6,24 @@ import {Grid} from '@material-ui/core';
 import './NavProject.css';
 
 const NavProject = (props) => (
-  <Grid item>
+  <Grid item xs={12}>
   <div className="nav">
     <Link to="/home">
-      <h2 className="nav-title">Project Navbar</h2>
+      <h2 className="nav-title">PinDo</h2>
     </Link>
     <div className="nav-right">
       <Link className="nav-link" to="/home">
         {/* Show this link if they are logged in or not,
         but call this link 'Home' if they are logged in,
         and call this link 'Login / Register' if they are not */}
-        {props.user.id ? 'Home' : 'Login / Register'}
+       Projects
       </Link>
       {/* Show the link to the info page and the logout button if the user is logged in */}
       {props.user.id && (
         <>
-          <Link className="nav-link" to="/info">
-            Info Page
-          </Link>
           <LogOutButton className="nav-link"/>
         </>
       )}
-      {/* Always show this link since the about page is not protected */}
-      <Link className="nav-link" to="/about">
-        About
-      </Link>
     </div>
   </div>
   </Grid>
