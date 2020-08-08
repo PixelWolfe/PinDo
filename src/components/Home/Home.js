@@ -22,8 +22,7 @@ class Home extends Component {
   render() {
     return (
       <>
-        <NavHome/>
-        {JSON.stringify(this.props)}
+          <NavHome/>
           <Fade delay={200}>
             <CreateProjectButton/>  
             <Grid container justify='center' alignItems='center' alignContent='center'> 
@@ -31,7 +30,7 @@ class Home extends Component {
               {
                   this.props.reduxState.project?
                     this.props.reduxState.project.map((project)=>
-                      <Grid key={project.id} item align='center' xs={10} sm={5} lg={3} style={{margin: '15px'}}>
+                      <Grid key={project.id} item align='center' xs={9} sm={6} md={4} lg={3} style={{margin: '15px'}}>
                         <ProjectCard 
                           title={project.title} 
                           image_url={project.image_url} 
