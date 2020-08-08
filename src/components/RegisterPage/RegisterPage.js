@@ -10,6 +10,8 @@ import EmailTwoToneIcon from '@material-ui/icons/EmailTwoTone';
 
 import NavHome from '../NavHome/NavHome';
 
+import CreateAccountImage from '../../images/CreateAccount.jpg';
+
 class RegisterPage extends Component {
   state = {
     username: '',
@@ -55,7 +57,7 @@ class RegisterPage extends Component {
 
       <div style={{backgroundColor: 'lightgreen', marginTop: '5%', borderRadius: '20px', minWidth: '80%', padding: '3%'}}>
         <Grid container justify='center' alignItems='center' alignContent='center' spacing={4}>
-          <Grid item xs={5} align='center'>
+          <Grid item xs={12} sm={7} md={6} align='center'>
             <div style={{backgroundColor: 'lightblue',  height: '80%', borderRadius: '20px'}}>
             {
               this.props.errors.registrationMessage && (<h2 className="alert" role="alert">{this.props.errors.registrationMessage}</h2>)
@@ -157,21 +159,21 @@ class RegisterPage extends Component {
             </div>
           </Grid>
 
-          <Grid xs={7} item align='center'>
+          <Grid xs={0} sm={5} md={6} item align='center'>
           <div>
           
       
             
               <Fade>
                 <img
-                style={{
-                  position: 'relative',
-                  overflow: 'hidden',
-                  width: '100%',
-                  borderRadius: '20px'
-                }}
-                src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Ailurus_fulgens_-_Syracuse_Zoo.jpg"
-                alt="Red Panda"
+                  style={{
+                    position: 'relative',
+                    overflow: 'hidden',
+                    width: '100%',
+                    borderRadius: '20px'
+                  }}
+                  src={CreateAccountImage}
+                  alt="Everything begins with an idea quote"
                 />
               </Fade>
 
