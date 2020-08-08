@@ -80,7 +80,6 @@ class ProjectCard extends Component{
 
     goToProject=()=>{
       this.props.history.push(`/info/${this.state.project_id}`);
-
     }
   
     handleInputChangeFor = propertyName => (event) => {
@@ -93,28 +92,28 @@ class ProjectCard extends Component{
         return(
             <ReactCardFlip isFlipped={this.state.isFlipped} flipDirection='horizontal'>
 
-              <Grid item style={{backgroundColor: 'white', height: '400px', border: '1px solid black',  borderRadius: '20px'}}>
+              <Grid item style={{borderRadius: '20px', boxShadow: '3px 3px 5px 6px #ccc'}}>
                 
-                <div style={{borderRadius:'20px', backgroundColor: 'white'}}>
+                <div style={{borderRadius:'20px', backgroundColor: 'cyan', border: '1px solid darkblue'}}>
                     <Grid item align='right'>
                     <Button
                       variant="outlined"
                       color="primary"
                       onClick={this.flipCard}
-                      style={{borderRadius: '0 20px 0 0', backgroundColor:'lightgrey'}}
+                      style={{borderRadius: '0 18px 0 0', backgroundColor:'lightgrey', borderWidth: '2px'}}
                     >
                       <EditTwoToneIcon/>
                     </Button>
                   </Grid>
-                  <div style={{overflow: 'hidden', maxHeight: '80%'}}>
-                    <h2 style={{paddingLeft: '10px', paddingRight: '10px'}}>{this.state.title}</h2>
+                    <h2 style={{paddingLeft: '10px', paddingRight: '10px', marginTop: '5px', marginBottom: '5px'}}>{this.state.title}</h2>
                       <img 
                         
-                        style={{cursor:'pointer',position: 'relative', height:'200px', maxWidth:'100%', overflow: 'hidden', borderRadius: '20px', paddingLeft: '10px', paddingRight: '10px'}}
+                        style={{cursor:'pointer',height: '250px', width:'250px', borderRadius: '20px', paddingLeft: '10px', paddingRight: '10px'}}
                         src={this.state.image_url}
                       />
-                  </div>
-                  <p>{this.state.description}</p>
+                  <p style={{marginTop: '2px', marginBottom: '5px'}}>
+                    {this.state.description}
+                  </p>
                   <Button
                   startIcon={<MoreTwoToneIcon/>}
                   variant="contained"
@@ -129,14 +128,14 @@ class ProjectCard extends Component{
                 </div>
               </Grid> 
 
-              <Grid item align='center' style={{backgroundColor: 'white', height: '400px', border: '1px solid black',  borderRadius: '20px'}}>
-                  <div>
+              <Grid item align='center' style={{backgroundColor: 'lightblue', height: '400px', border: '2px solid darkblue',  borderRadius: '20px'}}>
+              
                   <Grid item align='right'>
                     <Button
                       variant="outlined"
                       color="primary"
                       onClick={this.backPressed}
-                      style={{borderRadius: '0 20px 0 0', backgroundColor:'lightgrey'}}
+                      style={{borderRadius: '0 18px 0 0', backgroundColor:'lightgrey', borderWidth: '2px', boxShadow: 'inset 0 0 px #000000'}}
                     >
                       Back
                     </Button>
@@ -211,7 +210,7 @@ class ProjectCard extends Component{
                     </Button>
                     <br/>
                     <br/>
-                </div>
+            
               </Grid> 
             </ReactCardFlip>
         )
