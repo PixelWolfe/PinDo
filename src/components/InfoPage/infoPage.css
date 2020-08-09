@@ -1,0 +1,22 @@
+.box{
+  height: calc(100vh - 135px);
+  width: calc(100vw - 60px);
+  position: relative; 
+  overflow: auto; 
+  border: 1px solid black;
+  box-shadow: inset 0 0 10px #000000;
+}
+
+.draggable-container{
+    width: 2000px;
+    height: 1000px;
+    background-repeat: repeat;
+    background-size: cover;
+    /* background-image: url("https://cdn.wallpapersafari.com/79/25/0vNy1b.jpg"); */
+}
+
+.main-container{
+
+  height: 92vh;
+  width:100%;
+}

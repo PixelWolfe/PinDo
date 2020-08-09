@@ -5,8 +5,16 @@ import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
 import {Fade} from 'react-reveal';
 import {Grid} from '@material-ui/core';
-import './note.css';
+import './infoPage.css';
 import Draggable from 'react-draggable';
+
+import Note from '../Note/Note';
+
+import IconButton from '@material-ui/core/IconButton';
+import DeleteTwoToneIcon from '@material-ui/icons/DeleteTwoTone';
+import EditTwoToneIcon from '@material-ui/icons/EditTwoTone';
+
+import CorkBoard from '../../images/corkboard.jpg';
 
 class InfoPage extends Component{
 
@@ -59,22 +67,13 @@ class InfoPage extends Component{
               {/*Will have to reposition most likely when zindex changin is implemented */}
               <CreateButtonOptions/>
               <div className="box">
-              <div className="draggable-container">
+              <div className="draggable-container" style={{backgroundImage: ('url('+CorkBoard+')')}}>
                 {
                   this.state.notes.length > 0 ?
                     this.state.notes.map(note=>
-                      <Draggable
-                        onStop={(e,data)=>this.updatePosition(e, data, note.id, "note")}
-                        defaultPosition={{x: note.x, y: note.y}}
-                        key={note.id}
-                        onStart={this.onStart}
-                        bounds='parent'
-                      >
-                        <div className='sticky-note green'>
-                          <h3>{note.title}</h3>
-                          <p>{note.text}</p>
-                        </div>
-                      </Draggable>
+                        <Note key={note.id} title={note.title} text={note.text}
+                        z_index={note.z_index} x={note.x} y={note.y} note_id={note.id}
+                        project_id={note.project_id} color_id={note.color_id} />
                       ):
                       <>
                       </>
