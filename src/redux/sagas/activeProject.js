@@ -18,9 +18,19 @@ function* fetchProject(action){
     }
 }
 
+function* updatePosition(action){
+    try{
+        const response = yield axios.put('/api/activeProject/updatePosition', action.payload);
+        yield console.log('response from /api/activeProject/updatePositions put', response);
+    }
+    catch(error){
+        console.log('Error updating position', error);
+    }
+}
 
 function* activeProjectSaga() {
     yield takeLatest('FETCH_PROJECT', fetchProject);
+    yield takeLatest('UPDATE_POSITION', updatePosition);
 }
 
   export default activeProjectSaga;

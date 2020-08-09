@@ -5,43 +5,90 @@ import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
 import {Fade} from 'react-reveal';
 import {Grid} from '@material-ui/core';
-// This is one of our simplest components
-// It doesn't have local state, so it can be a function component.
-// It doesn't dispatch any redux actions or display any part of redux state
-// or even care what the redux state is, so it doesn't need 'connect()'
-
+import './note.css';
+import Draggable from 'react-draggable';
 
 class InfoPage extends Component{
 
   state={
-    project_id: Number(this.props.match.params.id)
+    project: [],
+    notes: [],
+    checklists: [],
+    images: []
   }
 
    componentDidMount(){
-     this.props.dispatch({type: 'FETCH_PROJECT', payload: {project_id: this.state.project_id}});
+     this.props.dispatch({type: 'FETCH_PROJECT', payload: {project_id:  Number(this.props.match.params.id)}});
    }
+
+   componentDidUpdate(previousProps){
+    if(previousProps.reduxState.activeProject !== this.props.reduxState.activeProject){
+      this.setState({
+        ...this.state,
+        project: this.props.reduxState.activeProject.project[0],
+        notes: this.props.reduxState.activeProject.notes,
+        checklists: this.props.reduxState.activeProject.checklists,
+        images: this.props.reduxState.activeProject.images
+      })
+    }
+   }
+
+   //updates the x and y position after a note is moved
+   updatePosition = (e, data, id, type) => {
+    console.log('In updatePosition for note for note:', id)
+    console.log('x:', data.x, 'y:', data.y);
+    console.log(e, data)
+    this.props.dispatch({type: 'UPDATE_POSITION', payload: {x: data.x, y: data.y, id: id, project_id: this.state.project.id, type: type}});
+    }
+
+    onStart(e) {
+      console.log('onstart e event',e);
+    }
+    
 
   render(){
     return(
       <>
+               
         <NavProject/>
-        <Fade delay={200}>
-          <CreateButtonOptions/>
-          <Grid Item xs={12} style={{background: 'yellow'}}>
-            <div>
-              <h3>Project</h3>
-              <p>{JSON.stringify(this.props.reduxState.activeProject.project)}</p>
-              <h4>Notes</h4>
-              <p>{JSON.stringify(this.props.reduxState.activeProject.notes)}</p>
-              <h4>Checklists</h4>
-              <p>{JSON.stringify(this.props.reduxState.activeProject.checklists)}</p>
-              <h4>Images</h4>
-              <p>{JSON.stringify(this.props.reduxState.activeProject.images)}</p>
-              <h1>The card you have selected is: {this.state.project_id} </h1>
-            </div>
+        <div className='main-container'>
+        
+        <Fade delay={200}>  
+          <Grid container >
+            <Grid item xs={12} align='center'>
+              {/*Will have to reposition most likely when zindex changin is implemented */}
+              <CreateButtonOptions/>
+              <div className="box">
+              <div className="draggable-container">
+                {
+                  this.state.notes.length > 0 ?
+                    this.state.notes.map(note=>
+                      <Draggable
+                        onStop={(e,data)=>this.updatePosition(e, data, note.id, "note")}
+                        defaultPosition={{x: note.x, y: note.y}}
+                        key={note.id}
+                        onStart={this.onStart}
+                        bounds='parent'
+                      >
+                        <div className='sticky-note green'>
+                          <h3>{note.title}</h3>
+                          <p>{note.text}</p>
+                        </div>
+                      </Draggable>
+                      ):
+                      <>
+                      </>
+                }
+                
+                </div>
+                
+              </div>
+
+            </Grid>
           </Grid>
-          
         </Fade>
+        </div>
+      
        
       </>
     )

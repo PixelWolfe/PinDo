@@ -55,81 +55,33 @@ router.get('/project/:id', rejectUnauthenticated, async (req, res) => {
     }
   })
 
-// router.get('/project/:id', rejectUnauthenticated, (req, res) => {
-//     console.log('In /project GET, Req.body:', req.body);
+router.put('/updatePosition/', rejectUnauthenticated, (req, res) => {
+  console.log('Update Position req.body',req.body)
+  console.log('req.body.type', req.body.type)
 
-//     console.log('project GET id param', req.params.id);
+  let type = '';
+  switch(req.body.type){
+    case 'note':
+      type = 'note';
+      break;
+    case 'checklist':
+      type = 'checklist';
+      break;
+    case 'image':
+      type = 'image';
+      break;
+  }
 
-//     const queryString = `SELECT * FROM "project" WHERE user_id = $1 AND id = $2;`;
-
-//     pool.query(queryString,  [req.user.id, req.params.id])
-//         .then(response=>{
-//             res.send(response.rows);
-//         })
-//         .catch(error=>{
-//             console.log('Error with project GET:', error)
-//             res.sendStatus(500);
-//         })
-// });
-
-// router.get('/notes/:id', rejectUnauthenticated, (req, res) => {
-//     console.log('In activeProject get notes');
-//     const queryString = `SELECT * FROM "note" WHERE project_id = $1;`;
-
-//     pool.query(queryString,  [req.params.id])
-//         .then(response=>{
-//             res.send(response.rows);
-//         })
-//         .catch(error=>{
-//             console.log('Error with project GET:', error)
-//             res.sendStatus(500);
-//         })
-// });
-
-// router.get('/checklists/:id', rejectUnauthenticated, async (req, res) => {
-//     console.log('In activeProject get checklists')
-//     const client = await pool.connect();
-//     try{
-//       //start the transaction with BEGIN
-//       await client.query(`BEGIN;`);
-//       const queryString = `SELECT * FROM "list" WHERE project_id = $1;`;
-//       const listArray = await client.query(queryString, [req.params.id]);
-//       const allChecklists = [];
-
-//       //loop through array of lists and grab tasks for every list
-//       for(list of listArray.rows){
-//         const queryString = `SELECT * FROM "task" WHERE list_id = $1;`;
-//         const tasks = await client.query(queryString, [list.id])
-//         allChecklists.push({id: list.id, title: list.title, project_id: list.project_id, color_id: list.color_id, tasks: tasks.rows})
-//       }
-//       //end the transaction with COMMIT
-//       await client.query('COMMIT;')
-//       res.send(allChecklists);
-//     }
-//     catch(error){
-//       //transaction failed so lets reset it so other queries can be made
-//       console.log('Error on create account', error);
-//       await client.query('ROLLBACK;');
-//       res.sendStatus(500);
-//     }
-//     finally{
-//       //close connection no matter what
-//       client.release();
-//     }
-//   })
-
-// router.get('/images/:id', rejectUnauthenticated, (req, res) => {
-//     console.log('In activeProject get images')
-//     const queryString = `SELECT * FROM "image" WHERE project_id = $1;`;
-
-//     pool.query(queryString, [req.params.id])
-//         .then(response=>{
-//             res.send(response.rows);
-//         })
-//         .catch(error=>{
-//             console.log('Error with project GET:', error)
-//             res.sendStatus(500);
-//         })
-// });
+  //bypass the inability to update table name with stl
+  const queryString = `UPDATE ${type} SET x=$1, y=$2 WHERE id=$3 AND project_id=$4;`;
+  pool.query(queryString, [ req.body.x, req.body.y, req.body.id, req.body.project_id])
+    .then(response=>{
+      res.sendStatus(201);
+    })
+    .catch(error=>{
+      console.log('Error on position update', error);
+      res.sendStatus(500);
+    })
+})
 
 module.exports = router;

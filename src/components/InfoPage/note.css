@@ -1,0 +1,73 @@
+.sticky-note {
+    line-height: 1;
+    text-align:center;     
+    width: 140px;    
+    margin: 25px;    
+    min-height:140px;
+    max-height:150px;
+    padding-top:px;
+    position: relative;   
+    border:1px solid #00000017;  
+    font-family:'Reenie Beanie';    
+    font-size:15px;      
+    display: inline-block;    
+  }
+   
+  .yellow{
+    background: linear-gradient(135deg, #ffff88 82%,#ffffc6 100%);
+    border:1px solid #ffcccc;  
+  }
+
+  .blue{
+    background: linear-gradient(135deg, #88ddff 82%,#c6f2ff 100%);
+    border:1px solid #8bcbff;  
+  }
+
+  .green{
+    background: linear-gradient(135deg, #88ffe1 82%,#c6ffec 100%);
+     
+  }
+
+  .purple{
+    background: linear-gradient(135deg, #b688ff 82%,#ccc6ff 100%);
+    border:1px solid #b78cfc;  
+  }
+
+  .red{
+    background: linear-gradient(135deg, #ff8888 82%,#ffc6c6 100%);
+    border:1px solid #fa9d9d;  
+  }
+
+  .sticky-note:after {     
+    content: "";
+    position:relative;
+    z-index:-1;
+    right:-0px; bottom:20px;
+    width:200px;
+    height: 25px;
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow:2px 15px 5px rgba(0, 0, 0, 0.40);
+    transform: matrix(-1, -0.1, 0, 1, 0, 0);
+  }
+
+  .box{
+    height: calc(100vh - 135px);
+    width: calc(100vw - 60px);
+    position: relative; 
+    overflow: auto; 
+    border: 1px solid black;
+  }
+
+  .draggable-container{
+      width: 2000px;
+      height: 2000px;
+  }
+
+  .main-container{
+    background-color: lightgrey;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("https://cdn.wallpapersafari.com/79/25/0vNy1b.jpg");
+    height: 92vh;
+    width:100%;
+  }
