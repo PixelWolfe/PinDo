@@ -24,7 +24,7 @@ class Note extends Component{
     }
 
     updatePosition = (e, data, id, type) => {
-        console.log('In updatePosition for note for note:', id)
+        console.log('In updatePosition for note', data);
         console.log('x:', data.x, 'y:', data.y, 'id', id);
         this.props.dispatch({type: 'UPDATE_POSITION', payload: {x: data.x, y: data.y, id: this.props.note_id, project_id: this.props.project_id, type: type}});
     }

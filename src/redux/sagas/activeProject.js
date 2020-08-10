@@ -54,11 +54,23 @@ function* deleteNote(action){
     }
 }
 
+function* createNote(action){
+    try{
+        const response = yield axios.post('/api/activeProject/createNote', action.payload);
+        yield console.log('response from /api/activeProject/createNote post', response);
+        yield put({type: 'FETCH_PROJECT', payload: {project_id: action.payload.project_id}});
+    }
+    catch(error){
+        console.log('Error creating note', error);
+    }
+}
+
 function* activeProjectSaga() {
     yield takeLatest('FETCH_PROJECT', fetchProject);
     yield takeLatest('UPDATE_POSITION', updatePosition);
     yield takeLatest('UPDATE_NOTE', updateNote);
     yield takeLatest('DELETE_NOTE', deleteNote);
+    yield takeLatest('CREATE_NOTE', createNote);
 }
 
   export default activeProjectSaga;

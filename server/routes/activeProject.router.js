@@ -111,6 +111,26 @@ router.delete('/deleteNote', rejectUnauthenticated, (req,res)=>{
       console.log('Error on note delete', error);
       res.sendStatus(500);
     })
+
+})
+
+router.post('/createNote', rejectUnauthenticated, (req,res)=>{
+
+  const queryString = `INSERT INTO "note" (title, text, project_id, color_id, x, y, z_index)
+  VALUES ('Click the edit icon upper right', 'Fill in the text and you''re set!', $1, 1, $2, $3, 50);`
+
+  console.log(queryString);
+
+  pool.query(queryString, [req.body.project_id, req.body.x, req.body.y])
+    .then(response=>{
+      res.sendStatus(201);
+    })
+    .catch(error=>{
+      console.log('Error on note create', error);
+      res.sendStatus(500);
+    })
+
+
 })
 
 module.exports = router;

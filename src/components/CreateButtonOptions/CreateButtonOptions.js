@@ -5,6 +5,9 @@ import AddBoxTwoToneIcon from '@material-ui/icons/AddBoxTwoTone';
 
 class CreateButtonOptions extends Component{
 
+    createNote =()=>{
+        this.props.dispatch({type: 'CREATE_NOTE', payload: {x: this.props.reduxState.projectScroll.scrollLeft, y: this.props.reduxState.projectScroll.scrollTop, project_id: this.props.reduxState.activeProject.project[0].id}});
+    }
     render(){
         return(
             <Grid container justify='center' alignItems='center' alignContent='center'>
@@ -15,10 +18,7 @@ class CreateButtonOptions extends Component{
                         variant='contained' 
                         color='primary' 
                         style={{ marginTop: '0px'}}
-                        onClick={()=>{
-                            this.props.dispatch({type: 'SET_CREATE_PROJECT_POPUP_BOOLEAN', payload: {open: true}})
-                            console.log("modal closed ");
-                    }}>
+                        onClick={this.createNote}>
                         Add Note
                     </Button> 
                 </Grid>
@@ -29,10 +29,7 @@ class CreateButtonOptions extends Component{
                         variant='contained' 
                         color='primary' 
                         style={{ marginTop: '0px'}}
-                        onClick={()=>{
-                            this.props.dispatch({type: 'SET_CREATE_PROJECT_POPUP_BOOLEAN', payload: {open: true}})
-                            console.log("modal closed ");
-                    }}>
+                        onClick={console.log('Add Checklist Pressed')}>
                         Add Checklist
                     </Button> 
                 </Grid>
@@ -43,10 +40,7 @@ class CreateButtonOptions extends Component{
                         variant='contained' 
                         color='primary' 
                         style={{ marginTop: '0px'}}
-                        onClick={()=>{
-                            this.props.dispatch({type: 'SET_CREATE_PROJECT_POPUP_BOOLEAN', payload: {open: true}})
-                            console.log("modal closed ");
-                    }}>
+                        onClick={console.log('Add Image Pressed')}>
                         Add Image
                     </Button> 
                 </Grid>

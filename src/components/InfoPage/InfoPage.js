@@ -16,6 +16,9 @@ import EditTwoToneIcon from '@material-ui/icons/EditTwoTone';
 
 import CorkBoard from '../../images/corkboard.jpg';
 
+
+
+
 class InfoPage extends Component{
 
   state={
@@ -27,6 +30,44 @@ class InfoPage extends Component{
 
    componentDidMount(){
      this.props.dispatch({type: 'FETCH_PROJECT', payload: {project_id:  Number(this.props.match.params.id)}});
+      console.log('this.props!!!!', this.props)
+
+    /*!
+    * Thanks to Chris Ferdinandi at https://gomakethings.com
+    * for their epic scrollStop function which is adapted here :]
+    */
+
+     var scrollStop = function (callback) {
+      // Make sure a valid callback was provided
+      if (!callback || typeof callback !== 'function') return;
+      // Setup scrolling variable
+      var isScrolling;
+      // Listen for scroll events
+      document.querySelector('.box').addEventListener('scroll', function (event) {
+        // Clear our timeout throughout the scroll
+        window.clearTimeout(isScrolling);
+        // Set a timeout to run after scrolling ends
+        isScrolling = setTimeout(function() {
+          // Run the callback
+          callback();
+        }, 66);
+      }, false);
+    };
+    
+    scrollStop(function () {
+      const box = document.querySelector('.box');
+      console.log('Scroll Left/Top', box.scrollLeft, box.scrollTop);
+      setScroll(box.scrollLeft, box.scrollTop);
+    });
+
+    var setScroll = (scrollLeft, scrollTop)=>{
+      this.props.dispatch({type: 'SET_PROJECT_SCROLL', payload: {scrollLeft: scrollLeft, scrollTop: scrollTop}});
+    }
+    this.resetScroll();
+   }
+
+   resetScroll = ()=>{
+    this.props.dispatch({type: 'SET_PROJECT_SCROLL', payload: {scrollLeft: 0, scrollTop: 0}});
    }
 
    componentDidUpdate(previousProps){
@@ -54,7 +95,9 @@ class InfoPage extends Component{
     }
     
 
+
   render(){
+    
     return(
       <>
                
@@ -82,7 +125,7 @@ class InfoPage extends Component{
                 </div>
                 
               </div>
-
+                <p>{JSON.stringify(this.props.reduxState.projectScroll)}</p>
             </Grid>
           </Grid>
         </Fade>
