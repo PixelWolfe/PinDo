@@ -6,6 +6,7 @@ import project from './projectReducer';
 import popupReducer from './popupReducer';
 import activeProject from './activeProject';
 import projectScroll from './projectScroll';
+import highestZIndex from './highestZIndex';
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
 // This is imported in index.js as rootSaga
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
   project, //will have all the users boards if they go to the home page
   popupReducer, //stores popup open state
   activeProject,
-  projectScroll
+  projectScroll,
+  highestZIndex
 });
 
 export default rootReducer;

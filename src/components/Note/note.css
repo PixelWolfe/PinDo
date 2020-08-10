@@ -3,13 +3,12 @@
 .sticky-note {
     text-align:center;     
     width: 340px;    
-    min-height:340px;
-    max-height:340px;
+    height:340px;
     position: absolute;   
     box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.13);
     border:1px solid #00000017;  
     font-family:'Reenie Beanie';    
-    font-size:15px;          
+    font-size:15px;     
   }
    
   .yellow{
@@ -24,7 +23,6 @@
 
   .green{
     background: linear-gradient(135deg, #88ffe1 82%,#c6ffec 100%);
-     
   }
 
   .purple{

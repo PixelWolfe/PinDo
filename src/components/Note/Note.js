@@ -18,6 +18,8 @@ import { TextField } from '@material-ui/core';
 
 class Note extends Component{
     state={
+        id: this.props.note_id,
+        project_id: this.props.project_id,
         title: this.props.title,
         text: this.props.text,
         edit_mode: false
@@ -26,12 +28,20 @@ class Note extends Component{
     updatePosition = (e, data, id, type) => {
         console.log('In updatePosition for note', data);
         console.log('x:', data.x, 'y:', data.y, 'id', id);
-        this.props.dispatch({type: 'UPDATE_POSITION', payload: {x: data.x, y: data.y, id: this.props.note_id, project_id: this.props.project_id, type: type}});
+        this.props.dispatch({type: 'UPDATE_POSITION', payload: {x: data.x, y: data.y, id: this.state.id, project_id: this.state.project_id, type: type}});
     }
 
-    onStart(e) {
-        console.log('onstart e event',e);
-    }
+
+    calculateZIndex(e) {
+            console.log('onstart zindex', e.currentTarget.style.zIndex);
+            
+            const newIndex = this.props.reduxState.highestZIndex + 1
+            e.currentTarget.style.zIndex = newIndex;
+
+            console.log('newIndex:', newIndex)
+            this.props.dispatch({type: 'UPDATE_ZINDEX', payload: {z_index: newIndex, type: 'note', id: this.state.id, project_id: this.state.project_id}});
+            this.props.dispatch({type: 'SET_HIGHEST_ZINDEX', payload: newIndex});
+          }
     
     makeEditable = ()=>{
         this.setState({
@@ -67,9 +77,9 @@ class Note extends Component{
             <>
             <Draggable
                 handle='.handle'
-                onStop={(e,data)=>this.updatePosition(e, data, this.props.note_id, "note")}
+                onStop={(e,data)=>this.updatePosition(e, data, this.state.id, "note")}
                 defaultPosition={{x: this.props.x, y: this.props.y}}
-                onStart={this.onStart}
+                onStart={console.log('draggable this', this),(e)=>this.calculateZIndex(e)}
                 bounds='parent'
             >
             {
@@ -133,6 +143,8 @@ class Note extends Component{
                     ),
                     }}
                 />
+                <br/>
+                <br/>
                 <br/>
                 <br/>
                 <h4 style={{margin: 0}}>Remove this note?</h4>

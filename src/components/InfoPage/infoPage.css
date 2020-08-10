@@ -8,11 +8,14 @@
 }
 
 .draggable-container{
-    width: 2000px;
-    height: 1000px;
-    background-repeat: repeat;
-    background-size: cover;
-    /* background-image: url("https://cdn.wallpapersafari.com/79/25/0vNy1b.jpg"); */
+    width: 4000px;
+    height: 2000px;
+}
+
+.corkboard{
+  background-repeat: repeat;
+  background-size: initial;
+  background-image: url('../../images/corkboardMedium.jpg');
 }
 
 .main-container{

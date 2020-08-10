@@ -15,10 +15,10 @@ router.get('/project/:id', rejectUnauthenticated, async (req, res) => {
       const project = await client.query(projectQuery, [req.user.id, req.params.id]);
       
       if(project.rows.length > 0){
-      const noteQuery = `SELECT * FROM "note" WHERE project_id = $1 ORDER BY z_index DESC;`;
+      const noteQuery = `SELECT * FROM "note" WHERE project_id = $1 ORDER BY z_index ASC;`;
       const notes = await client.query(noteQuery, [req.params.id]);
   
-      const queryString = `SELECT * FROM "list" WHERE project_id = $1 ORDER BY id ASC;`;
+      const queryString = `SELECT * FROM "list" WHERE project_id = $1 ORDER BY z_index ASC;`;
       const listArray = await client.query(queryString, [req.params.id]);
       const allChecklists = [];
   
@@ -26,10 +26,10 @@ router.get('/project/:id', rejectUnauthenticated, async (req, res) => {
       for(list of listArray.rows){
         const queryString = `SELECT * FROM "task" WHERE list_id = $1 ORDER BY position ASC;`;
         const tasks = await client.query(queryString, [list.id])
-        allChecklists.push({id: list.id, title: list.title, project_id: list.project_id, color_id: list.color_id, tasks: tasks.rows})
+        allChecklists.push({id: list.id, title: list.title, project_id: list.project_id, color_id: list.color_id, z_index: list.z_index, tasks: tasks.rows})
       }
   
-      const imageQuery = `SELECT * FROM "image" WHERE project_id = $1 ORDER BY id ASC;`;
+      const imageQuery = `SELECT * FROM "image" WHERE project_id = $1 ORDER BY z_index ASC;`;
       const images = await client.query(imageQuery, [req.params.id]);
   
   
@@ -117,11 +117,11 @@ router.delete('/deleteNote', rejectUnauthenticated, (req,res)=>{
 router.post('/createNote', rejectUnauthenticated, (req,res)=>{
 
   const queryString = `INSERT INTO "note" (title, text, project_id, color_id, x, y, z_index)
-  VALUES ('Click the edit icon upper right', 'Fill in the text and you''re set!', $1, 1, $2, $3, 50);`
+  VALUES ('Click the edit icon upper right', 'Fill in the text and you''re set!', $1, 1, $2, $3, $4);`
 
   console.log(queryString);
 
-  pool.query(queryString, [req.body.project_id, Math.floor(req.body.x), Math.floor(req.body.y)])
+  pool.query(queryString, [req.body.project_id, Math.floor(req.body.x), Math.floor(req.body.y), req.body.z_index])
     .then(response=>{
       res.sendStatus(201);
     })
@@ -129,8 +129,33 @@ router.post('/createNote', rejectUnauthenticated, (req,res)=>{
       console.log('Error on note create', error);
       res.sendStatus(500);
     })
+})
 
+router.put('/updateZIndex', rejectUnauthenticated, (req,res)=>{
+  let type = '';
+  switch(req.body.type){
+    case 'note':
+      type = 'note';
+      break;
+    case 'checklist':
+      type = 'checklist';
+      break;
+    case 'image':
+      type = 'image';
+      break;
+    default:
+      type = null;
+  }
 
+  const queryString = `UPDATE ${type} SET z_index=$1 WHERE id=$2 AND project_id=$3;`;
+  pool.query(queryString, [req.body.z_index, req.body.id, req.body.project_id])
+    .then(response=>{
+      res.sendStatus(201);
+    })
+    .catch(error=>{
+      console.log('Error updating z-index:', error);
+      res.sendStatus(500);
+    })
 })
 
 module.exports = router;

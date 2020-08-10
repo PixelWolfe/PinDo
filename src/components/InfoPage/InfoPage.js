@@ -6,15 +6,9 @@ import {withRouter} from 'react-router';
 import {Fade} from 'react-reveal';
 import {Grid} from '@material-ui/core';
 import './infoPage.css';
-import Draggable from 'react-draggable';
+
 
 import Note from '../Note/Note';
-
-import IconButton from '@material-ui/core/IconButton';
-import DeleteTwoToneIcon from '@material-ui/icons/DeleteTwoTone';
-import EditTwoToneIcon from '@material-ui/icons/EditTwoTone';
-
-import CorkBoard from '../../images/corkboard.jpg';
 
 
 
@@ -25,7 +19,8 @@ class InfoPage extends Component{
     project: [],
     notes: [],
     checklists: [],
-    images: []
+    images: [],
+    zIndexSorted: []
   }
 
    componentDidMount(){
@@ -72,12 +67,32 @@ class InfoPage extends Component{
 
    componentDidUpdate(previousProps){
     if(previousProps.reduxState.activeProject !== this.props.reduxState.activeProject){
+
+
+      let zIndexArray = [];
+      zIndexArray.push(...this.props.reduxState.activeProject.notes);
+      zIndexArray.push(...this.props.reduxState.activeProject.checklists);
+      zIndexArray.push(...this.props.reduxState.activeProject.images);
+
+      console.log('zindexarray pre-sort',zIndexArray);
+      zIndexArray.sort((a,b)=>a.z_index - b.z_index);
+      console.log('zindexarray post-sort',zIndexArray);
+
+
+      // //take the last value (highest zIndex)
+      if(zIndexArray.length > 0){
+        const highestZIndex = zIndexArray[zIndexArray.length-1]
+        console.log('highestZindex', highestZIndex);
+        this.props.dispatch({type: 'SET_HIGHEST_ZINDEX', payload: Number(highestZIndex.z_index)});
+      }
+
       this.setState({
         ...this.state,
         project: this.props.reduxState.activeProject.project[0],
         notes: this.props.reduxState.activeProject.notes,
         checklists: this.props.reduxState.activeProject.checklists,
-        images: this.props.reduxState.activeProject.images
+        images: this.props.reduxState.activeProject.images,
+        zIndexSorted: zIndexArray
       })
     }
    }
@@ -109,19 +124,27 @@ class InfoPage extends Component{
             <Grid item xs={12} align='center'>
               {/*Will have to reposition most likely when zindex changin is implemented */}
               <CreateButtonOptions/>
+              {JSON.stringify(this.props.reduxState.highestZIndex)}
               <div className="box">
-              <div className="draggable-container" style={{backgroundImage: ('url('+CorkBoard+')')}}>
+              <div className="draggable-container corkboard">
                 {
-                  this.state.notes.length > 0 ?
-                    this.state.notes.map(note=>
-                        <Note key={note.id} title={note.title} text={note.text}
-                          z_index={note.z_index} x={note.x} y={note.y} note_id={note.id}
-                          project_id={note.project_id} color_id={note.color_id} />
-                      ):
-                      <>
-                      </>
+                  this.state.zIndexSorted.map(item=>{
+                    if(item.hasOwnProperty('url')){
+                      console.log('item is an image');
+                      return;
+                    }
+                    else if(item.hasOwnProperty('text')){
+                      console.log('item is a note');
+                      return (<Note key={item.id} title={item.title} text={item.text}
+                       x={item.x} y={item.y} note_id={item.id}
+                      project_id={item.project_id} color_id={item.color_id} />);
+                    }
+                    else{
+                      console.log('item is a checklist');
+                      return;
+                    }
+                  })
                 }
-                
                 </div>
                 
               </div>

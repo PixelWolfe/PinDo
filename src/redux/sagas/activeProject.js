@@ -65,12 +65,24 @@ function* createNote(action){
     }
 }
 
+function* updateZIndex(action){
+    try{
+        console.log(action.payload)
+        const response = yield axios.put('/api/activeProject/updateZIndex', action.payload);
+        yield console.log('response from /api/activeProject/updateZIndex', response);
+    }
+    catch(error){
+        console.log('Error updating zindex:', error);
+    }
+}
+
 function* activeProjectSaga() {
     yield takeLatest('FETCH_PROJECT', fetchProject);
     yield takeLatest('UPDATE_POSITION', updatePosition);
     yield takeLatest('UPDATE_NOTE', updateNote);
     yield takeLatest('DELETE_NOTE', deleteNote);
     yield takeLatest('CREATE_NOTE', createNote);
+    yield takeLatest('UPDATE_ZINDEX', updateZIndex);
 }
 
   export default activeProjectSaga;
