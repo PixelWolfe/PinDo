@@ -28,9 +28,37 @@ function* updatePosition(action){
     }
 }
 
+function* updateNote(action){
+    try{
+        const response = yield axios.put('/api/activeProject/updateNote', action.payload);
+        yield console.log('response from /api/activeProject/updateNote put', response);
+        yield put({type: 'FETCH_PROJECT', payload: {project_id: action.payload.project_id}});
+    }
+    catch(error){
+        console.log('Error updating note', error);
+    }
+}
+
+function* deleteNote(action){
+    try{
+        const response = yield axios({
+            method: 'DELETE',
+            url: '/api/activeProject/deleteNote',
+            data: action.payload
+        });
+        yield console.log('response from /api/activeProject/deleteNote put', response);
+        yield put({type: 'FETCH_PROJECT', payload: {project_id: action.payload.project_id}});
+    }
+    catch(error){
+        console.log('Error deleting note', error);
+    }
+}
+
 function* activeProjectSaga() {
     yield takeLatest('FETCH_PROJECT', fetchProject);
     yield takeLatest('UPDATE_POSITION', updatePosition);
+    yield takeLatest('UPDATE_NOTE', updateNote);
+    yield takeLatest('DELETE_NOTE', deleteNote);
 }
 
   export default activeProjectSaga;

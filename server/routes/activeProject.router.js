@@ -15,7 +15,7 @@ router.get('/project/:id', rejectUnauthenticated, async (req, res) => {
       const project = await client.query(projectQuery, [req.user.id, req.params.id]);
       
       if(project.rows.length > 0){
-      const noteQuery = `SELECT * FROM "note" WHERE project_id = $1 ORDER BY id ASC;`;
+      const noteQuery = `SELECT * FROM "note" WHERE project_id = $1 ORDER BY z_index DESC;`;
       const notes = await client.query(noteQuery, [req.params.id]);
   
       const queryString = `SELECT * FROM "list" WHERE project_id = $1 ORDER BY id ASC;`;
@@ -55,7 +55,7 @@ router.get('/project/:id', rejectUnauthenticated, async (req, res) => {
     }
   })
 
-router.put('/updatePosition/', rejectUnauthenticated, (req, res) => {
+router.put('/updatePosition', rejectUnauthenticated, (req, res) => {
   console.log('Update Position req.body',req.body)
   console.log('req.body.type', req.body.type)
 
@@ -72,7 +72,6 @@ router.put('/updatePosition/', rejectUnauthenticated, (req, res) => {
       break;
   }
 
-  //bypass the inability to update table name with stl
   const queryString = `UPDATE ${type} SET x=$1, y=$2 WHERE id=$3 AND project_id=$4;`;
   pool.query(queryString, [ req.body.x, req.body.y, req.body.id, req.body.project_id])
     .then(response=>{
@@ -80,6 +79,36 @@ router.put('/updatePosition/', rejectUnauthenticated, (req, res) => {
     })
     .catch(error=>{
       console.log('Error on position update', error);
+      res.sendStatus(500);
+    })
+})
+
+router.put('/updateNote', rejectUnauthenticated, (req,res)=>{
+  console.log('Update Note req.body', req.body);
+  
+  const queryString = `UPDATE note SET title=$1, text=$2 WHERE id=$3 AND project_id=$4;`;
+
+  pool.query(queryString, [req.body.title, req.body.text, req.body.id, req.body.project_id])
+    .then(response=>{
+      res.sendStatus(201);
+    })
+    .catch(error=>{
+      console.log('Error on note update', error);
+      res.sendStatus(500);
+    })
+})
+
+router.delete('/deleteNote', rejectUnauthenticated, (req,res)=>{
+  console.log('Delete Note req.body', req.body);
+  
+  const queryString = `DELETE FROM "note" WHERE id = $1 AND project_id = $2; `;
+
+  pool.query(queryString, [req.body.id, req.body.project_id])
+    .then(response=>{
+      res.sendStatus(204);
+    })
+    .catch(error=>{
+      console.log('Error on note delete', error);
       res.sendStatus(500);
     })
 })

@@ -1,9 +1,11 @@
+
+
 .sticky-note {
     text-align:center;     
     width: 340px;    
     min-height:340px;
     max-height:340px;
-    position: relative;   
+    position: absolute;   
     box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.13);
     border:1px solid #00000017;  
     font-family:'Reenie Beanie';    
@@ -33,16 +35,4 @@
   .red{
     background: linear-gradient(135deg, #ff8888 82%,#ffc6c6 100%);
     border:1px solid #fa9d9d;  
-  }
-
-  .sticky-note:after {     
-    content: "";
-    position:relative;
-    z-index:-1;
-    right:-0px; bottom:20px;
-    width:200px;
-    height: 25px;
-    background: rgba(0, 0, 0, 0.2);
-    box-shadow:2px 15px 5px rgba(0, 0, 0, 0.40);
-    transform: matrix(-1, -0.1, 0, 1, 0, 0);
   }

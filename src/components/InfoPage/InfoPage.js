@@ -72,8 +72,8 @@ class InfoPage extends Component{
                   this.state.notes.length > 0 ?
                     this.state.notes.map(note=>
                         <Note key={note.id} title={note.title} text={note.text}
-                        z_index={note.z_index} x={note.x} y={note.y} note_id={note.id}
-                        project_id={note.project_id} color_id={note.color_id} />
+                          z_index={note.z_index} x={note.x} y={note.y} note_id={note.id}
+                          project_id={note.project_id} color_id={note.color_id} />
                       ):
                       <>
                       </>
