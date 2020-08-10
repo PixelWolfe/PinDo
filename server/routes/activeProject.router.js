@@ -73,7 +73,7 @@ router.put('/updatePosition', rejectUnauthenticated, (req, res) => {
   }
 
   const queryString = `UPDATE ${type} SET x=$1, y=$2 WHERE id=$3 AND project_id=$4;`;
-  pool.query(queryString, [ req.body.x, req.body.y, req.body.id, req.body.project_id])
+  pool.query(queryString, [ Math.floor(req.body.x), Math.floor(req.body.y), req.body.id, req.body.project_id])
     .then(response=>{
       res.sendStatus(201);
     })
@@ -121,7 +121,7 @@ router.post('/createNote', rejectUnauthenticated, (req,res)=>{
 
   console.log(queryString);
 
-  pool.query(queryString, [req.body.project_id, req.body.x, req.body.y])
+  pool.query(queryString, [req.body.project_id, Math.floor(req.body.x), Math.floor(req.body.y)])
     .then(response=>{
       res.sendStatus(201);
     })
