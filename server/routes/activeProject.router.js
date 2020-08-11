@@ -98,6 +98,21 @@ router.put('/updateNote', rejectUnauthenticated, (req,res)=>{
     })
 })
 
+router.put('/updateImage', rejectUnauthenticated, (req,res)=>{
+  console.log('Update Image req.body', req.body);
+  
+  const queryString = `UPDATE image SET title=$1, url=$2 WHERE id=$3 AND project_id=$4;`;
+
+  pool.query(queryString, [req.body.title, req.body.url, req.body.id, req.body.project_id])
+    .then(response=>{
+      res.sendStatus(201);
+    })
+    .catch(error=>{
+      console.log('Error on image update', error);
+      res.sendStatus(500);
+    })
+})
+
 router.delete('/deleteNote', rejectUnauthenticated, (req,res)=>{
   console.log('Delete Note req.body', req.body);
   
@@ -114,10 +129,43 @@ router.delete('/deleteNote', rejectUnauthenticated, (req,res)=>{
 
 })
 
+router.delete('/deleteImage', rejectUnauthenticated, (req,res)=>{
+  console.log('Delete image req.body', req.body);
+  
+  const queryString = `DELETE FROM "image" WHERE id = $1 AND project_id = $2; `;
+
+  pool.query(queryString, [req.body.id, req.body.project_id])
+    .then(response=>{
+      res.sendStatus(204);
+    })
+    .catch(error=>{
+      console.log('Error on image delete', error);
+      res.sendStatus(500);
+    })
+
+})
+
 router.post('/createNote', rejectUnauthenticated, (req,res)=>{
 
   const queryString = `INSERT INTO "note" (title, text, project_id, color_id, x, y, z_index)
   VALUES ('Click the edit icon upper right', 'Fill in the text and you''re set!', $1, 1, $2, $3, $4);`
+
+  console.log(queryString);
+
+  pool.query(queryString, [req.body.project_id, Math.floor(req.body.x), Math.floor(req.body.y), req.body.z_index])
+    .then(response=>{
+      res.sendStatus(201);
+    })
+    .catch(error=>{
+      console.log('Error on note create', error);
+      res.sendStatus(500);
+    })
+})
+
+router.post('/createImage', rejectUnauthenticated, (req,res)=>{
+
+  const queryString = `INSERT INTO "image" (title, url, project_id, color_id, x, y, z_index)
+  VALUES ('Click the edit icon upper right!', '', $1, 1, $2, $3, $4);`
 
   console.log(queryString);
 

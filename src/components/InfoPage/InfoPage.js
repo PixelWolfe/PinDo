@@ -9,7 +9,7 @@ import './infoPage.css';
 
 
 import Note from '../Note/Note';
-
+import Image from '../Image/Image';
 
 
 
@@ -128,14 +128,16 @@ class InfoPage extends Component{
               <div className="box">
               <div className="draggable-container corkboard">
                 {
-                  this.state.zIndexSorted.map(item=>{
+                  this.state.zIndexSorted.map((item,index)=>{
                     if(item.hasOwnProperty('url')){
                       console.log('item is an image');
-                      return;
+                      return(<Image key={index} title={item.title} url={item.url}
+                        x={item.x} y={item.y} image_id={item.id}
+                       project_id={item.project_id} color_id={item.color_id}/>);
                     }
                     else if(item.hasOwnProperty('text')){
                       console.log('item is a note');
-                      return (<Note key={item.id} title={item.title} text={item.text}
+                      return (<Note key={index} title={item.title} text={item.text}
                        x={item.x} y={item.y} note_id={item.id}
                       project_id={item.project_id} color_id={item.color_id} />);
                     }

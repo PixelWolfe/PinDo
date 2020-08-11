@@ -74,7 +74,6 @@ class Note extends Component{
 
     render(){
         return(
-            <>
             <Draggable
                 handle='.handle'
                 onStop={(e,data)=>this.updatePosition(e, data, this.state.id, "note")}
@@ -157,7 +156,6 @@ class Note extends Component{
                 
             }   
         </Draggable>
-        </>
         )
     }
 }
