@@ -1,6 +1,7 @@
-const activeProject= (state = [], action)=>{
+const activeProject= (state = {project:[], notes:[], checklists:[], images:[]}, action)=>{
     switch (action.type) {
         case 'SET_ACTIVE_PROJECT':
+          console.log('SET activeProject data!')
           return action.payload;
         default:
           return state;

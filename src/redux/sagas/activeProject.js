@@ -9,8 +9,8 @@ function* fetchProject(action){
             url: `/api/activeProject/project/${action.payload.project_id}`,
             //theorectically this should also be '24' the server doesnt recieve it
         });
-        yield console.log('response from /api/activeProject get', response);
         //call refresh of Get Data list
+        yield console.log('GET of project data successful!')
         yield put({type: 'SET_ACTIVE_PROJECT', payload: response.data});
     }
     catch (error) {
@@ -21,7 +21,6 @@ function* fetchProject(action){
 function* updatePosition(action){
     try{
         const response = yield axios.put('/api/activeProject/updatePosition', action.payload);
-        yield console.log('response from /api/activeProject/updatePositions put', response);
     }
     catch(error){
         console.log('Error updating position', error);
@@ -46,8 +45,9 @@ function* deleteNote(action){
             url: '/api/activeProject/deleteNote',
             data: action.payload
         });
-        yield console.log('response from /api/activeProject/deleteNote put', response);
+        yield console.log('Delete note SUCCESSFUL!', response);
         yield put({type: 'FETCH_PROJECT', payload: {project_id: action.payload.project_id}});
+        
     }
     catch(error){
         console.log('Error deleting note', error);
@@ -76,11 +76,22 @@ function* createImage(action){
     }
 }
 
+function* createChecklist(action){
+    try{
+        const response = yield axios.post('/api/activeProject/createChecklist', action.payload);
+        yield console.log('response from /api/activeProject/createChecklist post', response);
+        yield put({type: 'FETCH_PROJECT', payload: {project_id: action.payload.project_id}});
+    }
+    catch(error){
+        console.log('Error creating checklist', error);
+    }
+}
+
 function* updateZIndex(action){
     try{
         console.log(action.payload)
         const response = yield axios.put('/api/activeProject/updateZIndex', action.payload);
-        yield console.log('response from /api/activeProject/updateZIndex', response);
+
     }
     catch(error){
         console.log('Error updating zindex:', error);
@@ -114,6 +125,21 @@ function* deleteImage(action){
     }
 }
 
+function* deleteChecklist(action){
+    try{
+        const response = yield axios({
+            method: 'DELETE',
+            url: '/api/activeProject/deleteChecklist',
+            data: action.payload
+        });
+        yield console.log('response from /api/activeProject/deleteChecklist', response);
+        yield put({type: 'FETCH_PROJECT', payload: {project_id: action.payload.project_id}});
+    }
+    catch(error){
+        console.log('Error deleting image:', error);
+    }   
+}
+
 function* activeProjectSaga() {
     yield takeLatest('FETCH_PROJECT', fetchProject);
     yield takeLatest('UPDATE_POSITION', updatePosition);
@@ -124,6 +150,8 @@ function* activeProjectSaga() {
     yield takeLatest('UPDATE_IMAGE', updateImage);
     yield takeLatest('DELETE_IMAGE', deleteImage);
     yield takeLatest('CREATE_IMAGE', createImage);
+    yield takeLatest('DELETE_CHECKLIST', deleteChecklist);
+    yield takeLatest('CREATE_CHECKLIST', createChecklist);
 }
 
   export default activeProjectSaga;

@@ -15,6 +15,11 @@ class CreateButtonOptions extends Component{
         this.props.dispatch({type: 'CREATE_IMAGE', payload: {x: this.props.reduxState.projectScroll.scrollLeft, y: this.props.reduxState.projectScroll.scrollTop, project_id: this.props.reduxState.activeProject.project[0].id, z_index: zIndex}});
     }
 
+    createChecklist = ()=>{
+        let zIndex = this.props.reduxState.highestZIndex + 1;
+        this.props.dispatch({type: 'CREATE_CHECKLIST', payload: {x: this.props.reduxState.projectScroll.scrollLeft, y: this.props.reduxState.projectScroll.scrollTop, project_id: this.props.reduxState.activeProject.project[0].id, z_index: zIndex}});
+    }
+
     render(){
         return(
             <Grid container justify='center' alignItems='center' alignContent='center'>
@@ -36,7 +41,7 @@ class CreateButtonOptions extends Component{
                         variant='contained' 
                         color='primary' 
                         style={{ marginTop: '0px'}}
-                        onClick={console.log('Add Checklist Pressed')}>
+                        onClick={this.createChecklist}>
                         Add Checklist
                     </Button> 
                 </Grid>

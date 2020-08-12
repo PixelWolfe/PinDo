@@ -1,9 +1,6 @@
-.image {
+.checklist {
     text-align:center;     
-    min-height: 350px;
-    min-width: 375px;
-    max-height: 350px;
-    max-width: 375px;
+    width: 250px;
     position: absolute;   
     box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.13);
     border:1px solid #00000017;  

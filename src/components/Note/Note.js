@@ -26,19 +26,13 @@ class Note extends Component{
     }
 
     updatePosition = (e, data, id, type) => {
-        console.log('In updatePosition for note', data);
-        console.log('x:', data.x, 'y:', data.y, 'id', id);
         this.props.dispatch({type: 'UPDATE_POSITION', payload: {x: data.x, y: data.y, id: this.state.id, project_id: this.state.project_id, type: type}});
     }
 
 
     calculateZIndex(e) {
-            console.log('onstart zindex', e.currentTarget.style.zIndex);
-            
             const newIndex = this.props.reduxState.highestZIndex + 1
             e.currentTarget.style.zIndex = newIndex;
-
-            console.log('newIndex:', newIndex)
             this.props.dispatch({type: 'UPDATE_ZINDEX', payload: {z_index: newIndex, type: 'note', id: this.state.id, project_id: this.state.project_id}});
             this.props.dispatch({type: 'SET_HIGHEST_ZINDEX', payload: newIndex});
           }
@@ -78,7 +72,7 @@ class Note extends Component{
                 handle='.handle'
                 onStop={(e,data)=>this.updatePosition(e, data, this.state.id, "note")}
                 defaultPosition={{x: this.props.x, y: this.props.y}}
-                onStart={console.log('draggable this', this),(e)=>this.calculateZIndex(e)}
+                onStart={(e)=>this.calculateZIndex(e)}
                 bounds='parent'
             >
             {
@@ -91,7 +85,7 @@ class Note extends Component{
                         </IconButton>
                     </span>
                     <br/>
-                    <h3>{this.state.title}</h3>
+                    <h3>{this.state.id}</h3>
                     <p>{this.state.text}</p>
                 </div>
                     : 
