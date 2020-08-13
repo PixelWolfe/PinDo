@@ -85,7 +85,7 @@ class Note extends Component{
                         </IconButton>
                     </span>
                     <br/>
-                    <h3>{this.state.id}</h3>
+                    <h3>{this.state.title}</h3>
                     <p>{this.state.text}</p>
                 </div>
                     : 

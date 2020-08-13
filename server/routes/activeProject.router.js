@@ -30,10 +30,8 @@ router.get('/project/:id', rejectUnauthenticated, async (req, res) => {
       const imageQuery = `SELECT * FROM "image" WHERE project_id = $1 ORDER BY z_index ASC;`;
       const images = await client.query(imageQuery, [req.params.id]);
   
-  
       //end the transaction with COMMIT
       await client.query('COMMIT;');
-      
       res.send({project: project.rows, notes: notes.rows, checklists: allChecklists, images: images.rows});
      }
      else{
@@ -56,6 +54,8 @@ router.get('/project/:id', rejectUnauthenticated, async (req, res) => {
 
 router.put('/updatePosition', rejectUnauthenticated, (req, res) => {
   
+  //for puts use :id better practice for REST api
+
   let type = '';
   switch(req.body.type){
     case 'note':

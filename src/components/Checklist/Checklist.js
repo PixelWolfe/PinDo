@@ -9,6 +9,7 @@ import DescriptionTwoToneIcon from '@material-ui/icons/DescriptionTwoTone';
 import Draggable from 'react-draggable';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForwardTwoTone';
+import AddBoxTwoToneIcon from '@material-ui/icons/AddBoxTwoTone';
 
 import {Button} from '@material-ui/core'
 import './checklist.css';
@@ -21,7 +22,26 @@ class Checklist extends Component {
     project_id: this.props.project_id,
     title: this.props.title,
     tasks: this.props.tasks,
-    edit_mode: false
+    edit_mode: false,
+    add_task_mode: false,
+    task_to_add: ''
+}
+
+setAddTaskMode = ()=>{
+    console.log('in setAddTaskMode');
+    this.setState({
+        ...this.state,
+        add_task_mode: !this.state.add_task_mode
+    })
+}
+
+clearTask = ()=>{
+    console.log('in clearTask');
+    this.setState({
+        ...this.state,
+        task_to_add: '',
+        add_task_mode: !this.state.add_task_mode
+    })
 }
 
 updatePosition = (e, data, id, type) => {
@@ -84,7 +104,46 @@ deleteChecklist = ()=>{
               </span>
               <br/>
               <h3>{this.state.title}</h3>
-              <p>{this.state.text}</p>
+              {
+                  this.props.tasks.map(task=><p>{task.description}</p>)
+              }
+              {
+                  this.state.add_task_mode ?
+                  <>
+                  <TextField    
+                  size='small'
+                  variant="filled"
+                  label="Task Description"
+                  placeholder='Add a task here'
+                  value={this.state.task_to_add}
+                  type='text'
+                  onChange={this.handleInputChangeFor('task_to_add')}
+                  style={{width: '80%'}}
+                  inputProps={{maxLength: 40}}
+                  InputProps={{
+                  startAdornment: (
+                      <InputAdornment position="start">
+                          <TitleTwoToneIcon />
+                      </InputAdornment>
+                  ),
+                  }}/>
+                  <br/>
+                  <Button size='small' onClick={this.clearTask}>
+                      <AddBoxTwoToneIcon fontSize="small"/>
+                      cancel task
+                  </Button>
+                  <Button size='small' onClick={this.setAddTaskMode}>
+                      <AddBoxTwoToneIcon fontSize="small"/>
+                      Add task
+                  </Button>
+                  </>
+                  :
+                  <Button size='small' onClick={this.setAddTaskMode}>
+                      <AddBoxTwoToneIcon fontSize="small"/>
+                      Add task
+                  </Button>
+              }
+              
           </div>
               : 
           <div className='checklist green'> 

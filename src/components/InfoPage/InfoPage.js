@@ -111,13 +111,6 @@ class InfoPage extends Component{
           <Grid container >
             <Grid item xs={12} align='center'>
               <CreateButtonOptions/>
-              {JSON.stringify(this.props.reduxState.highestZIndex)}
-              <br/>
-              <br/>
-              {JSON.stringify(this.props.reduxState.activeProject.notes)}
-              <br/>
-              <br/>
-              {JSON.stringify(this.state.zIndexSorted)}
               <div className="box">
                 <div className="draggable-container corkboard">
                   {
@@ -125,24 +118,31 @@ class InfoPage extends Component{
                       console.log(this.state.zIndexSorted)
                       if(item.hasOwnProperty('url')){
 
-                        return(<Image key={index} title={item.title} url={item.url}
+                        return(<Image key={('image-'+item.id)} title={item.title} url={item.url}
                           x={item.x} y={item.y} image_id={item.id}
                           project_id={item.project_id} color_id={item.color_id}/>);
                       }
                       else if(item.hasOwnProperty('text')){
                         console.log(`Attaching note ${item.id} to the DOM`)
-                        return (<Note key={index} title={item.title} text={index}
+                        return (<Note key={('note-'+item.id)} title={item.title} text={item.text}
                           x={item.x} y={item.y} note_id={item.id}
                           project_id={item.project_id} color_id={item.color_id} />);
                       }
                       else{
-                        return (<Checklist title={item.title} project_id={item.project_id} color_id={item.color_id}
+                        return (<Checklist key={('checklist-'+item.id)} title={item.title} project_id={item.project_id} color_id={item.color_id}
                           list_id={item.id} x={item.x} y={item.y} tasks={item.tasks}/>);
                       }
                     })
                   }
                   </div>
               </div>
+              {JSON.stringify(this.props.reduxState.highestZIndex)}
+              <br/>
+              <br/>
+              {JSON.stringify(this.props.reduxState.activeProject.notes)}
+              <br/>
+              <br/>
+              {JSON.stringify(this.state.zIndexSorted)}
             </Grid>
           </Grid>
         </Fade>

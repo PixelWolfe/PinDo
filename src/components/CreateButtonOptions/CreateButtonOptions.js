@@ -7,11 +7,13 @@ class CreateButtonOptions extends Component{
 
     createNote =()=>{
         let zIndex = this.props.reduxState.highestZIndex + 1;
+        console.log('zIndex', zIndex);
         this.props.dispatch({type: 'CREATE_NOTE', payload: {x: this.props.reduxState.projectScroll.scrollLeft, y: this.props.reduxState.projectScroll.scrollTop, project_id: this.props.reduxState.activeProject.project[0].id, z_index: zIndex}});
     }
 
-    createImage =()=>{
-        let zIndex = this.props.reduxState.highestZIndex + 1;
+    createImage = ()=>{
+        let zIndex = this.props.reduxState.highestZIndex + 1;  
+        console.log(zIndex);
         this.props.dispatch({type: 'CREATE_IMAGE', payload: {x: this.props.reduxState.projectScroll.scrollLeft, y: this.props.reduxState.projectScroll.scrollTop, project_id: this.props.reduxState.activeProject.project[0].id, z_index: zIndex}});
     }
 
