@@ -1,4 +1,4 @@
-import { put, takeLatest } from 'redux-saga/effects';
+import { put, takeLatest, takeLeading } from 'redux-saga/effects';
 import axios from 'axios';
 
 function* fetchProject(action){
@@ -10,7 +10,7 @@ function* fetchProject(action){
             //theorectically this should also be '24' the server doesnt recieve it
         });
         //call refresh of Get Data list
-        yield console.log('GET of project data successful!')
+        yield console.log('GET of project data successful!', response.data)
         yield put({type: 'SET_ACTIVE_PROJECT', payload: response.data});
     }
     catch (error) {
@@ -140,6 +140,17 @@ function* deleteChecklist(action){
     }   
 }
 
+function* createNewTask(action){
+    try{
+        const response = yield axios.post('/api/activeProject/createNewTask', action.payload);
+        yield console.log('response from /api/activeProject/createChecklist createNewTask', response);
+        yield put({type: 'FETCH_PROJECT', payload: {project_id: action.payload.project_id}});
+    }
+    catch(error){
+        console.log('Error creating new task', error);
+    }
+}
+
 function* activeProjectSaga() {
     yield takeLatest('FETCH_PROJECT', fetchProject);
     yield takeLatest('UPDATE_POSITION', updatePosition);
@@ -152,6 +163,7 @@ function* activeProjectSaga() {
     yield takeLatest('CREATE_IMAGE', createImage);
     yield takeLatest('DELETE_CHECKLIST', deleteChecklist);
     yield takeLatest('CREATE_CHECKLIST', createChecklist);
+    yield takeLatest('CREATE_NEW_TASK', createNewTask);
 }
 
   export default activeProjectSaga;

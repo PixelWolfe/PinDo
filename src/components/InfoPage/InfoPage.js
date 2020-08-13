@@ -22,6 +22,7 @@ class InfoPage extends Component{
   }
 
    componentDidMount(){
+     console.log('Component did mount for InfoPage')
      this.props.dispatch({type: 'FETCH_PROJECT', payload: {project_id:  Number(this.props.match.params.id)}});
     /*!
     * Thanks to Chris Ferdinandi at https://gomakethings.com
@@ -61,15 +62,42 @@ class InfoPage extends Component{
 
    componentDidUpdate(previousProps){
      
+    console.log(previousProps.reduxState.activeProject.notes.length, this.props.reduxState.activeProject.notes.length)
     //check to see if reducer array length for IMAGES/CHECKLISTS/NOTES has changed
     //if so make sure zIndex is sorted so elements append to DOM in the right order
 
     if(previousProps.reduxState.activeProject.notes.length !== this.props.reduxState.activeProject.notes.length ||
         previousProps.reduxState.activeProject.checklists.length !== this.props.reduxState.activeProject.checklists.length ||
-        previousProps.reduxState.activeProject.images.length !== this.props.reduxState.activeProject.images.length){
-        console.log('updating zindex sorted')
+        previousProps.reduxState.activeProject.images.length !== this.props.reduxState.activeProject.images.length ||
+        previousProps.reduxState.activeProject.tasks.length !== this.props.reduxState.activeProject.tasks.length){
+        
+          console.log('updating zindex sorted')
         this.orderFromZIndex();
     }
+
+    
+
+
+
+    // else if (this.props.reduxState.activeProject.checklists.length > 0){
+    //   console.log('in new Zindex code')
+    //   //group up all of the tasks of the previous project
+    //   const previousChecklists = previousProps.reduxState.activeProject.checklists;
+    //   const previousTasks = [];
+    //   const currentChecklists = previousProps.reduxState.activeProject.checklists;
+    //   const currentTasks = [];
+    //   for(let i=0; i < previousChecklists.length; i++){
+    //     previousTasks.push(previousChecklists[i].tasks);
+    //   }
+    //   for(let i=0; i < currentChecklists.length; i++){
+    //     currentTasks.push(currentChecklists[i].tasks);
+    //   }
+
+    //   if(previousTasks.length !== currentTasks.length){
+    //     console.log('updating zindex sorted')
+    //     this.orderFromZIndex();
+    //   }
+    // }
    }
 
    orderFromZIndex=()=>{
@@ -136,13 +164,20 @@ class InfoPage extends Component{
                   }
                   </div>
               </div>
-              {JSON.stringify(this.props.reduxState.highestZIndex)}
+              {/*
+                 {JSON.stringify(this.props.reduxState.highestZIndex)}
               <br/>
               <br/>
-              {JSON.stringify(this.props.reduxState.activeProject.notes)}
-              <br/>
+              {JSON.stringify(this.state)}
+                  <br/>
               <br/>
               {JSON.stringify(this.state.zIndexSorted)}
+              <br/>
+              <br/>
+              */}
+           
+              {JSON.stringify(this.props.reduxState.activeProject)}
+      
             </Grid>
           </Grid>
         </Fade>

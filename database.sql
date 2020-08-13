@@ -13,31 +13,41 @@ CREATE TABLE "user" (
 CREATE TABLE "project" (
 	id SERIAL PRIMARY KEY,
 	user_id int,
-	image_url varchar(15000),
-	description varchar(250)
+	title varchar(40),
+	image_url varchar(25000),
+	description varchar(100)
 );
 
 CREATE TABLE "list" (
 	id SERIAL PRIMARY KEY,
-	title varchar(100),
-	board_id int,
-	color_id int
+	title varchar(40),
+	project_id int,
+	color_id int,
+	x int,
+	y int,
+	z_index int
 );
 
 CREATE TABLE "note" (
 	id SERIAL PRIMARY KEY,
-	title varchar(100),
+	title varchar(40),
+	project_id int,
 	text varchar(10000),
-	board_id int,
-	color_id int
+	color_id int,
+	x int,
+	y int,
+	z_index int
 );
 
 CREATE TABLE "image" (
 	id SERIAL PRIMARY KEY,
-	title varchar(100),
+	title varchar(40),
 	url varchar(15000),
-	board_id int,
-	color_id int
+	project_id int,
+	color_id int,
+	x int,
+	y int,
+	z_index int
 );
 
 CREATE TABLE "task" (

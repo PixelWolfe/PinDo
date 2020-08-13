@@ -19,12 +19,14 @@ router.get('/project/:id', rejectUnauthenticated, async (req, res) => {
       const queryString = `SELECT * FROM "list" WHERE project_id = $1 ORDER BY z_index ASC;`;
       const listArray = await client.query(queryString, [req.params.id]);
       const allChecklists = [];
-  
+      const allTasks = []
       //loop through array of lists and grab tasks for every list
       for(list of listArray.rows){
         const queryString = `SELECT * FROM "task" WHERE list_id = $1 ORDER BY position ASC;`;
         const tasks = await client.query(queryString, [list.id])
         allChecklists.push({id: list.id, title: list.title, project_id: list.project_id, color_id: list.color_id, x:list.x, y:list.y, z_index: list.z_index, tasks: tasks.rows})
+        allTasks.push(...tasks.rows)
+        console.log('ALLTASKS:', allTasks)
       }
   
       const imageQuery = `SELECT * FROM "image" WHERE project_id = $1 ORDER BY z_index ASC;`;
@@ -32,7 +34,7 @@ router.get('/project/:id', rejectUnauthenticated, async (req, res) => {
   
       //end the transaction with COMMIT
       await client.query('COMMIT;');
-      res.send({project: project.rows, notes: notes.rows, checklists: allChecklists, images: images.rows});
+      res.send({project: project.rows, notes: notes.rows, checklists: allChecklists, images: images.rows, tasks: allTasks});
      }
      else{
         console.log('Board does not exist / User does not have access to ')
@@ -55,7 +57,6 @@ router.get('/project/:id', rejectUnauthenticated, async (req, res) => {
 router.put('/updatePosition', rejectUnauthenticated, (req, res) => {
   
   //for puts use :id better practice for REST api
-
   let type = '';
   switch(req.body.type){
     case 'note':
@@ -70,7 +71,6 @@ router.put('/updatePosition', rejectUnauthenticated, (req, res) => {
   }
 
   const queryString = `UPDATE ${type} SET x=$1, y=$2 WHERE id=$3 AND project_id=$4;`;
-
   pool.query(queryString, [ Math.floor(req.body.x), Math.floor(req.body.y), req.body.id, req.body.project_id])
     .then(response=>{
       res.sendStatus(201);
@@ -222,6 +222,21 @@ router.delete('/deleteChecklist', rejectUnauthenticated, (req,res)=>{
     })
     .catch(error=>{
       console.log('Error deleting checklist:', error);
+      res.sendStatus(500);
+    })
+})
+
+router.post('/createNewTask', rejectUnauthenticated, (req,res)=>{
+
+  const queryString = `INSERT INTO "task" (list_id, position, description, completed)
+  VALUES ($1, $2, $3, false);`
+
+  pool.query(queryString, [req.body.list_id, req.body.position, req.body.description])
+    .then(response=>{
+      res.sendStatus(201);
+    })
+    .catch(error=>{
+      console.log('Error on task create', error);
       res.sendStatus(500);
     })
 })

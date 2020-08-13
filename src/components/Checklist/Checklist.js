@@ -56,10 +56,19 @@ calculateZIndex(e) {
       }
 
 makeEditable = ()=>{
-    this.setState({
-        ...this.state,
-        edit_mode: !this.state.edit_mode
-    })
+    if(this.state.add_task_mode === true){
+        this.setState({
+            ...this.state,
+            edit_mode: !this.state.edit_mode,
+            add_task_mode: !this.state.add_task_mode
+        })  
+    }
+    else{
+        this.setState({
+            ...this.state,
+            edit_mode: !this.state.edit_mode,
+        })  
+    }
 }
     
 updateChecklist = ()=>{
@@ -72,6 +81,18 @@ updateChecklist = ()=>{
     console.log('Updating Checklist!');
     this.props.dispatch({type: 'UPDATE_CHECKLIST', payload: {id: this.props.list_id, project_id: this.props.project_id, title: this.state.title, text: this.state.text}});
     this.makeEditable();
+}
+
+addNewTask = ()=>{
+    if(this.state.task_to_add !== ''){
+        this.props.dispatch({type: 'CREATE_NEW_TASK', payload: {project_id: this.state.project_id, list_id: this.state.id, description: this.state.task_to_add, position: this.state.tasks.length}});
+
+        this.setState({
+            ...this.state,
+            task_to_add: '',
+            add_task_mode: !this.state.add_task_mode
+        })
+    }
 }
 
 handleInputChangeFor = propertyName => (event) => {
@@ -128,11 +149,11 @@ deleteChecklist = ()=>{
                   ),
                   }}/>
                   <br/>
-                  <Button size='small' onClick={this.clearTask}>
+                  <Button size='small' onClick={this.clearTask} variant='outlined' style={{backgroundColor: 'coral'}}>
                       <AddBoxTwoToneIcon fontSize="small"/>
-                      cancel task
+                      Cancel
                   </Button>
-                  <Button size='small' onClick={this.setAddTaskMode}>
+                  <Button size='small' onClick={this.addNewTask} variant='contained' color='primary'>
                       <AddBoxTwoToneIcon fontSize="small"/>
                       Add task
                   </Button>
