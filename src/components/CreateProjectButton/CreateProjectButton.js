@@ -13,7 +13,7 @@ class CreateProjectButton extends Component{
                         startIcon={<AddBoxTwoToneIcon/>}
                         variant='contained' 
                         color='primary' 
-                        style={{ marginTop: '0px'}}
+                        style={{ marginTop: '0px', backgroundColor: '#3c4454'}}
                         onClick={()=>{
                             this.props.dispatch({type: 'SET_CREATE_PROJECT_POPUP_BOOLEAN', payload: {open: true}})
                             console.log("modal closed ");

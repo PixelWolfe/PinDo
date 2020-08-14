@@ -104,7 +104,7 @@ class LoginPage extends Component {
                     />
                     <br/>
                     <Button 
-                      style={{marginTop: '10px'}}
+                      style={{marginTop: '10px', backgroundColor: '#3c4454'}}
                       name="submit" 
                       variant="contained" 
                       color="primary" 

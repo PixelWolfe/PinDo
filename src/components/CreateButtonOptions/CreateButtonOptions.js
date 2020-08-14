@@ -31,7 +31,7 @@ class CreateButtonOptions extends Component{
                         startIcon={<AddBoxTwoToneIcon/>}
                         variant='contained' 
                         color='primary' 
-                        style={{ marginTop: '0px'}}
+                        style={{ marginTop: '0px', backgroundColor: '#3c4454'}}
                         onClick={this.createNote}>
                         Add Note
                     </Button> 
@@ -42,7 +42,7 @@ class CreateButtonOptions extends Component{
                         startIcon={<AddBoxTwoToneIcon/>}
                         variant='contained' 
                         color='primary' 
-                        style={{ marginTop: '0px'}}
+                        style={{ marginTop: '0px', backgroundColor: '#3c4454'}}
                         onClick={this.createChecklist}>
                         Add Checklist
                     </Button> 
@@ -53,7 +53,7 @@ class CreateButtonOptions extends Component{
                         startIcon={<AddBoxTwoToneIcon/>}
                         variant='contained' 
                         color='primary' 
-                        style={{ marginTop: '0px'}}
+                        style={{ marginTop: '0px', backgroundColor: '#3c4454'}}
                         onClick={this.createImage}>
                         Add Image
                     </Button> 

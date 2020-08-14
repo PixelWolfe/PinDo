@@ -16,7 +16,12 @@ const NavHome = (props) => (
       <img src={PinDoIcon} style={{height: '50px', paddingTop: '5px'}}></img>
   </span>
   </Link>
+
     <div className="nav-right">
+      {/* Always show this link since the about page is not protected */}
+        <Link className="nav-link" to="/about">
+          About
+        </Link>
       {
         props.user.id ? 
           <LogOutButton className="nav-link"/>
@@ -26,10 +31,6 @@ const NavHome = (props) => (
           </Link>
           
       }
-      {/* Always show this link since the about page is not protected */}
-      <Link className="nav-link" to="/about">
-        About
-      </Link>
     </div>
   </div>
   </Grid>

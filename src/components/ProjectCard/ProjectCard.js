@@ -94,7 +94,7 @@ class ProjectCard extends Component{
 
               <Grid item style={{borderRadius: '20px'}}>
                 
-                <div style={{borderRadius:'20px', backgroundColor: '#7ab2b3', border: '1px solid grey',boxShadow: '10px 6px 5px rgba(0, 0, 0, 0.153)'}}>
+                <div style={{borderRadius:'20px', backgroundColor: '#7ab2b3', border: '1px solid grey',boxShadow: '10px 6px 5px rgba(0, 0, 0, 0.153)', overflow: 'hidden'}}>
                     <Grid item align='right'>
                     <Button
                       variant="outlined"
@@ -118,7 +118,7 @@ class ProjectCard extends Component{
                   startIcon={<MoreTwoToneIcon/>}
                   variant="contained"
                   color="primary"
-                  style={{bottom: 0}}
+                  style={{bottom: 0, backgroundColor: '#3c4454'}}
                   onClick={this.goToProject}
                 >
                  Go To Project
@@ -203,7 +203,7 @@ class ProjectCard extends Component{
                       startIcon={<DeleteForeverTwoToneIcon/>}
                       variant="contained"
                       color="secondary"
-
+                      style={{backgroundColor: '#b11f1f'}}
                       onClick={this.deleteProject}
                     >
                       DELETE THIS PROJECT
