@@ -9,6 +9,7 @@ import DescriptionTwoToneIcon from '@material-ui/icons/DescriptionTwoTone';
 import Draggable from 'react-draggable';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForwardTwoTone';
+import SaveTwoToneIcon from '@material-ui/icons/SaveTwoTone';
 
 import {Button} from '@material-ui/core'
 import './note.css';
@@ -85,21 +86,29 @@ class Note extends Component{
                         </IconButton>
                     </span>
                     <br/>
-                    <h3>{this.state.title}</h3>
-                    <p>{this.state.text}</p>
+                    <br/>
+                    <h3 style={{margin:'0px'}}>{this.state.title}</h3>
+                    <p className='note-text'>{this.state.text}</p>
                 </div>
                     : 
                 <div className='sticky-note green'> 
-                    <span style={{float: 'right'}}>
-                        <Button size='small' onClick={this.updateNote}>
-                            Back
-                            <ArrowForwardIcon fontSize="small"/>
-                        </Button>
-                    </span>
+                    <div style={{textAlign: 'left'}}>
+                        <span>
+                            <Button variant='contained' color='secondary' size='small' onClick={this.deleteNote} style={{borderRadius: '0px', fontSize: '10px'}}>
+                                Delete <DeleteForeverTwoToneIcon fontSize="small"/>
+                            </Button>
+                        </span>
+                        <span style={{float: 'right'}}>
+                            <Button size='small' onClick={this.makeEditable} style={{borderRadius: '0px 0px 0px 5px'}}>
+                                Back
+                                <ArrowForwardIcon fontSize="small"/>
+                            </Button>
+                        </span>
+                    </div>
                     <br/>
                     <br/>
                 <h4 style={{margin: 0, marginBottom: '5px'}}>Edit this note below</h4>
-                <h5 style={{margin: 0, marginBottom: '5px'}}>Press BACK when finished</h5>
+                <h5 style={{margin: 0, marginBottom: '5px'}}>Press SAVE CHANGES when finished</h5>
                 <TextField
                     size='small'
                     variant="filled"
@@ -139,13 +148,10 @@ class Note extends Component{
                 <br/>
                 <br/>
                 <br/>
-                <br/>
-                <h4 style={{margin: 0}}>Remove this note?</h4>
-                <Button variant='contained' color='secondary' size='small' onClick={this.deleteNote}>
-                    Delete <DeleteForeverTwoToneIcon fontSize="small"/>
+                <Button variant='contained' color='secondary' size='small' onClick={this.updateNote} style={{backgroundColor: 'green'}}>
+                    Save Changes<SaveTwoToneIcon fontSize="small"/>
                 </Button>
-                       
-                
+                <br/>
                 </div>
                 
             }   

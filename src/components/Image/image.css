@@ -1,10 +1,11 @@
 .image {
     text-align:center;     
-    min-height: 350px;
+    min-height: 280px;
     min-width: 375px;
     max-height: 350px;
     max-width: 375px;
     position: absolute;   
+    overflow: hidden;
     box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.13);
     border:1px solid #00000017;  
     font-family:'Reenie Beanie';    

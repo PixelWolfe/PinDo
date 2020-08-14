@@ -151,6 +151,15 @@ function* createNewTask(action){
     }
 }
 
+function* updateTaskCompleted(action){
+    console.log('task completed', action.payload)
+    try{
+        const response = yield axios.put(`/api/activeProject/updateTaskCompleted/${action.payload.id}`, action.payload);
+    }
+    catch(error){
+        console.log('Error updating task completion', error);
+    }
+}
 function* activeProjectSaga() {
     yield takeLatest('FETCH_PROJECT', fetchProject);
     yield takeLatest('UPDATE_POSITION', updatePosition);
@@ -164,6 +173,7 @@ function* activeProjectSaga() {
     yield takeLatest('DELETE_CHECKLIST', deleteChecklist);
     yield takeLatest('CREATE_CHECKLIST', createChecklist);
     yield takeLatest('CREATE_NEW_TASK', createNewTask);
+    yield takeLatest('UPDATE_TASK_COMPLETED', updateTaskCompleted);
 }
 
   export default activeProjectSaga;

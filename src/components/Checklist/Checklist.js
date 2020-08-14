@@ -10,7 +10,9 @@ import Draggable from 'react-draggable';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForwardTwoTone';
 import AddBoxTwoToneIcon from '@material-ui/icons/AddBoxTwoTone';
+import SaveTwoToneIcon from '@material-ui/icons/SaveTwoTone';
 
+import TaskCheckItem from '../TaskCheckItem/TaskCheckItem';
 import {Button} from '@material-ui/core'
 import './checklist.css';
 import { TextField } from '@material-ui/core';
@@ -87,6 +89,8 @@ addNewTask = ()=>{
     if(this.state.task_to_add !== ''){
         this.props.dispatch({type: 'CREATE_NEW_TASK', payload: {project_id: this.state.project_id, list_id: this.state.id, description: this.state.task_to_add, position: this.state.tasks.length}});
 
+
+
         this.setState({
             ...this.state,
             task_to_add: '',
@@ -124,9 +128,11 @@ deleteChecklist = ()=>{
                   </IconButton>
               </span>
               <br/>
-              <h3>{this.state.title}</h3>
+              <br/>
+              <h3 style={{margin:'0px', marginTop: '5px', paddingBottom:'10px', borderBottom: '1px solid lightblue'}}>{this.state.title}</h3>
               {
-                  this.props.tasks.map(task=><p>{task.description}</p>)
+                  this.props.tasks.map(task=>
+                    <TaskCheckItem task={task} key={task.id}/>)
               }
               {
                   this.state.add_task_mode ?
@@ -139,7 +145,7 @@ deleteChecklist = ()=>{
                   value={this.state.task_to_add}
                   type='text'
                   onChange={this.handleInputChangeFor('task_to_add')}
-                  style={{width: '80%'}}
+                  style={{width: '80%', marginTop: '5px'}}
                   inputProps={{maxLength: 40}}
                   InputProps={{
                   startAdornment: (
@@ -149,14 +155,18 @@ deleteChecklist = ()=>{
                   ),
                   }}/>
                   <br/>
-                  <Button size='small' onClick={this.clearTask} variant='outlined' style={{backgroundColor: 'coral'}}>
-                      <AddBoxTwoToneIcon fontSize="small"/>
-                      Cancel
-                  </Button>
-                  <Button size='small' onClick={this.addNewTask} variant='contained' color='primary'>
-                      <AddBoxTwoToneIcon fontSize="small"/>
-                      Add task
-                  </Button>
+                  <div style={{margin: '5px'}}>
+                    <Button size='small' onClick={this.clearTask} variant='outlined' style={{backgroundColor: 'coral', height: '25px', fontSize: '12px', minWidth: '40px'}}>
+                        <AddBoxTwoToneIcon fontSize="small"/>
+                        Cancel
+                    </Button>
+                    {'\u00A0'}
+                    <Button size='small' onClick={this.addNewTask} variant='outlined' style={{backgroundColor: '#3c4454', color: 'white', height: '25px', fontSize: '12px'}}>
+                        <AddBoxTwoToneIcon fontSize="small"/>
+                        Add task
+                    </Button>
+                  </div>
+                  
                   </>
                   :
                   <Button size='small' onClick={this.setAddTaskMode}>
@@ -168,12 +178,19 @@ deleteChecklist = ()=>{
           </div>
               : 
           <div className='checklist green'> 
-              <span style={{float: 'right'}}>
-                  <Button size='small' onClick={this.updateChecklist}>
-                      Back
-                      <ArrowForwardIcon fontSize="small"/>
-                  </Button>
-              </span>
+            <div style={{textAlign: 'left'}}>
+                <span>
+                    <Button variant='contained' color='secondary' size='small' onClick={this.deleteChecklist} style={{borderRadius: '0px', fontSize: '10px'}}>
+                        Delete <DeleteForeverTwoToneIcon fontSize="small"/>
+                    </Button>
+                </span>
+                <span style={{float: 'right'}}>
+                    <Button size='small' onClick={this.makeEditable} style={{borderRadius: '0px 0px 0px 5px'}}>
+                        Back
+                        <ArrowForwardIcon fontSize="small"/>
+                    </Button>
+                </span>
+            </div>
               <br/>
               <br/>
           <h4 style={{margin: 0, marginBottom: '5px'}}>Edit this checklist below</h4>
@@ -202,11 +219,9 @@ deleteChecklist = ()=>{
           <br/>
           <br/>
           <h4 style={{margin: 0}}>Remove this checklist?</h4>
-          <Button variant='contained' color='secondary' size='small' onClick={this.deleteChecklist}>
-              Delete <DeleteForeverTwoToneIcon fontSize="small"/>
+          <Button variant='contained' color='secondary' size='small' onClick={this.updateChecklist} style={{backgroundColor: 'green'}}>
+            Save Changes<SaveTwoToneIcon fontSize="small"/>
           </Button>
-                 
-          
           </div>
           
       }

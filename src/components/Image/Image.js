@@ -9,6 +9,7 @@ import AddPhotoAlternateTwoToneIcon from '@material-ui/icons/AddPhotoAlternateTw
 import Draggable from 'react-draggable';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForwardTwoTone';
+import SaveTwoToneIcon from '@material-ui/icons/SaveTwoTone';
 
 import './image.css';
 
@@ -107,22 +108,30 @@ class Image extends Component{
                                     </span>
                                     <br/>
                                     <br/>
-                                    <h4>{this.state.title}</h4>
+                                    <h3 style={{margin:'0px'}}>{this.state.title}</h3>
                                     <img style={{height: '250px'}} src={(this.state.url || defaultImage)}/>
                                 </div>
                             
                             :
                                 <div className='image green'>
+                                <div style={{textAlign: 'left'}}>
+                                    <span>
+                                        <Button variant='contained' color='secondary' size='small' onClick={this.deleteImage} style={{borderRadius: '0px', fontSize: '10px'}}>
+                                            Delete <DeleteForeverTwoToneIcon fontSize="small"/>
+                                        </Button>
+                                    </span>
                                     <span style={{float: 'right'}}>
-                                        <Button size='small' onClick={this.updateImage}>
+                                        <Button size='small' onClick={this.makeEditable} style={{borderRadius: '0px 0px 0px 5px'}}>
                                             Back
                                             <ArrowForwardIcon fontSize="small"/>
                                         </Button>
                                     </span>
+                                </div>
+                                    
                                     <br/>
                                     <br/>
                                     <h4 style={{margin: 0, marginBottom: '5px'}}>Edit this Image below</h4>
-                                    <h5 style={{margin: 0, marginBottom: '5px'}}>Press BACK when finished</h5>
+                                    <h5 style={{margin: 0, marginBottom: '5px'}}>Press SAVE when finished</h5>
                                     <TextField
                                         size='small'
                                         variant="filled"
@@ -161,12 +170,11 @@ class Image extends Component{
                                     />
                                     <br/>
                                     <br/>
-                                    <br/>
-                                    <br/>
-                                    <h4 style={{margin: 0}}>Remove this Image?</h4>
-                                    <Button variant='contained' color='secondary' size='small' onClick={this.deleteImage}>
-                                        Delete <DeleteForeverTwoToneIcon fontSize="small"/>
+                                    <Button variant='contained' color='secondary' size='small' onClick={this.updateImage} style={{backgroundColor: 'green'}}>
+                                        Save Changes<SaveTwoToneIcon fontSize="small"/>
                                     </Button>
+                                    <br/>
+                                    <br/>
                                 </div>
                             
                     }

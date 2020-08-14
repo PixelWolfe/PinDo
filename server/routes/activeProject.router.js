@@ -241,4 +241,20 @@ router.post('/createNewTask', rejectUnauthenticated, (req,res)=>{
     })
 })
 
+router.put('/updateTaskCompleted/:id', rejectUnauthenticated, (req,res)=>{
+
+  console.log('req.params.id', req.params.id);
+  console.log('req.body.completed', req.body.completed);
+
+  const queryString = `UPDATE task SET completed=$1 WHERE id=$2;`;
+  pool.query(queryString, [req.body.completed, req.params.id])
+    .then(response=>{
+      res.sendStatus(201);
+    })
+    .catch(error=>{
+      console.log('Error updating task completed:', error);
+      res.sendStatus(500);
+    })
+})
+
 module.exports = router;
