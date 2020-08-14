@@ -9,7 +9,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 
 import AccountCircleTwoToneIcon from '@material-ui/icons/AccountCircleTwoTone';
 import LockTwoToneIcon from '@material-ui/icons/LockTwoTone';
-
+import './LoginPage.css'
 
 
 class LoginPage extends Component {
@@ -17,10 +17,6 @@ class LoginPage extends Component {
     username: '',
     password: '',
   };
-
-  componentDidMount(){
-
-  }
 
   login = (event) => {
     event.preventDefault();
@@ -47,20 +43,22 @@ class LoginPage extends Component {
   render() {
     return (
       <>
+      <div className='misty-forest'>
       <NavHome/>
       <Fade delay={200}>
         {/* Parent container */}
-        <Grid container justify='center'>
+        <Grid container direction='row' justify='center'  alignItems='center' style={{minHeight: '65vh'}}>
             {/* Spacing for left of main container */}
             <Grid item md={1} lg={2}/>
             {/* Main container */}
-            <Grid item xs={12} md={10} lg={8}>
+            <Grid item xs={10} md={6} lg={5}>
 
-            <div style={{backgroundColor: 'lightgreen', marginTop: '5%', borderRadius: '20px', minWidth: '90%', maxWidth:'100%', padding: '3%'}}>
-              <Grid container justify='center' alignItems='center' alignContent='center' spacing={4}>
+            <div style={{backgroundColor: '#7ab2b3', marginTop: '5%', borderRadius: '20px',
+             maxWidth:'100%', padding: '3%'}}>
+              <Grid container justify='center' alignItems='center' alignContent='center' spacing={5}>
 
                 {/* Login form grid 5/12 */}
-                <Grid xs={5} item align='center'>
+                <Grid xs={12} item align='center'>
                     <div style={{backgroundColor: 'lightblue', height: '80%', borderRadius: '20px'}}> 
                     {
                       this.props.errors.loginMessage && 
@@ -130,28 +128,6 @@ class LoginPage extends Component {
                     <br/>
                 </div>
                 </Grid> {/* End Form Grid */}
-              
-                {/* Picture container 7/12 */}
-                <Grid xs={7} item align='center'>
-                    <div>
-                    
-                
-                      
-                        <Fade>
-                          <img
-                          style={{
-                            position: 'relative',
-                            overflow: 'hidden',
-                            width: '100%',
-                            borderRadius: '20px'
-                          }}
-                          src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Ailurus_fulgens_-_Syracuse_Zoo.jpg"
-                          alt="Red Panda"
-                          />
-                        </Fade>
-                        
-                    </div>
-                </Grid> {/* End picture Grid */}
               </Grid> {/* End content Grid */}
             </div>
 
@@ -160,6 +136,7 @@ class LoginPage extends Component {
             <Grid item md={1} lg={2}/>
         </Grid>
       </Fade>
+      </div>
       </>
     );
   }

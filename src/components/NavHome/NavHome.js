@@ -4,20 +4,25 @@ import { connect } from 'react-redux';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import {Grid} from '@material-ui/core';
 import './NavHome.css';
+import PinDoIcon from '../../images/PinDo.png';
 
 const NavHome = (props) => (
   <Grid item xs={12}>
   <div className="nav">
-    <Link to="/home">
-      <h2 className="nav-title">PinDo</h2>
-    </Link>
+ 
+  <Link to="/home" style={{textDecoration: 'none', color: 'black', paddingLeft: '15px'}}>
+  <span style={{display: 'inline-flex', width: '10%'}}>
+      <h2 >PinDo</h2>
+      <img src={PinDoIcon} style={{height: '50px', paddingTop: '5px'}}></img>
+  </span>
+  </Link>
     <div className="nav-right">
       {
         props.user.id ? 
           <LogOutButton className="nav-link"/>
           :
           <Link className="nav-link" to="/home">
-            'Login / Register'
+            Login / Register
           </Link>
           
       }

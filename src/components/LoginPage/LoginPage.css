@@ -1,0 +1,10 @@
+.misty-forest{
+    height: 100%;
+    width: 100%;
+    min-width: 100vw;
+    min-height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url('../../images/jorge-garcia-9e5bnyDA_gs-unsplash.jpg');
+    background-color: #96c4c5;
+  }

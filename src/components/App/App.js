@@ -62,16 +62,6 @@ class App extends Component {
                   <Route render={() => <h1>404</h1>} />
                 </Switch>
         </Grid>
-
-
-          
-
-
-
-
-
-
-          {/*<Footer />*/}
         </div>
       </Router>
   )}

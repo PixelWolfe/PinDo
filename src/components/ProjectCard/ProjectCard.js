@@ -92,9 +92,9 @@ class ProjectCard extends Component{
         return(
             <ReactCardFlip isFlipped={this.state.isFlipped} flipDirection='horizontal'>
 
-              <Grid item style={{borderRadius: '20px', boxShadow: '3px 3px 5px 6px #ccc'}}>
+              <Grid item style={{borderRadius: '20px'}}>
                 
-                <div style={{borderRadius:'20px', backgroundColor: 'cyan', border: '1px solid darkblue'}}>
+                <div style={{borderRadius:'20px', backgroundColor: '#7ab2b3', border: '1px solid grey',boxShadow: '10px 6px 5px rgba(0, 0, 0, 0.153)'}}>
                     <Grid item align='right'>
                     <Button
                       variant="outlined"
@@ -128,7 +128,7 @@ class ProjectCard extends Component{
                 </div>
               </Grid> 
 
-              <Grid item align='center' style={{backgroundColor: 'lightblue', height: '400px', border: '2px solid darkblue',  borderRadius: '20px'}}>
+              <Grid item align='center' style={{backgroundColor: '#96c4c5', height: '400px', border: '1px solid grey',  borderRadius: '20px', boxShadow: '10px 6px 5px rgba(0, 0, 0, 0.143)'}}>
               
                   <Grid item align='right'>
                     <Button

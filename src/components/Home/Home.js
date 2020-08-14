@@ -21,6 +21,8 @@ class Home extends Component {
   render() {
     return (
       <>
+          
+          <div className='wooden-wall'>
           <NavHome/>
           <Fade delay={200}>
             <CreateProjectButton/>  
@@ -42,7 +44,8 @@ class Home extends Component {
                   </>
               }
             </Grid>
-          </Fade>
+            </Fade>
+          </div>
       </>
     )
   }

@@ -132,11 +132,12 @@ class InfoPage extends Component{
     return(
       <>
                
-        <NavProject/>
-        <div className='main-container'>
         
-        <Fade delay={200}>  
-          <Grid container >
+        <div className='main-container'>
+        <div className='wooden-wall'>
+        <NavProject/>
+        <Fade>  
+          <Grid container>
             <Grid item xs={12} align='center'>
               <CreateButtonOptions/>
               <div className="box">
@@ -164,23 +165,10 @@ class InfoPage extends Component{
                   }
                   </div>
               </div>
-              {/*
-                 {JSON.stringify(this.props.reduxState.highestZIndex)}
-              <br/>
-              <br/>
-              {JSON.stringify(this.state)}
-                  <br/>
-              <br/>
-              {JSON.stringify(this.state.zIndexSorted)}
-              <br/>
-              <br/>
-              */}
-           
-              {JSON.stringify(this.props.reduxState.activeProject)}
-      
             </Grid>
           </Grid>
         </Fade>
+        </div>
         </div>
       
        
