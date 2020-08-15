@@ -81,7 +81,7 @@ updateChecklist = ()=>{
         return;
     }
     console.log('Updating Checklist!');
-    this.props.dispatch({type: 'UPDATE_CHECKLIST', payload: {id: this.props.list_id, project_id: this.props.project_id, title: this.state.title, text: this.state.text}});
+    this.props.dispatch({type: 'UPDATE_CHECKLIST_TITLE', payload: {id: this.props.list_id, project_id: this.props.project_id, title: this.state.title}});
     this.makeEditable();
 }
 
@@ -129,7 +129,14 @@ deleteChecklist = ()=>{
               </span>
               <br/>
               <br/>
-              <h3 style={{margin:'0px', marginTop: '5px', paddingBottom:'10px', borderBottom: '1px solid lightblue'}}>{this.state.title}</h3>
+              <h3 style={{margin:'0px', marginTop: '5px', paddingBottom:'10px', borderBottom: '1px solid lightblue'}}>
+              {
+                this.state.title === ''?
+                'Click the edit icon upper right!'
+                :
+                this.state.title
+              }
+              </h3>
               {
                   this.props.tasks.map(task=>
                     <TaskCheckItem task={task} key={task.id}/>)
@@ -199,6 +206,7 @@ deleteChecklist = ()=>{
               size='small'
               variant="filled"
               label="Title"
+              placeholder='Click the edit icon upper right!'
               value={this.state.title}
               type='text'
               onChange={this.handleInputChangeFor('title')}

@@ -144,7 +144,7 @@ router.delete('/deleteImage', rejectUnauthenticated, (req,res)=>{
 router.post('/createNote', rejectUnauthenticated, (req,res)=>{
 
   const queryString = `INSERT INTO "note" (title, text, project_id, color_id, x, y, z_index)
-  VALUES ('Click the edit icon upper right', 'Fill in the text and you''re set!', $1, 1, $2, $3, $4);`
+  VALUES ('', '', $1, 1, $2, $3, $4);`
 
   pool.query(queryString, [req.body.project_id, Math.floor(req.body.x), Math.floor(req.body.y), req.body.z_index])
     .then(response=>{
@@ -159,7 +159,7 @@ router.post('/createNote', rejectUnauthenticated, (req,res)=>{
 router.post('/createImage', rejectUnauthenticated, (req,res)=>{
 
   const queryString = `INSERT INTO "image" (title, url, project_id, color_id, x, y, z_index)
-  VALUES ('Click the edit icon upper right!', '', $1, 1, $2, $3, $4);`
+  VALUES ('', '', $1, 1, $2, $3, $4);`
 
   pool.query(queryString, [req.body.project_id, Math.floor(req.body.x), Math.floor(req.body.y), req.body.z_index])
     .then(response=>{
@@ -174,7 +174,7 @@ router.post('/createImage', rejectUnauthenticated, (req,res)=>{
 router.post('/createChecklist', rejectUnauthenticated, (req,res)=>{
 
   const queryString = `INSERT INTO "list" (title, project_id, color_id, x, y, z_index)
-  VALUES ('Click the edit icon upper right!', $1, 1, $2, $3, $4);`
+  VALUES ('', $1, 1, $2, $3, $4);`
 
   pool.query(queryString, [req.body.project_id, Math.floor(req.body.x), Math.floor(req.body.y), req.body.z_index])
     .then(response=>{
@@ -248,6 +248,22 @@ router.put('/updateTaskCompleted/:id', rejectUnauthenticated, (req,res)=>{
 
   const queryString = `UPDATE task SET completed=$1 WHERE id=$2;`;
   pool.query(queryString, [req.body.completed, req.params.id])
+    .then(response=>{
+      res.sendStatus(201);
+    })
+    .catch(error=>{
+      console.log('Error updating task completed:', error);
+      res.sendStatus(500);
+    })
+})
+
+router.put('/updateChecklistTitle/:id', rejectUnauthenticated, (req,res)=>{
+
+  console.log('req.params.id', req.params.id);
+  console.log('req.body.completed', req.body.completed);
+
+  const queryString = `UPDATE list SET title=$1 WHERE id=$2;`;
+  pool.query(queryString, [req.body.title, req.params.id])
     .then(response=>{
       res.sendStatus(201);
     })

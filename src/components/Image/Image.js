@@ -108,7 +108,14 @@ class Image extends Component{
                                     </span>
                                     <br/>
                                     <br/>
-                                    <h3 style={{margin:'0px'}}>{this.state.title}</h3>
+                                    <h3 style={{margin:'0px'}}>
+                                    {
+                                        this.state.title === ''?
+                                        'Click the edit icon upper right!'
+                                        :
+                                        this.state.title
+                                    }
+                                    </h3>
                                     <img style={{height: '250px'}} src={(this.state.url || defaultImage)}/>
                                 </div>
                             
@@ -136,6 +143,7 @@ class Image extends Component{
                                         size='small'
                                         variant="filled"
                                         label="Title"
+                                        placeholder='Click the edit icon upper right!'
                                         value={this.state.title}
                                         type='text'
                                         onChange={this.handleInputChangeFor('title')}
@@ -151,9 +159,10 @@ class Image extends Component{
                                     /> 
                                     <TextField
                                         size='small'
-                                        variant="filled"
-                                        label="Image URL"
+                                        variant='filled'
+                                        label='Image URL'
                                         value={this.state.url}
+                                        placeholder='Paste an image url here!'
                                         type='text'
                                         onChange={this.handleInputChangeFor('url')}
                                         multiline

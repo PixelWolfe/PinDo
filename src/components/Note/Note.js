@@ -87,8 +87,22 @@ class Note extends Component{
                     </span>
                     <br/>
                     <br/>
-                    <h3 style={{margin:'0px'}}>{this.state.title}</h3>
-                    <p className='note-text'>{this.state.text}</p>
+                    <h3 style={{margin:'0px'}}>
+                        {
+                            this.state.title === ''?
+                            'Click the edit icon upper right!'
+                            :
+                            this.state.title
+                        }
+                    </h3>
+                    <p className='note-text'>
+                    {
+                        this.state.text === ''?
+                        'Fill in the text and you\'re set!'
+                        :
+                        this.state.text
+                    }
+                    </p>
                 </div>
                     : 
                 <div className='sticky-note green'> 
@@ -113,6 +127,7 @@ class Note extends Component{
                     size='small'
                     variant="filled"
                     label="Title"
+                    placeholder='Click the edit icon upper right!'
                     value={this.state.title}
                     type='text'
                     onChange={this.handleInputChangeFor('title')}
@@ -130,6 +145,7 @@ class Note extends Component{
                     size='small'
                     variant="filled"
                     label="Text"
+                    placeholder="Fill in the text and you're set!"
                     value={this.state.text}
                     type='text'
                     onChange={this.handleInputChangeFor('text')}
