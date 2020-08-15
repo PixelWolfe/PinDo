@@ -21,7 +21,10 @@ class Image extends Component{
         project_id: this.props.project_id,
         title: this.props.title,
         url: this.props.url,
-        edit_mode: false
+        edit_mode: false,
+        color_id: this.props.color_id,
+        color: this.props.color,
+        selected_value: this.props.color 
     }
 
     updatePosition = (e, data, id, type) => {
@@ -45,20 +48,25 @@ class Image extends Component{
     makeEditable = ()=>{
         this.setState({
             ...this.state,
-            edit_mode: !this.state.edit_mode
+            edit_mode: !this.state.edit_mode,
+            selected_value: this.state.color
         })
     }
         
     updateImage = ()=>{
         //check to see if old details match new, if not send update request
-        if(this.props.title === this.state.title && this.props.url === this.state.url){
+        if(this.props.title === this.state.title && this.props.url === this.state.url && this.props.selected_value === this.state.color){
             console.log('No update made, details were not changed.');
             this.makeEditable();
             return;
         }
         console.log('Updating Note!');
-        this.props.dispatch({type: 'UPDATE_IMAGE', payload: {id: this.state.id, project_id: this.state.project_id, title: this.state.title, url: this.state.url}});
-        this.makeEditable();
+        this.props.dispatch({type: 'UPDATE_IMAGE', payload: {id: this.state.id, color_id: this.state.color_id, project_id: this.state.project_id, title: this.state.title, url: this.state.url}});
+        this.setState({
+            ...this.state,
+            color: this.state.selected_value,
+            edit_mode: !this.state.edit_mode,
+        })
     }
 
 
@@ -75,8 +83,37 @@ class Image extends Component{
         });
       }
       
+    handleCheck = (event)=>{
+        let color_id;
+        switch(event.target.value){
+            case 'yellow':
+                color_id = '1';
+                break;
+            case 'blue':
+                color_id = '2';
+                break;
+            case 'cyan':
+                color_id = '3';
+                break;
+            case 'purple':
+                color_id = '4';
+                break;
+            case 'red':
+                color_id ='5';
+                break;
+            case 'green':
+                color_id = '6';
+                break;
+            default:
+                color_id = '1';
+        }
 
-
+        this.setState({
+            ...this.state,
+            selected_value: event.target.value,
+            color_id: color_id
+        })
+    }
 
 
 
@@ -97,7 +134,7 @@ class Image extends Component{
                     {
                         !this.state.edit_mode?
                             
-                                <div className='image green handle'>
+                                <div className={`sticky-note handle ${this.state.color}`}>
                                     <span style={{float: 'right'}}>
                                         <IconButton aria-label="edit" size="small"
                                             onClick={this.makeEditable}>
@@ -118,7 +155,7 @@ class Image extends Component{
                                 </div>
                             
                             :
-                                <div className='image green'>
+                                <div className={`sticky-note ${this.state.selected_value}`}>
                                 <div style={{textAlign: 'left'}}>
                                     <span>
                                         <Button variant='contained' color='secondary' size='small' onClick={this.deleteImage} style={{borderRadius: '0px', fontSize: '10px', backgroundColor: '#b11f1f'}}>
@@ -176,15 +213,22 @@ class Image extends Component{
                                         }}
                                     />
                                     <br/>
-                                    <div style={{backgroundColor: 'rgb(243, 235, 219)', minHeight: '30px', display: 'flex', alignItems: 'center', width: '230px', margin: 'auto', borderRadius:'3px', marginTop: '10px'}}>
+                                    <div style={{backgroundColor: 'rgb(243, 235, 219)', minHeight: '30px', display: 'flex',
+                                    alignItems: 'center', width: '230px', margin: 'auto', borderRadius:'3px', marginTop: '10px'}}>
                                     <span style={{marginLeft: '5px'}}>Color:{'\u00A0'}</span>
-                                        <Checkbox style={{backgroundColor: '#ffff88', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
-                                        <Checkbox style={{backgroundColor: '#a2e5ff', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
-                                        <Checkbox style={{backgroundColor: '#88ffe1', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
-                                        <Checkbox style={{backgroundColor: '#d7beff', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
-                                        <Checkbox style={{backgroundColor: '#ff9c9c', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
-                                        <Checkbox style={{backgroundColor: '#90ee90', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
-                                    </div>
+                                    <Checkbox onChange={this.handleCheck} value='yellow' checked={this.state.selected_value === 'yellow'} 
+                                        style={{backgroundColor: '#ffff88', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
+                                    <Checkbox onChange={this.handleCheck} value='blue' checked={this.state.selected_value === 'blue'} 
+                                        style={{backgroundColor: '#a2e5ff', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
+                                    <Checkbox onChange={this.handleCheck} value='cyan' checked={this.state.selected_value === 'cyan'} 
+                                        style={{backgroundColor: '#88ffe1', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
+                                    <Checkbox onChange={this.handleCheck} value='purple' checked={this.state.selected_value === 'purple'} 
+                                        style={{backgroundColor: '#d7beff', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
+                                    <Checkbox onChange={this.handleCheck} value='red' checked={this.state.selected_value === 'red'} 
+                                        style={{backgroundColor: '#ff9c9c', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
+                                    <Checkbox onChange={this.handleCheck} value='green' checked={this.state.selected_value === 'green'}
+                                        style={{backgroundColor: '#90ee90', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
+                                </div>
                                     <br/>
                                     <Button variant='contained' color='secondary' size='small' onClick={this.updateImage} style={{backgroundColor: '#3c4454', marginBottom: '5px'}}>
                                         Save Changes<SaveTwoToneIcon fontSize="small"/>

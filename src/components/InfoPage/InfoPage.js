@@ -66,10 +66,7 @@ class InfoPage extends Component{
     //check to see if reducer array length for IMAGES/CHECKLISTS/NOTES has changed
     //if so make sure zIndex is sorted so elements append to DOM in the right order
 
-    if(previousProps.reduxState.activeProject.notes.length !== this.props.reduxState.activeProject.notes.length ||
-        previousProps.reduxState.activeProject.checklists.length !== this.props.reduxState.activeProject.checklists.length ||
-        previousProps.reduxState.activeProject.images.length !== this.props.reduxState.activeProject.images.length ||
-        previousProps.reduxState.activeProject.tasks.length !== this.props.reduxState.activeProject.tasks.length){
+    if(previousProps.reduxState.activeProject !== this.props.reduxState.activeProject){
         
           console.log('updating zindex sorted')
         this.orderFromZIndex();
@@ -144,22 +141,44 @@ class InfoPage extends Component{
                 <div className="draggable-container corkboard">
                   {
                     this.state.zIndexSorted.map((item,index)=>{
-                      console.log(this.state.zIndexSorted)
+                      let color;
+                      switch(item.color_id){
+                          case 1:
+                              color = 'yellow';
+                              break;
+                          case 2:
+                              color = 'blue';
+                              break;
+                          case 3:
+                              color = 'cyan';
+                              break;
+                          case 4:
+                              color = 'purple';
+                              break;
+                          case 5:
+                              color ='red';
+                              break;
+                          case 6:
+                              color = 'green';
+                              break;
+                          default:
+                              color = 'yellow';
+                      }
                       if(item.hasOwnProperty('url')){
 
                         return(<Image key={('image-'+item.id)} title={item.title} url={item.url}
                           x={item.x} y={item.y} image_id={item.id}
-                          project_id={item.project_id} color_id={item.color_id}/>);
+                          project_id={item.project_id} color_id={item.color_id} color={color}/>);
                       }
                       else if(item.hasOwnProperty('text')){
-                        console.log(`Attaching note ${item.id} to the DOM`)
                         return (<Note key={('note-'+item.id)} title={item.title} text={item.text}
                           x={item.x} y={item.y} note_id={item.id}
-                          project_id={item.project_id} color_id={item.color_id} />);
+                          project_id={item.project_id} color_id={item.color_id} color={color}/>);
                       }
                       else{
+                        console.log(`Attaching checklist ${item.id} to the DOM color ${color} color_id ${item.color_id }`)
                         return (<Checklist key={('checklist-'+item.id)} title={item.title} project_id={item.project_id} color_id={item.color_id}
-                          list_id={item.id} x={item.x} y={item.y} tasks={item.tasks}/>);
+                          list_id={item.id} x={item.x} y={item.y} tasks={item.tasks} color={color}/>);
                       }
                     })
                   }

@@ -84,9 +84,9 @@ router.put('/updatePosition', rejectUnauthenticated, (req, res) => {
 router.put('/updateNote', rejectUnauthenticated, (req,res)=>{
   console.log('Update Note req.body', req.body);
   
-  const queryString = `UPDATE note SET title=$1, text=$2 WHERE id=$3 AND project_id=$4;`;
+  const queryString = `UPDATE note SET title=$1, text=$2, color_id=$3 WHERE id=$4 AND project_id=$5;`;
 
-  pool.query(queryString, [req.body.title, req.body.text, req.body.id, req.body.project_id])
+  pool.query(queryString, [req.body.title, req.body.text, req.body.color_id, req.body.id, req.body.project_id])
     .then(response=>{
       res.sendStatus(201);
     })
@@ -98,9 +98,9 @@ router.put('/updateNote', rejectUnauthenticated, (req,res)=>{
 
 router.put('/updateImage', rejectUnauthenticated, (req,res)=>{
   
-  const queryString = `UPDATE image SET title=$1, url=$2 WHERE id=$3 AND project_id=$4;`;
+  const queryString = `UPDATE image SET title=$1, url=$2, color_id=$3 WHERE id=$4 AND project_id=$5;`;
 
-  pool.query(queryString, [req.body.title, req.body.url, req.body.id, req.body.project_id])
+  pool.query(queryString, [req.body.title, req.body.url, req.body.color_id, req.body.id, req.body.project_id])
     .then(response=>{
       res.sendStatus(201);
     })
@@ -262,8 +262,8 @@ router.put('/updateChecklistTitle/:id', rejectUnauthenticated, (req,res)=>{
   console.log('req.params.id', req.params.id);
   console.log('req.body.completed', req.body.completed);
 
-  const queryString = `UPDATE list SET title=$1 WHERE id=$2;`;
-  pool.query(queryString, [req.body.title, req.params.id])
+  const queryString = `UPDATE list SET title=$1, color_id=$2 WHERE id=$3;`;
+  pool.query(queryString, [req.body.title, req.body.color_id, req.params.id])
     .then(response=>{
       res.sendStatus(201);
     })

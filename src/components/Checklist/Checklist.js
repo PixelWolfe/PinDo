@@ -13,8 +13,8 @@ import AddBoxTwoToneIcon from '@material-ui/icons/AddBoxTwoTone';
 import SaveTwoToneIcon from '@material-ui/icons/SaveTwoTone';
 
 import TaskCheckItem from '../TaskCheckItem/TaskCheckItem';
-import {Button} from '@material-ui/core'
-import { TextField, Checkbox } from '@material-ui/core';
+import {Button, RadioGroup, FormControl, FormControlLabel} from '@material-ui/core'
+import { TextField, Checkbox, Radio } from '@material-ui/core';
 
 class Checklist extends Component {
 
@@ -25,8 +25,11 @@ class Checklist extends Component {
     tasks: this.props.tasks,
     edit_mode: false,
     add_task_mode: false,
-    task_to_add: ''
-}
+    task_to_add: '',
+    color_id: this.props.color_id,
+    color: this.props.color,
+    selected_value: this.props.color
+}   
 
 setAddTaskMode = ()=>{
     console.log('in setAddTaskMode');
@@ -61,6 +64,7 @@ makeEditable = ()=>{
         this.setState({
             ...this.state,
             edit_mode: !this.state.edit_mode,
+            selected_value: this.state.color,
             add_task_mode: !this.state.add_task_mode
         })  
     }
@@ -68,20 +72,28 @@ makeEditable = ()=>{
         this.setState({
             ...this.state,
             edit_mode: !this.state.edit_mode,
+            selected_value: this.state.color
         })  
     }
+
 }
     
 updateChecklist = ()=>{
     //check to see if old details match new, if not send update request
-    if(this.props.text === this.state.text && this.props.title === this.state.title){
+    if(this.props.text === this.state.text && this.props.title === this.state.title && this.state.color === this.state.selected_value){
         console.log('No update made, details were not changed.');
         this.makeEditable();
-        return;
     }
-    console.log('Updating Checklist!');
-    this.props.dispatch({type: 'UPDATE_CHECKLIST_TITLE', payload: {id: this.props.list_id, project_id: this.props.project_id, title: this.state.title}});
-    this.makeEditable();
+    else{
+        console.log('Updating Checklist!');
+        this.props.dispatch({type: 'UPDATE_CHECKLIST_TITLE', payload: {id: this.props.list_id, project_id: this.props.project_id, title: this.state.title, color_id: this.state.color_id}});
+        this.setState({
+            ...this.state,
+            color: this.state.selected_value,
+            edit_mode: !this.state.edit_mode,
+        })
+    }
+
 }
 
 addNewTask = ()=>{
@@ -108,18 +120,50 @@ deleteChecklist = ()=>{
     this.props.dispatch({type: 'DELETE_CHECKLIST', payload: {id: this.props.list_id, project_id: this.props.project_id}});
 }
 
+handleCheck = (event)=>{
+    let color_id;
+    switch(event.target.value){
+        case 'yellow':
+            color_id = '1';
+            break;
+        case 'blue':
+            color_id = '2';
+            break;
+        case 'cyan':
+            color_id = '3';
+            break;
+        case 'purple':
+            color_id = '4';
+            break;
+        case 'red':
+            color_id ='5';
+            break;
+        case 'green':
+            color_id = '6';
+            break;
+        default:
+            color_id = '1';
+    }
+
+    this.setState({
+        ...this.state,
+        selected_value: event.target.value,
+        color_id: color_id
+    })
+}
+
   render() {
     return (
         <Draggable
-        handle='.handle'
-        onStop={(e,data)=>this.updatePosition(e, data, this.state.id, "list")}
-        defaultPosition={{x: this.props.x, y: this.props.y}}
-        onStart={(e)=>this.calculateZIndex(e)}
-        bounds='parent'
+            handle='.handle'
+            onStop={(e,data)=>this.updatePosition(e, data, this.state.id, "list")}
+            defaultPosition={{x: this.props.x, y: this.props.y}}
+            onStart={(e)=>this.calculateZIndex(e)}
+            bounds='parent'
         >
         {
           !this.state.edit_mode ? 
-          <div className='checklist green handle'>
+          <div className={`checklist ${this.state.color} handle`}>
               <span style={{float: 'right'}}>
                   <IconButton aria-label="edit" size="small"
                       onClick={this.makeEditable}>
@@ -183,7 +227,7 @@ deleteChecklist = ()=>{
               
           </div>
               : 
-          <div className='checklist green'> 
+          <div className={`checklist ${this.state.selected_value}`}> 
             <div style={{textAlign: 'left'}}>
                 <span>
                     <Button variant='contained' color='secondary' size='small' onClick={this.deleteChecklist} style={{borderRadius: '0px', fontSize: '10px', backgroundColor: '#b11f1f'}}>
@@ -221,12 +265,12 @@ deleteChecklist = ()=>{
           /> 
           <div style={{backgroundColor: 'rgb(243, 235, 219)', minHeight: '30px', display: 'flex', alignItems: 'center', width: '230px', margin: 'auto', borderRadius:'3px', marginTop: '10px'}}>
           <span style={{marginLeft: '5px'}}>Color:{'\u00A0'}</span>
-              <Checkbox style={{backgroundColor: '#ffff88', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
-              <Checkbox style={{backgroundColor: '#a2e5ff', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
-              <Checkbox style={{backgroundColor: '#88ffe1', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
-              <Checkbox style={{backgroundColor: '#d7beff', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
-              <Checkbox style={{backgroundColor: '#ff9c9c', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
-              <Checkbox style={{backgroundColor: '#90ee90', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
+              <Checkbox onChange={this.handleCheck} value='yellow' checked={this.state.selected_value === 'yellow'} style={{backgroundColor: '#ffff88', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
+              <Checkbox onChange={this.handleCheck} value='blue' checked={this.state.selected_value === 'blue'} style={{backgroundColor: '#a2e5ff', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
+              <Checkbox onChange={this.handleCheck} value='cyan' checked={this.state.selected_value === 'cyan'} style={{backgroundColor: '#88ffe1', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
+              <Checkbox onChange={this.handleCheck} value='purple' checked={this.state.selected_value === 'purple'} style={{backgroundColor: '#d7beff', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
+              <Checkbox onChange={this.handleCheck} value='red' checked={this.state.selected_value === 'red'} style={{backgroundColor: '#ff9c9c', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
+              <Checkbox onChange={this.handleCheck} value='green' checked={this.state.selected_value === 'green'} style={{backgroundColor: '#90ee90', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
           </div>
           <br/>
           <br/>

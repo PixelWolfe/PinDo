@@ -165,6 +165,7 @@ function* updateChecklistTitle(action){
     console.log('task completed', action.payload)
     try{
         const response = yield axios.put(`/api/activeProject/updateChecklistTitle/${action.payload.id}`, action.payload);
+        yield put({type: 'FETCH_PROJECT', payload: {project_id: action.payload.project_id}});
     }
     catch(error){
         console.log('Error updating task completion', error);
