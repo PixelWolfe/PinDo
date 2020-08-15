@@ -9,7 +9,6 @@ import {
 import {connect} from 'react-redux';
 
 import NavHome from '../NavHome/NavHome';
-import Footer from '../Footer/Footer';
 
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
 
