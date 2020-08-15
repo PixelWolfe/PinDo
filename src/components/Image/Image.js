@@ -11,9 +11,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForwardTwoTone';
 import SaveTwoToneIcon from '@material-ui/icons/SaveTwoTone';
 
-import './image.css';
-
-import {Button} from '@material-ui/core'
+import {Button, Checkbox} from '@material-ui/core'
 import { TextField } from '@material-ui/core';
 
 
@@ -123,7 +121,7 @@ class Image extends Component{
                                 <div className='image green'>
                                 <div style={{textAlign: 'left'}}>
                                     <span>
-                                        <Button variant='contained' color='secondary' size='small' onClick={this.deleteImage} style={{borderRadius: '0px', fontSize: '10px'}}>
+                                        <Button variant='contained' color='secondary' size='small' onClick={this.deleteImage} style={{borderRadius: '0px', fontSize: '10px', backgroundColor: '#b11f1f'}}>
                                             Delete <DeleteForeverTwoToneIcon fontSize="small"/>
                                         </Button>
                                     </span>
@@ -138,7 +136,7 @@ class Image extends Component{
                                     <br/>
                                     <br/>
                                     <h4 style={{margin: 0, marginBottom: '5px'}}>Edit this Image below</h4>
-                                    <h5 style={{margin: 0, marginBottom: '5px'}}>Press SAVE when finished</h5>
+                                    <h5 style={{margin: 0, marginBottom: '5px'}}>Press SAVE CHANGES when finished</h5>
                                     <TextField
                                         size='small'
                                         variant="filled"
@@ -178,11 +176,19 @@ class Image extends Component{
                                         }}
                                     />
                                     <br/>
+                                    <div style={{backgroundColor: 'rgb(243, 235, 219)', minHeight: '30px', display: 'flex', alignItems: 'center', width: '230px', margin: 'auto', borderRadius:'3px', marginTop: '10px'}}>
+                                    <span style={{marginLeft: '5px'}}>Color:{'\u00A0'}</span>
+                                        <Checkbox style={{backgroundColor: '#ffff88', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
+                                        <Checkbox style={{backgroundColor: '#a2e5ff', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
+                                        <Checkbox style={{backgroundColor: '#88ffe1', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
+                                        <Checkbox style={{backgroundColor: '#d7beff', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
+                                        <Checkbox style={{backgroundColor: '#ff9c9c', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
+                                        <Checkbox style={{backgroundColor: '#90ee90', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
+                                    </div>
                                     <br/>
-                                    <Button variant='contained' color='secondary' size='small' onClick={this.updateImage} style={{backgroundColor: 'green'}}>
+                                    <Button variant='contained' color='secondary' size='small' onClick={this.updateImage} style={{backgroundColor: '#3c4454', marginBottom: '5px'}}>
                                         Save Changes<SaveTwoToneIcon fontSize="small"/>
                                     </Button>
-                                    <br/>
                                     <br/>
                                 </div>
                             

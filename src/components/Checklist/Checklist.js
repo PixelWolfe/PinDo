@@ -14,8 +14,7 @@ import SaveTwoToneIcon from '@material-ui/icons/SaveTwoTone';
 
 import TaskCheckItem from '../TaskCheckItem/TaskCheckItem';
 import {Button} from '@material-ui/core'
-import './checklist.css';
-import { TextField } from '@material-ui/core';
+import { TextField, Checkbox } from '@material-ui/core';
 
 class Checklist extends Component {
 
@@ -163,7 +162,7 @@ deleteChecklist = ()=>{
                   }}/>
                   <br/>
                   <div style={{margin: '5px'}}>
-                    <Button size='small' onClick={this.clearTask} variant='outlined' style={{backgroundColor: 'coral', height: '25px', fontSize: '12px', minWidth: '40px'}}>
+                    <Button size='small' onClick={this.clearTask} variant='outlined' style={{backgroundColor: '#b11f1f', height: '25px', fontSize: '12px', minWidth: '40px'}}>
                         <AddBoxTwoToneIcon fontSize="small"/>
                         Cancel
                     </Button>
@@ -187,7 +186,7 @@ deleteChecklist = ()=>{
           <div className='checklist green'> 
             <div style={{textAlign: 'left'}}>
                 <span>
-                    <Button variant='contained' color='secondary' size='small' onClick={this.deleteChecklist} style={{borderRadius: '0px', fontSize: '10px'}}>
+                    <Button variant='contained' color='secondary' size='small' onClick={this.deleteChecklist} style={{borderRadius: '0px', fontSize: '10px', backgroundColor: '#b11f1f'}}>
                         Delete <DeleteForeverTwoToneIcon fontSize="small"/>
                     </Button>
                 </span>
@@ -201,7 +200,7 @@ deleteChecklist = ()=>{
               <br/>
               <br/>
           <h4 style={{margin: 0, marginBottom: '5px'}}>Edit this checklist below</h4>
-          <h5 style={{margin: 0, marginBottom: '5px'}}>Press BACK when finished</h5>
+          <h5 style={{margin: 0, marginBottom: '5px'}}>Press SAVE CHANGES when finished</h5>
           <TextField
               size='small'
               variant="filled"
@@ -220,14 +219,18 @@ deleteChecklist = ()=>{
               ),
               }}
           /> 
-    
-          
+          <div style={{backgroundColor: 'rgb(243, 235, 219)', minHeight: '30px', display: 'flex', alignItems: 'center', width: '230px', margin: 'auto', borderRadius:'3px', marginTop: '10px'}}>
+          <span style={{marginLeft: '5px'}}>Color:{'\u00A0'}</span>
+              <Checkbox style={{backgroundColor: '#ffff88', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
+              <Checkbox style={{backgroundColor: '#a2e5ff', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
+              <Checkbox style={{backgroundColor: '#88ffe1', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
+              <Checkbox style={{backgroundColor: '#d7beff', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
+              <Checkbox style={{backgroundColor: '#ff9c9c', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
+              <Checkbox style={{backgroundColor: '#90ee90', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
+          </div>
           <br/>
           <br/>
-          <br/>
-          <br/>
-          <h4 style={{margin: 0}}>Remove this checklist?</h4>
-          <Button variant='contained' color='secondary' size='small' onClick={this.updateChecklist} style={{backgroundColor: 'green'}}>
+          <Button variant='contained' color='secondary' size='small' onClick={this.updateChecklist} style={{backgroundColor: '#3c4454', marginBottom: '5px'}}>
             Save Changes<SaveTwoToneIcon fontSize="small"/>
           </Button>
           </div>

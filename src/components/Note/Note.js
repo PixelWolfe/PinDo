@@ -12,8 +12,7 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForwardTwoTone';
 import SaveTwoToneIcon from '@material-ui/icons/SaveTwoTone';
 
 import {Button} from '@material-ui/core'
-import './note.css';
-import { TextField } from '@material-ui/core';
+import { TextField, Checkbox } from '@material-ui/core';
 
 
 
@@ -108,7 +107,7 @@ class Note extends Component{
                 <div className='sticky-note green'> 
                     <div style={{textAlign: 'left'}}>
                         <span>
-                            <Button variant='contained' color='secondary' size='small' onClick={this.deleteNote} style={{borderRadius: '0px', fontSize: '10px'}}>
+                            <Button variant='contained' color='secondary' size='small' onClick={this.deleteNote} style={{borderRadius: '0px', fontSize: '10px', backgroundColor: '#b11f1f'}}>
                                 Delete <DeleteForeverTwoToneIcon fontSize="small"/>
                             </Button>
                         </span>
@@ -162,11 +161,20 @@ class Note extends Component{
                     }}
                 />
                 <br/>
+                <div style={{backgroundColor: 'rgb(243, 235, 219)', minHeight: '30px', display: 'flex', alignItems: 'center', width: '230px', margin: 'auto', borderRadius:'3px', marginTop: '10px'}}>
+                <span style={{marginLeft: '5px'}}>Color:{'\u00A0'}</span>
+                    <Checkbox style={{backgroundColor: '#ffff88', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
+                    <Checkbox style={{backgroundColor: '#a2e5ff', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
+                    <Checkbox style={{backgroundColor: '#88ffe1', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
+                    <Checkbox style={{backgroundColor: '#d7beff', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
+                    <Checkbox style={{backgroundColor: '#ff9c9c', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
+                    <Checkbox style={{backgroundColor: '#90ee90', padding: '0px', borderRadius: '0px', marginRight: '5px'}} color='default'/>
+                </div>
                 <br/>
-                <br/>
-                <Button variant='contained' color='secondary' size='small' onClick={this.updateNote} style={{backgroundColor: 'green'}}>
+                <Button variant='contained' color='secondary' size='small' onClick={this.updateNote} style={{backgroundColor: '#3c4454'}}>
                     Save Changes<SaveTwoToneIcon fontSize="small"/>
                 </Button>
+                <br/>
                 <br/>
                 </div>
                 

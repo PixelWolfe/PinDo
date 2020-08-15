@@ -18,6 +18,7 @@ class TaskCheckItem extends Component{
 
     render(){
         return(
+            <>
             <p style={{textAlign:'left', margin: '0px', paddingLeft: '15px', borderBottom: '1px solid lightblue'}}>
                 <Checkbox
                     checked={this.state.completed}
@@ -28,6 +29,7 @@ class TaskCheckItem extends Component{
                 />
                 {this.props.task.description}
             </p>
+            </>
            
         )
     }
