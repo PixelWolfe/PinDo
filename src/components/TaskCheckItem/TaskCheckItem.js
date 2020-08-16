@@ -6,20 +6,44 @@ class TaskCheckItem extends Component{
     state = {
         completed: this.props.task.completed,
         id: this.props.task.id,
+        text_decoration: 'none'
+    }
+
+    componentDidMount(){
+        console.log('check item state', this.state);
+        if(this.state.completed === true){
+            this.setState({
+                ...this.state,
+                text_decoration: 'line-through'
+            })
+        }
     }
 
     updateTaskCompleted = ()=>{
         this.props.dispatch({type: 'UPDATE_TASK_COMPLETED', payload: {completed: !this.state.completed, id: this.state.id}});
-        this.setState({
-            ...this.state,
-            completed: !this.state.completed
-        })
+        if(this.state.completed === true){
+            this.setState({
+                ...this.state,
+                completed: !this.state.completed,
+                text_decoration: 'none'
+            }) 
+        }
+        else{
+            this.setState({
+                ...this.state,
+                completed: !this.state.completed,
+                text_decoration: 'line-through'
+            }) 
+        }
+        
     }
 
     render(){
+
         return(
             <>
-            <p style={{textAlign:'left', margin: '0px', paddingLeft: '15px', borderBottom: '1px solid lightblue'}}>
+            <p style={{textAlign:'left', margin: '0px', paddingLeft: '15px', borderBottom: '1px solid lightblue', 
+            textDecoration: this.state.text_decoration}}>
                 <Checkbox
                     checked={this.state.completed}
                     onChange={this.updateTaskCompleted}
