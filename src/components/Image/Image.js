@@ -130,6 +130,7 @@ class Image extends Component{
                 defaultPosition={{x: this.props.x, y: this.props.y}}
                 onStart={console.log('draggable this', this),(e)=>this.calculateZIndex(e)}
                 bounds='parent'
+                scale={Number(this.props.reduxState.zoomReducer.zoomValue)}
                 >
                     {
                         !this.state.edit_mode?
@@ -151,7 +152,7 @@ class Image extends Component{
                                         this.state.title
                                     }
                                     </h3>
-                                    <img style={{height: '250px'}} src={(this.state.url || defaultImage)}/>
+                                    <img draggable='false' style={{height: '250px', userSelect: 'none'}} src={(this.state.url || defaultImage)}/>
                                 </div>
                             
                             :

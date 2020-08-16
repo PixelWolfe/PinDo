@@ -1,38 +1,62 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Grid, Button, Icon, TextField} from "@material-ui/core";
+import {Grid, Button} from "@material-ui/core";
 import AddBoxTwoToneIcon from '@material-ui/icons/AddBoxTwoTone';
 
 class CreateButtonOptions extends Component{
 
-    createNote =()=>{
+    create= (type)=>{
         let zIndex = this.props.reduxState.highestZIndex + 1;
-        console.log('zIndex', zIndex);
-        this.props.dispatch({type: 'CREATE_NOTE', payload: {x: this.props.reduxState.projectScroll.scrollLeft, y: this.props.reduxState.projectScroll.scrollTop, project_id: this.props.reduxState.activeProject.project[0].id, z_index: zIndex}});
+        let zoomValue = Number(this.props.reduxState.zoomReducer.zoomValue);
+        let x = Number(this.props.reduxState.projectScroll.scrollLeft)*(1/zoomValue)
+        let y = Number(this.props.reduxState.projectScroll.scrollTop)*(1/zoomValue)
+        console.log('highest zIndex', zIndex);
+        
+        switch(type){
+            case 'note':
+                this.props.dispatch({type: 'CREATE_NOTE', payload: {x: x, y: y, project_id: this.props.reduxState.activeProject.project[0].id, z_index: zIndex}});
+                break;
+            case 'image':
+                this.props.dispatch({type: 'CREATE_IMAGE', payload: {x: x, y: y, project_id: this.props.reduxState.activeProject.project[0].id, z_index: zIndex}});
+                break;
+            case 'checklist':
+                this.props.dispatch({type: 'CREATE_CHECKLIST', payload: {x: x, y: y, project_id: this.props.reduxState.activeProject.project[0].id, z_index: zIndex}});
+                break;  
+        }
     }
 
-    createImage = ()=>{
-        let zIndex = this.props.reduxState.highestZIndex + 1;  
-        console.log(zIndex);
-        this.props.dispatch({type: 'CREATE_IMAGE', payload: {x: this.props.reduxState.projectScroll.scrollLeft, y: this.props.reduxState.projectScroll.scrollTop, project_id: this.props.reduxState.activeProject.project[0].id, z_index: zIndex}});
-    }
+    // createNote =()=>{
+    //     let zIndex = this.props.reduxState.highestZIndex + 1;
+    //     let zoomValue = Number(this.props.reduxState.zoomReducer.zoomValue);
+    //     let x = Number(this.props.reduxState.projectScroll.scrollLeft)*(1/zoomValue)
+    //     let y = Number(this.props.reduxState.projectScroll.scrollTop)*(1/zoomValue)
+    //     console.log('highest zIndex', zIndex);
+    //     this.props.dispatch({type: 'CREATE_NOTE', payload: {x: x, y: y, project_id: this.props.reduxState.activeProject.project[0].id, z_index: zIndex}});
+    // }
 
-    createChecklist = ()=>{
-        let zIndex = this.props.reduxState.highestZIndex + 1;
-        this.props.dispatch({type: 'CREATE_CHECKLIST', payload: {x: this.props.reduxState.projectScroll.scrollLeft, y: this.props.reduxState.projectScroll.scrollTop, project_id: this.props.reduxState.activeProject.project[0].id, z_index: zIndex}});
-    }
+    // createImage = ()=>{
+    //     let zIndex = this.props.reduxState.highestZIndex + 1;  
+    //     console.log(zIndex);
+    //     this.props.dispatch({type: 'CREATE_IMAGE', payload: {x: this.props.reduxState.projectScroll.scrollLeft, y: this.props.reduxState.projectScroll.scrollTop, project_id: this.props.reduxState.activeProject.project[0].id, z_index: zIndex}});
+    // }
+
+    // createChecklist = ()=>{
+    //     let zIndex = this.props.reduxState.highestZIndex + 1;
+    //     this.props.dispatch({type: 'CREATE_CHECKLIST', payload: {x: this.props.reduxState.projectScroll.scrollLeft, y: this.props.reduxState.projectScroll.scrollTop, project_id: this.props.reduxState.activeProject.project[0].id, z_index: zIndex}});
+    // }
 
     render(){
         return(
             <Grid container justify='center' alignItems='center' alignContent='center'>
                 <Grid item xs={3} md={2}  lg={1} align='center'>
+                {JSON.stringify(this.props.reduxState.highestZIndex)}
                     <Button 
                         size='small'
                         startIcon={<AddBoxTwoToneIcon/>}
                         variant='contained' 
                         color='primary' 
                         style={{ marginTop: '0px', backgroundColor: '#3c4454'}}
-                        onClick={this.createNote}>
+                        onClick={()=>this.create('note')}>
                         Add Note
                     </Button> 
                 </Grid>
@@ -43,7 +67,7 @@ class CreateButtonOptions extends Component{
                         variant='contained' 
                         color='primary' 
                         style={{ marginTop: '0px', backgroundColor: '#3c4454'}}
-                        onClick={this.createChecklist}>
+                        onClick={()=>this.create('checklist')}>
                         Add Checklist
                     </Button> 
                 </Grid>
@@ -54,7 +78,7 @@ class CreateButtonOptions extends Component{
                         variant='contained' 
                         color='primary' 
                         style={{ marginTop: '0px', backgroundColor: '#3c4454'}}
-                        onClick={this.createImage}>
+                        onClick={()=>this.create('image')}>
                         Add Image
                     </Button> 
                 </Grid>

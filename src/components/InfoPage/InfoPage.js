@@ -5,7 +5,6 @@ import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
 import {Fade} from 'react-reveal';
 import {Grid} from '@material-ui/core';
-import './infoPage.css';
 
 import Note from '../Note/Note';
 import Image from '../Image/Image';
@@ -61,47 +60,19 @@ class InfoPage extends Component{
    }
 
    componentDidUpdate(previousProps){
-     
     console.log(previousProps.reduxState.activeProject.notes.length, this.props.reduxState.activeProject.notes.length)
     //check to see if reducer array length for IMAGES/CHECKLISTS/NOTES has changed
     //if so make sure zIndex is sorted so elements append to DOM in the right order
-
     if(previousProps.reduxState.activeProject !== this.props.reduxState.activeProject){
         
           console.log('updating zindex sorted')
         this.orderFromZIndex();
     }
-
-    
-
-
-
-    // else if (this.props.reduxState.activeProject.checklists.length > 0){
-    //   console.log('in new Zindex code')
-    //   //group up all of the tasks of the previous project
-    //   const previousChecklists = previousProps.reduxState.activeProject.checklists;
-    //   const previousTasks = [];
-    //   const currentChecklists = previousProps.reduxState.activeProject.checklists;
-    //   const currentTasks = [];
-    //   for(let i=0; i < previousChecklists.length; i++){
-    //     previousTasks.push(previousChecklists[i].tasks);
-    //   }
-    //   for(let i=0; i < currentChecklists.length; i++){
-    //     currentTasks.push(currentChecklists[i].tasks);
-    //   }
-
-    //   if(previousTasks.length !== currentTasks.length){
-    //     console.log('updating zindex sorted')
-    //     this.orderFromZIndex();
-    //   }
-    // }
    }
 
    orderFromZIndex=()=>{
     let zIndexArray = [];
-    zIndexArray.push(...this.props.reduxState.activeProject.notes);
-    zIndexArray.push(...this.props.reduxState.activeProject.checklists);
-    zIndexArray.push(...this.props.reduxState.activeProject.images);
+    zIndexArray.push(...this.props.reduxState.activeProject.notes, ...this.props.reduxState.activeProject.checklists, ...this.props.reduxState.activeProject.images);
 
     zIndexArray.sort((a,b)=>a.z_index - b.z_index);
     console.log('zindexarray post-sort',zIndexArray);
@@ -128,8 +99,6 @@ class InfoPage extends Component{
     
     return(
       <>
-               
-        
         <div className='main-container'>
         <div className='wooden-wall'>
         <NavProject/>
@@ -138,7 +107,7 @@ class InfoPage extends Component{
             <Grid item xs={12} align='center'>
               <CreateButtonOptions/>
               <div className="box">
-                <div className="draggable-container corkboard">
+                <div className="draggable-container corkboard" style={{zoom: `${this.props.reduxState.zoomReducer.zoomValue}`}}>
                   {
                     this.state.zIndexSorted.map((item,index)=>{
                       let color;
@@ -173,7 +142,7 @@ class InfoPage extends Component{
                       else if(item.hasOwnProperty('text')){
                         return (<Note key={('note-'+item.id)} title={item.title} text={item.text}
                           x={item.x} y={item.y} note_id={item.id}
-                          project_id={item.project_id} color_id={item.color_id} color={color}/>);
+                          project_id={item.project_id} color_id={item.color_id} color={color} zIndex={item.z_index}/>);
                       }
                       else{
                         console.log(`Attaching checklist ${item.id} to the DOM color ${color} color_id ${item.color_id }`)
@@ -183,7 +152,9 @@ class InfoPage extends Component{
                     })
                   }
                   </div>
+                  
               </div>
+              
             </Grid>
           </Grid>
         </Fade>

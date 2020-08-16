@@ -13,7 +13,7 @@ import SaveTwoToneIcon from '@material-ui/icons/SaveTwoTone';
 
 import {Button} from '@material-ui/core'
 import { TextField, Checkbox } from '@material-ui/core';
-import { yellow } from '@material-ui/core/colors';
+
 
 
 
@@ -117,6 +117,7 @@ class Note extends Component{
                 defaultPosition={{x: this.props.x, y: this.props.y}}
                 onStart={(e)=>this.calculateZIndex(e)}
                 bounds='parent'
+                scale={Number(this.props.reduxState.zoomReducer.zoomValue)}
             >
             {
                 !this.state.edit_mode ? 

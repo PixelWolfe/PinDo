@@ -12,6 +12,7 @@ class LogOutButton extends Component{
   logout = ()=>{
     this.clearActiveProject();
     this.props.dispatch({type: 'LOGOUT'});
+    this.props.dispatch({type: 'SET_ZOOM_VALUE', payload: {zoomValue: '.25'}})
   }
 
   render(){

@@ -160,6 +160,7 @@ handleCheck = (event)=>{
             defaultPosition={{x: this.props.x, y: this.props.y}}
             onStart={(e)=>this.calculateZIndex(e)}
             bounds='parent'
+            scale={Number(this.props.reduxState.zoomReducer.zoomValue)}
         >
         {
           !this.state.edit_mode ? 
@@ -188,21 +189,21 @@ handleCheck = (event)=>{
                   this.state.add_task_mode ?
                   <>
                   <TextField    
-                  size='small'
-                  variant="filled"
-                  label="Task Description"
-                  placeholder='Add a task here'
-                  value={this.state.task_to_add}
-                  type='text'
-                  onChange={this.handleInputChangeFor('task_to_add')}
-                  style={{width: '80%', marginTop: '5px'}}
-                  inputProps={{maxLength: 40}}
-                  InputProps={{
-                  startAdornment: (
-                      <InputAdornment position="start">
-                          <TitleTwoToneIcon />
-                      </InputAdornment>
-                  ),
+                    size='small'
+                    variant="filled"
+                    label="Task Description"
+                    placeholder='Add a task here'
+                    value={this.state.task_to_add}
+                    type='text'
+                    onChange={this.handleInputChangeFor('task_to_add')}
+                    style={{width: '80%', marginTop: '5px'}}
+                    inputProps={{maxLength: 40}}
+                    InputProps={{
+                    startAdornment: (
+                        <InputAdornment position="start">
+                            <TitleTwoToneIcon />
+                        </InputAdornment>
+                    ),
                   }}/>
                   <br/>
                   <div style={{margin: '5px'}}>
