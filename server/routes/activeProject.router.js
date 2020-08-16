@@ -20,6 +20,7 @@ router.get('/project/:id', rejectUnauthenticated, async (req, res) => {
       const listArray = await client.query(queryString, [req.params.id]);
       const allChecklists = [];
       const allTasks = []
+
       //loop through array of lists and grab tasks for every list
       for(list of listArray.rows){
         const queryString = `SELECT * FROM "task" WHERE list_id = $1 ORDER BY position ASC;`;
@@ -37,13 +38,13 @@ router.get('/project/:id', rejectUnauthenticated, async (req, res) => {
       res.send({project: project.rows, notes: notes.rows, checklists: allChecklists, images: images.rows, tasks: allTasks});
      }
      else{
-        console.log('Board does not exist / User does not have access to ')
+        console.log('Board does not exist or User does not have access to this board ')
         await client.query('ROLLBACK;');
         res.sendStatus(500);
      }
     }
     catch(error){
-      //transaction failed so lets reset it so other queries can be made
+      //transaction failed reset it
       console.log('Error on project get', error);
       await client.query('ROLLBACK;');
       res.sendStatus(500);
@@ -54,97 +55,10 @@ router.get('/project/:id', rejectUnauthenticated, async (req, res) => {
     }
   })
 
-router.put('/updatePosition', rejectUnauthenticated, (req, res) => {
-  
-  //for puts use :id better practice for REST api
-  let type = '';
-  switch(req.body.type){
-    case 'note':
-      type = 'note';
-      break;
-    case 'list':
-      type = 'list';
-      break;
-    case 'image':
-      type = 'image';
-      break;
-  }
+router.post('/createChecklist', rejectUnauthenticated, (req,res)=>{
 
-  const queryString = `UPDATE ${type} SET x=$1, y=$2 WHERE id=$3 AND project_id=$4;`;
-  pool.query(queryString, [ Math.floor(req.body.x), Math.floor(req.body.y), req.body.id, req.body.project_id])
-    .then(response=>{
-      res.sendStatus(201);
-    })
-    .catch(error=>{
-      console.log('Error on position update', error);
-      res.sendStatus(500);
-    })
-})
-
-router.put('/updateNote', rejectUnauthenticated, (req,res)=>{
-  console.log('Update Note req.body', req.body);
-  
-  const queryString = `UPDATE note SET title=$1, text=$2, color_id=$3 WHERE id=$4 AND project_id=$5;`;
-
-  pool.query(queryString, [req.body.title, req.body.text, req.body.color_id, req.body.id, req.body.project_id])
-    .then(response=>{
-      res.sendStatus(201);
-    })
-    .catch(error=>{
-      console.log('Error on note update', error);
-      res.sendStatus(500);
-    })
-})
-
-router.put('/updateImage', rejectUnauthenticated, (req,res)=>{
-  
-  const queryString = `UPDATE image SET title=$1, url=$2, color_id=$3 WHERE id=$4 AND project_id=$5;`;
-
-  pool.query(queryString, [req.body.title, req.body.url, req.body.color_id, req.body.id, req.body.project_id])
-    .then(response=>{
-      res.sendStatus(201);
-    })
-    .catch(error=>{
-      console.log('Error on image update', error);
-      res.sendStatus(500);
-    })
-})
-
-router.delete('/deleteNote', rejectUnauthenticated, (req,res)=>{
-  console.log('Delete Note req.body', req.body);
-  
-  const queryString = `DELETE FROM "note" WHERE id = $1 AND project_id = $2; `;
-
-  pool.query(queryString, [req.body.id, req.body.project_id])
-    .then(response=>{
-      res.sendStatus(204);
-    })
-    .catch(error=>{
-      console.log('Error on note delete', error);
-      res.sendStatus(500);
-    })
-
-})
-
-router.delete('/deleteImage', rejectUnauthenticated, (req,res)=>{
-  
-  const queryString = `DELETE FROM "image" WHERE id = $1 AND project_id = $2; `;
-
-  pool.query(queryString, [req.body.id, req.body.project_id])
-    .then(response=>{
-      res.sendStatus(204);
-    })
-    .catch(error=>{
-      console.log('Error on image delete', error);
-      res.sendStatus(500);
-    })
-
-})
-
-router.post('/createNote', rejectUnauthenticated, (req,res)=>{
-
-  const queryString = `INSERT INTO "note" (title, text, project_id, color_id, x, y, z_index)
-  VALUES ('', '', $1, 1, $2, $3, $4);`
+  const queryString = `INSERT INTO "list" (title, project_id, color_id, x, y, z_index)
+  VALUES ('', $1, 1, $2, $3, $4);`
 
   pool.query(queryString, [req.body.project_id, Math.floor(req.body.x), Math.floor(req.body.y), req.body.z_index])
     .then(response=>{
@@ -171,61 +85,6 @@ router.post('/createImage', rejectUnauthenticated, (req,res)=>{
     })
 })
 
-router.post('/createChecklist', rejectUnauthenticated, (req,res)=>{
-
-  const queryString = `INSERT INTO "list" (title, project_id, color_id, x, y, z_index)
-  VALUES ('', $1, 1, $2, $3, $4);`
-
-  pool.query(queryString, [req.body.project_id, Math.floor(req.body.x), Math.floor(req.body.y), req.body.z_index])
-    .then(response=>{
-      res.sendStatus(201);
-    })
-    .catch(error=>{
-      console.log('Error on note create', error);
-      res.sendStatus(500);
-    })
-})
-
-router.put('/updateZIndex', rejectUnauthenticated, (req,res)=>{
-  let type = '';
-  switch(req.body.type){
-    case 'note':
-      type = 'note';
-      break;
-    case 'list':
-      type = 'list';
-      break;
-    case 'image':
-      type = 'image';
-      break;
-    default:
-      type = null;
-  }
-
-  const queryString = `UPDATE ${type} SET z_index=$1 WHERE id=$2 AND project_id=$3;`;
-  pool.query(queryString, [req.body.z_index, req.body.id, req.body.project_id])
-    .then(response=>{
-      res.sendStatus(201);
-    })
-    .catch(error=>{
-      console.log('Error updating z-index:', error);
-      res.sendStatus(500);
-    })
-})
-
-router.delete('/deleteChecklist', rejectUnauthenticated, (req,res)=>{
-
-  const queryString = `DELETE FROM "list" WHERE id = $1 AND project_id = $2;`;
-  pool.query(queryString, [req.body.id, req.body.project_id])
-    .then(response=>{
-      res.sendStatus(204);
-    })
-    .catch(error=>{
-      console.log('Error deleting checklist:', error);
-      res.sendStatus(500);
-    })
-})
-
 router.post('/createNewTask', rejectUnauthenticated, (req,res)=>{
 
   const queryString = `INSERT INTO "task" (list_id, position, description, completed)
@@ -237,6 +96,88 @@ router.post('/createNewTask', rejectUnauthenticated, (req,res)=>{
     })
     .catch(error=>{
       console.log('Error on task create', error);
+      res.sendStatus(500);
+    })
+})
+
+router.post('/createNote', rejectUnauthenticated, (req,res)=>{
+
+  const queryString = `INSERT INTO "note" (title, text, project_id, color_id, x, y, z_index)
+  VALUES ('', '', $1, 1, $2, $3, $4);`
+
+  pool.query(queryString, [req.body.project_id, Math.floor(req.body.x), Math.floor(req.body.y), req.body.z_index])
+    .then(response=>{
+      res.sendStatus(201);
+    })
+    .catch(error=>{
+      console.log('Error on note create', error);
+      res.sendStatus(500);
+    })
+})
+
+router.put('/updateChecklistTitle/:id', rejectUnauthenticated, (req,res)=>{
+
+  console.log('req.params.id', req.params.id);
+  console.log('req.body.completed', req.body.completed);
+
+  const queryString = `UPDATE list SET title=$1, color_id=$2 WHERE id=$3;`;
+  pool.query(queryString, [req.body.title, req.body.color_id, req.params.id])
+    .then(response=>{
+      res.sendStatus(201);
+    })
+    .catch(error=>{
+      console.log('Error updating task completed:', error);
+      res.sendStatus(500);
+    })
+})
+
+router.put('/updateImage/:id', rejectUnauthenticated, (req,res)=>{
+  const queryString = `UPDATE image SET title=$1, url=$2, color_id=$3 WHERE id=$4;`;
+
+  pool.query(queryString, [req.body.title, req.body.url, req.body.color_id, req.params.id])
+    .then(response=>{
+      res.sendStatus(201);
+    })
+    .catch(error=>{
+      console.log('Error on image update', error);
+      res.sendStatus(500);
+    })
+})
+
+router.put('/updateNote/:id', rejectUnauthenticated, (req,res)=>{
+  const queryString = `UPDATE note SET title=$1, text=$2, color_id=$3 WHERE id=$4;`;
+
+  pool.query(queryString, [req.body.title, req.body.text, req.body.color_id, req.params.id])
+    .then(response=>{
+      res.sendStatus(201);
+    })
+    .catch(error=>{
+      console.log('Error on note update', error);
+      res.sendStatus(500);
+    })
+})
+
+router.put('/updatePosition/:id', rejectUnauthenticated, (req, res) => {
+  let type = '';
+  switch(req.body.type){
+    case 'note':
+      type = 'note';
+      break;
+    case 'list':
+      type = 'list';
+      break;
+    case 'image':
+      type = 'image';
+      break;
+  }
+
+  const queryString = `UPDATE ${type} SET x=$1, y=$2 WHERE id=$3;`;
+  pool.query(queryString, [ Math.floor(req.body.x), Math.floor(req.body.y), req.params.id])
+    .then(response=>{
+      res.sendStatus(201);
+    })
+    .catch(error=>{
+      console.log('Error on position update', error);
       res.sendStatus(500);
     })
 })
@@ -257,20 +198,73 @@ router.put('/updateTaskCompleted/:id', rejectUnauthenticated, (req,res)=>{
     })
 })
 
-router.put('/updateChecklistTitle/:id', rejectUnauthenticated, (req,res)=>{
+router.put('/updateZIndex/:id', rejectUnauthenticated, (req,res)=>{
+  let type = '';
+  switch(req.body.type){
+    case 'note':
+      type = 'note';
+      break;
+    case 'list':
+      type = 'list';
+      break;
+    case 'image':
+      type = 'image';
+      break;
+    default:
+      type = null;
+  }
 
-  console.log('req.params.id', req.params.id);
-  console.log('req.body.completed', req.body.completed);
-
-  const queryString = `UPDATE list SET title=$1, color_id=$2 WHERE id=$3;`;
-  pool.query(queryString, [req.body.title, req.body.color_id, req.params.id])
+  const queryString = `UPDATE ${type} SET z_index=$1 WHERE id=$2;`;
+  pool.query(queryString, [req.body.z_index, req.params.id])
     .then(response=>{
       res.sendStatus(201);
     })
     .catch(error=>{
-      console.log('Error updating task completed:', error);
+      console.log('Error updating z-index:', error);
       res.sendStatus(500);
     })
+})
+
+router.delete('/deleteChecklist/:id', rejectUnauthenticated, (req,res)=>{
+
+  const queryString = `DELETE FROM "list" WHERE id = $1;`;
+  pool.query(queryString, [req.params.id])
+    .then(response=>{
+      res.sendStatus(204);
+    })
+    .catch(error=>{
+      console.log('Error deleting checklist:', error);
+      res.sendStatus(500);
+    })
+})
+
+router.delete('/deleteImage/:id', rejectUnauthenticated, (req,res)=>{
+  
+  const queryString = `DELETE FROM "image" WHERE id = $1;`;
+
+  pool.query(queryString, [req.params.id])
+    .then(response=>{
+      res.sendStatus(204);
+    })
+    .catch(error=>{
+      console.log('Error on image delete', error);
+      res.sendStatus(500);
+    })
+
+})
+
+router.delete('/deleteNote/:id', rejectUnauthenticated, (req,res)=>{
+  const queryString = `DELETE FROM "note" WHERE id = $1;`;
+
+  pool.query(queryString, [req.params.id])
+    .then(response=>{
+      res.sendStatus(204);
+    })
+    .catch(error=>{
+      console.log('Error on note delete', error);
+      res.sendStatus(500);
+    })
+
 })
 
 module.exports = router;

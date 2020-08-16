@@ -7,9 +7,7 @@ function* fetchProject(action){
         const response = yield axios({
             method: 'GET',
             url: `/api/activeProject/project/${action.payload.project_id}`,
-            //theorectically this should also be '24' the server doesnt recieve it
         });
-        //call refresh of Get Data list
         yield put({type: 'SET_ACTIVE_PROJECT', payload: response.data});
     }
     catch (error) {
@@ -19,7 +17,7 @@ function* fetchProject(action){
 
 function* updatePosition(action){
     try{
-        yield axios.put('/api/activeProject/updatePosition', action.payload);
+        yield axios.put(`/api/activeProject/updatePosition/${action.payload.id}`, action.payload);
     }
     catch(error){
         console.log('Error updating position', error);
@@ -28,7 +26,7 @@ function* updatePosition(action){
 
 function* updateNote(action){
     try{
-        yield axios.put('/api/activeProject/updateNote', action.payload);
+        yield axios.put(`/api/activeProject/updateNote/${action.payload.id}`, action.payload);
         yield put({type: 'FETCH_PROJECT', payload: {project_id: action.payload.project_id}});
     }
     catch(error){
@@ -38,13 +36,8 @@ function* updateNote(action){
 
 function* deleteNote(action){
     try{
-        yield axios({
-            method: 'DELETE',
-            url: '/api/activeProject/deleteNote',
-            data: action.payload
-        });
+        yield axios.delete(`/api/activeProject/deleteNote/${action.payload.id}`);
         yield put({type: 'FETCH_PROJECT', payload: {project_id: action.payload.project_id}});
-        
     }
     catch(error){
         console.log('Error deleting note', error);
@@ -83,7 +76,7 @@ function* createChecklist(action){
 
 function* updateZIndex(action){
     try{
-        yield axios.put('/api/activeProject/updateZIndex', action.payload);
+        yield axios.put(`/api/activeProject/updateZIndex/${action.payload.id}`, action.payload);
     }
     catch(error){
         console.log('Error updating zindex:', error);
@@ -92,7 +85,7 @@ function* updateZIndex(action){
 
 function* updateImage(action){
     try{
-        yield axios.put('/api/activeProject/updateImage', action.payload);
+        yield axios.put(`/api/activeProject/updateImage/${action.payload.id}`, action.payload);
         yield put({type: 'FETCH_PROJECT', payload:{project_id: action.payload.project_id}});
     }
     catch(error){
@@ -102,11 +95,7 @@ function* updateImage(action){
 
 function* deleteImage(action){
     try{
-        yield axios({
-            method: 'DELETE',
-            url: '/api/activeProject/deleteImage',
-            data: action.payload
-        });
+        yield axios.delete(`/api/activeProject/deleteImage/${action.payload.id}`);
         yield put({type: 'FETCH_PROJECT', payload:{project_id: action.payload.project_id}});
     }
     catch(error){
@@ -116,11 +105,7 @@ function* deleteImage(action){
 
 function* deleteChecklist(action){
     try{
-        yield axios({
-            method: 'DELETE',
-            url: '/api/activeProject/deleteChecklist',
-            data: action.payload
-        });
+        yield axios.delete(`/api/activeProject/deleteChecklist/${action.payload.id}`);
         yield put({type: 'FETCH_PROJECT', payload: {project_id: action.payload.project_id}});
     }
     catch(error){
