@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
+
 import { connect } from 'react-redux';
+import {Grid, Button, TextField, InputAdornment} from '@material-ui/core';
+import {Fade} from 'react-reveal';
 import NavHome from '../NavHome/NavHome';
-
-import {Grid, Button, TextField} from '@material-ui/core';
-import Fade from 'react-reveal/Fade'
-
-import InputAdornment from '@material-ui/core/InputAdornment';
 
 import AccountCircleTwoToneIcon from '@material-ui/icons/AccountCircleTwoTone';
 import LockTwoToneIcon from '@material-ui/icons/LockTwoTone';
-import './LoginPage.css'
-
 
 class LoginPage extends Component {
   state = {

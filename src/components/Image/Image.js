@@ -1,19 +1,16 @@
 import React, {Component} from 'react';
+
 import {connect} from 'react-redux';
+import Draggable from 'react-draggable';
+import {Button, Checkbox, TextField, InputAdornment, IconButton} from '@material-ui/core'
 import defaultImage from '../../images/GetCrafting.jpg';
-import IconButton from '@material-ui/core/IconButton';
+
 import DeleteForeverTwoToneIcon from '@material-ui/icons/DeleteForeverTwoTone';
 import EditTwoToneIcon from '@material-ui/icons/EditTwoTone';
 import TitleTwoToneIcon from '@material-ui/icons/TitleTwoTone';
 import AddPhotoAlternateTwoToneIcon from '@material-ui/icons/AddPhotoAlternateTwoTone';
-import Draggable from 'react-draggable';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForwardTwoTone';
 import SaveTwoToneIcon from '@material-ui/icons/SaveTwoTone';
-
-import {Button, Checkbox} from '@material-ui/core'
-import { TextField } from '@material-ui/core';
-
 
 class Image extends Component{
     state={

@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
+
 import {connect} from 'react-redux';
-import {TextField, Button, Grid} from '@material-ui/core'
-import Fade from 'react-reveal/Fade'
-import InputAdornment from '@material-ui/core/InputAdornment';
+import {TextField, Button, Grid, InputAdornment} from '@material-ui/core';
+import {Fade} from 'react-reveal';
+import NavHome from '../NavHome/NavHome';
+import CreateAccountImage from '../../images/CreateAccount.jpg';
 
 import AccountCircleTwoToneIcon from '@material-ui/icons/AccountCircleTwoTone';
 import LockTwoToneIcon from '@material-ui/icons/LockTwoTone';
 import EmailTwoToneIcon from '@material-ui/icons/EmailTwoTone';
-
-import NavHome from '../NavHome/NavHome';
-
-import CreateAccountImage from '../../images/CreateAccount.jpg';
-import './RegisterPage.css';
 
 class RegisterPage extends Component {
   state = {

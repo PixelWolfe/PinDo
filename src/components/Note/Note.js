@@ -1,21 +1,15 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
 
-import IconButton from '@material-ui/core/IconButton';
+import {connect} from 'react-redux';
+import { TextField, Checkbox, Button, IconButton, InputAdornment} from '@material-ui/core';
+import Draggable from 'react-draggable';
+
 import DeleteForeverTwoToneIcon from '@material-ui/icons/DeleteForeverTwoTone';
 import EditTwoToneIcon from '@material-ui/icons/EditTwoTone';
 import TitleTwoToneIcon from '@material-ui/icons/TitleTwoTone';
 import DescriptionTwoToneIcon from '@material-ui/icons/DescriptionTwoTone';
-import Draggable from 'react-draggable';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForwardTwoTone';
 import SaveTwoToneIcon from '@material-ui/icons/SaveTwoTone';
-
-import {Button} from '@material-ui/core'
-import { TextField, Checkbox } from '@material-ui/core';
-
-
-
 
 class Note extends Component{
     state={

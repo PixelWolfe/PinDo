@@ -1,8 +1,12 @@
 import React from 'react';
-import {Route} from 'react-router-dom'
+
 import {connect} from 'react-redux';
+import {Route} from 'react-router-dom'
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+
+//Thanks to Prime Digital Academy for their ProtectedRoute starter code
+//couldn't have gotten this project to this point without them, thanks!
 
 // A Custom Wrapper Component -- This will keep our code DRY.
 // Responsible for watching redux state, and returning an appropriate component

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+
+import {connect} from 'react-redux';
 import {Grid} from "@material-ui/core";
 import NavHome from '../NavHome/NavHome';
 import ProjectCard from '../ProjectCard/ProjectCard';
-import Fade from 'react-reveal/Fade';
+import {Fade} from 'react-reveal';
 
 import CreateProjectButton from '../CreateProjectButton/CreateProjectButton';
 import CreateProjectPopup from '../CreateProjectPopup/CreateProjectPopup';

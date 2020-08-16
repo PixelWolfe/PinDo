@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import NavProject from '../NavProject/NavProject';
-import CreateButtonOptions from '../CreateButtonOptions/CreateButtonOptions';
+
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
 import {Fade} from 'react-reveal';
@@ -9,6 +8,8 @@ import {Grid} from '@material-ui/core';
 import Note from '../Note/Note';
 import Image from '../Image/Image';
 import Checklist from '../Checklist/Checklist';
+import NavProject from '../NavProject/NavProject';
+import CreateButtonOptions from '../CreateButtonOptions/CreateButtonOptions';
 
 class InfoPage extends Component{
 

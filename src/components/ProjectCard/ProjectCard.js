@@ -1,17 +1,17 @@
 import React, {Component} from 'react';
+
 import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
+import {Grid, Button, Icon, TextField, InputAdornment} from "@material-ui/core";
 import ReactCardFlip from 'react-card-flip';
-import {Grid, Button, Icon, TextField} from "@material-ui/core";
+import Swal from 'sweetalert2';
+
 import MoreTwoToneIcon from '@material-ui/icons/MoreTwoTone';
 import EditTwoToneIcon from '@material-ui/icons/EditTwoTone';
 import DeleteForeverTwoToneIcon from '@material-ui/icons/DeleteForeverTwoTone';
-
-import Swal from 'sweetalert2';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import TitleTwoToneIcon from '@material-ui/icons/TitleTwoTone';
 import AddPhotoAlternateTwoToneIcon from '@material-ui/icons/AddPhotoAlternateTwoTone';
 import DescriptionTwoToneIcon from '@material-ui/icons/DescriptionTwoTone';
-import {withRouter} from 'react-router-dom';
 
 class ProjectCard extends Component{
     state = {

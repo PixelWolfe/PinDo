@@ -1,24 +1,14 @@
 import React, {Component} from 'react';
-import {
-  HashRouter as Router,
-  Route,
-  Redirect,
-  Switch,
-} from 'react-router-dom';
 
 import {connect} from 'react-redux';
-
-import NavHome from '../NavHome/NavHome';
-
+import {HashRouter as Router, Route, Redirect, Switch} from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
-
 import AboutPage from '../AboutPage/AboutPage';
 import Home from '../Home/Home';
 import InfoPage from '../InfoPage/InfoPage';
+import {Grid} from '@material-ui/core';
 
 import './App.css';
-
-import {Grid} from '@material-ui/core';
 
 class App extends Component {
   componentDidMount () {

@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom';
+
 import { connect } from 'react-redux';
-import LogOutButton from '../LogOutButton/LogOutButton';
+import { Link } from 'react-router-dom';
 import {Grid, Slider} from '@material-ui/core';
-import '../NavHome/NavHome.css';
+import LogOutButton from '../LogOutButton/LogOutButton';
 import PinDoIcon from '../../images/PinDo.png'
 
 import ZoomInTwoToneIcon from '@material-ui/icons/ZoomInTwoTone';

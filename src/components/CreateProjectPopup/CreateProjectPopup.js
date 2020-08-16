@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
+
 import {connect} from 'react-redux';
+import {Grid, Button, TextField, InputAdornment} from "@material-ui/core";
 import Swal from 'sweetalert2';
 import Popup from "reactjs-popup";
-import {Grid, Button, Icon, TextField} from "@material-ui/core";
-import InputAdornment from '@material-ui/core/InputAdornment';
+
 import MoreTwoToneIcon from '@material-ui/icons/MoreTwoTone';
 import DescriptionTwoToneIcon from '@material-ui/icons/DescriptionTwoTone';
 import TitleTwoToneIcon from '@material-ui/icons/TitleTwoTone';

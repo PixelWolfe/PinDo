@@ -1,20 +1,16 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
 
-import IconButton from '@material-ui/core/IconButton';
+import {connect} from 'react-redux';
+import Draggable from 'react-draggable';
+import TaskCheckItem from '../TaskCheckItem/TaskCheckItem';
+import { TextField, Checkbox, Button, InputAdornment, IconButton} from '@material-ui/core';
+
 import DeleteForeverTwoToneIcon from '@material-ui/icons/DeleteForeverTwoTone';
 import EditTwoToneIcon from '@material-ui/icons/EditTwoTone';
 import TitleTwoToneIcon from '@material-ui/icons/TitleTwoTone';
-import DescriptionTwoToneIcon from '@material-ui/icons/DescriptionTwoTone';
-import Draggable from 'react-draggable';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForwardTwoTone';
 import AddBoxTwoToneIcon from '@material-ui/icons/AddBoxTwoTone';
 import SaveTwoToneIcon from '@material-ui/icons/SaveTwoTone';
-
-import TaskCheckItem from '../TaskCheckItem/TaskCheckItem';
-import {Button, RadioGroup, FormControl, FormControlLabel} from '@material-ui/core'
-import { TextField, Checkbox, Radio } from '@material-ui/core';
 
 class Checklist extends Component {
 
