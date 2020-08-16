@@ -1,4 +1,4 @@
-import { put, takeLatest, takeLeading } from 'redux-saga/effects';
+import { put, takeLatest} from 'redux-saga/effects';
 import axios from 'axios';
 
 function* fetchProject(action){
@@ -10,7 +10,6 @@ function* fetchProject(action){
             //theorectically this should also be '24' the server doesnt recieve it
         });
         //call refresh of Get Data list
-        yield console.log('GET of project data successful!', response.data)
         yield put({type: 'SET_ACTIVE_PROJECT', payload: response.data});
     }
     catch (error) {
@@ -20,7 +19,7 @@ function* fetchProject(action){
 
 function* updatePosition(action){
     try{
-        const response = yield axios.put('/api/activeProject/updatePosition', action.payload);
+        yield axios.put('/api/activeProject/updatePosition', action.payload);
     }
     catch(error){
         console.log('Error updating position', error);
@@ -29,8 +28,7 @@ function* updatePosition(action){
 
 function* updateNote(action){
     try{
-        const response = yield axios.put('/api/activeProject/updateNote', action.payload);
-        yield console.log('response from /api/activeProject/updateNote put', response);
+        yield axios.put('/api/activeProject/updateNote', action.payload);
         yield put({type: 'FETCH_PROJECT', payload: {project_id: action.payload.project_id}});
     }
     catch(error){
@@ -40,12 +38,11 @@ function* updateNote(action){
 
 function* deleteNote(action){
     try{
-        const response = yield axios({
+        yield axios({
             method: 'DELETE',
             url: '/api/activeProject/deleteNote',
             data: action.payload
         });
-        yield console.log('Delete note SUCCESSFUL!', response);
         yield put({type: 'FETCH_PROJECT', payload: {project_id: action.payload.project_id}});
         
     }
@@ -56,8 +53,7 @@ function* deleteNote(action){
 
 function* createNote(action){
     try{
-        const response = yield axios.post('/api/activeProject/createNote', action.payload);
-        yield console.log('response from /api/activeProject/createNote post', response);
+        yield axios.post('/api/activeProject/createNote', action.payload);
         yield put({type: 'FETCH_PROJECT', payload: {project_id: action.payload.project_id}});
     }
     catch(error){
@@ -67,8 +63,7 @@ function* createNote(action){
 
 function* createImage(action){
     try{
-        const response = yield axios.post('/api/activeProject/createImage', action.payload);
-        yield console.log('response from /api/activeProject/createNote image', response);
+        yield axios.post('/api/activeProject/createImage', action.payload);
         yield put({type: 'FETCH_PROJECT', payload: {project_id: action.payload.project_id}});
     }
     catch(error){
@@ -78,8 +73,7 @@ function* createImage(action){
 
 function* createChecklist(action){
     try{
-        const response = yield axios.post('/api/activeProject/createChecklist', action.payload);
-        yield console.log('response from /api/activeProject/createChecklist post', response);
+        yield axios.post('/api/activeProject/createChecklist', action.payload);
         yield put({type: 'FETCH_PROJECT', payload: {project_id: action.payload.project_id}});
     }
     catch(error){
@@ -89,9 +83,7 @@ function* createChecklist(action){
 
 function* updateZIndex(action){
     try{
-        console.log(action.payload)
-        const response = yield axios.put('/api/activeProject/updateZIndex', action.payload);
-
+        yield axios.put('/api/activeProject/updateZIndex', action.payload);
     }
     catch(error){
         console.log('Error updating zindex:', error);
@@ -100,9 +92,7 @@ function* updateZIndex(action){
 
 function* updateImage(action){
     try{
-        console.log(action.payload)
-        const response = yield axios.put('/api/activeProject/updateImage', action.payload);
-        yield console.log('response from /api/activeProject/updateImage', response);
+        yield axios.put('/api/activeProject/updateImage', action.payload);
         yield put({type: 'FETCH_PROJECT', payload:{project_id: action.payload.project_id}});
     }
     catch(error){
@@ -112,12 +102,11 @@ function* updateImage(action){
 
 function* deleteImage(action){
     try{
-        const response = yield axios({
+        yield axios({
             method: 'DELETE',
             url: '/api/activeProject/deleteImage',
             data: action.payload
         });
-        yield console.log('response from /api/activeProject/deleteImage', response);
         yield put({type: 'FETCH_PROJECT', payload:{project_id: action.payload.project_id}});
     }
     catch(error){
@@ -127,12 +116,11 @@ function* deleteImage(action){
 
 function* deleteChecklist(action){
     try{
-        const response = yield axios({
+        yield axios({
             method: 'DELETE',
             url: '/api/activeProject/deleteChecklist',
             data: action.payload
         });
-        yield console.log('response from /api/activeProject/deleteChecklist', response);
         yield put({type: 'FETCH_PROJECT', payload: {project_id: action.payload.project_id}});
     }
     catch(error){
@@ -142,8 +130,7 @@ function* deleteChecklist(action){
 
 function* createNewTask(action){
     try{
-        const response = yield axios.post('/api/activeProject/createNewTask', action.payload);
-        yield console.log('response from /api/activeProject/createChecklist createNewTask', response);
+        yield axios.post('/api/activeProject/createNewTask', action.payload);
         yield put({type: 'FETCH_PROJECT', payload: {project_id: action.payload.project_id}});
     }
     catch(error){
@@ -152,9 +139,8 @@ function* createNewTask(action){
 }
 
 function* updateTaskCompleted(action){
-    console.log('task completed', action.payload)
     try{
-        const response = yield axios.put(`/api/activeProject/updateTaskCompleted/${action.payload.id}`, action.payload);
+        yield axios.put(`/api/activeProject/updateTaskCompleted/${action.payload.id}`, action.payload);
     }
     catch(error){
         console.log('Error updating task completion', error);
@@ -162,9 +148,8 @@ function* updateTaskCompleted(action){
 }
 
 function* updateChecklistTitle(action){
-    console.log('task completed', action.payload)
     try{
-        const response = yield axios.put(`/api/activeProject/updateChecklistTitle/${action.payload.id}`, action.payload);
+        yield axios.put(`/api/activeProject/updateChecklistTitle/${action.payload.id}`, action.payload);
         yield put({type: 'FETCH_PROJECT', payload: {project_id: action.payload.project_id}});
     }
     catch(error){
