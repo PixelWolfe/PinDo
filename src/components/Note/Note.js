@@ -132,7 +132,7 @@ class Note extends Component{
                             this.state.title
                         }
                     </h3>
-                    <p className='note-text' style={{cursor: 'default'}}>
+                    <p className='note-text' style={{cursor: 'default', padding: '5px 7px 0px 7px'}}>
                     {
                         this.state.text === ''?
                         'Fill in the text and you\'re set!'
