@@ -50,7 +50,6 @@ class CreateButtonOptions extends Component{
         return(
             <Grid container justify='center' alignItems='center' alignContent='center'>
                 <Grid item xs={3} md={2}  lg={1} align='center'>
-                {JSON.stringify(this.props.reduxState.highestZIndex)}
                     <Button 
                         size='small'
                         startIcon={<AddBoxTwoToneIcon/>}

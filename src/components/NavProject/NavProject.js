@@ -41,7 +41,7 @@ class NavProject extends Component{
   clearActiveProject = ()=>{
     console.log('Clearing active Project!');
     this.props.dispatch({type: 'SET_ACTIVE_PROJECT', payload : {project:[], notes:[], checklists:[], images:[], tasks:[]}});
-    this.props.dispatch({type: 'SET_ZOOM_VALUE', payload: {zoomValue: '.25'}})
+    this.props.dispatch({type: 'SET_ZOOM_VALUE', payload: {zoomValue: '.64'}})
   }   
 
   render(){
@@ -64,7 +64,7 @@ class NavProject extends Component{
               {'\u00A0'} 
                 <Slider
                   style={{maxWidth: '50%'}}
-                  defaultValue={25}
+                  defaultValue={64}
                   aria-labelledby="zoom-slider"
                   marks={this.marks}
                   steps={13}

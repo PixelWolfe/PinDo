@@ -1,4 +1,4 @@
-const zoomReducer= (state = {zoomValue: '.25'}, action)=>{
+const zoomReducer= (state = {zoomValue: '.64'}, action)=>{
     switch(action.type){
         case 'SET_ZOOM_VALUE':
           console.log('setting zoom reducer')
