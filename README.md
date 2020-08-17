@@ -1,4 +1,25 @@
-## Prerequisites
+# PinDo
+
+## Duration: 2 Week Sprint
+
+  - PinDo is an online tackboard to help creators maintain a highly visual overview of any project they are working on. Users log in to have access to any of their projects, here they have free reign to recolor, reposition, overlap, and create/delete/edit any information on a project board. All projects are accessable/deleteable from a user Home page and have built in zoom capacity so users can control the scope in which they're viewing their boards.
+
+### Why Create This?
+
+  - There are a lot of project board or kanban applications for creators to use, however, most are quite rigid in their format and unintuitive for a new user. PinDo targets a community of creators that want full control of the layout of their organization in a quick, easy to use, and visually appealing format. Pindo aims to empower creators to work in an environment that works best for them and change/delete layout or formatting on a whim.
+
+  - This project was also completed as a 2-week long solo project for Prime Digital Academy.
+
+#### Personal Goals
+
+  - My goals for this project were to solidify my existing knowledge of the many fullstack CRUD interactions from the client to the database by building this application. PinDo focuses entirely around the user being able to manipulate data rather freely, whether that is the x/y position, z_index, title, text, color you name it, the entire application is Create Read Update Delete, and therefore good practice.
+
+  - Besides active recollection and application of concepts, I was also very interested in learning about about a few libaries like React-Draggable, SweetAlert2, and React-PopupJS, so a goal was to work those into the application. 
+
+### Screen Shots / Gifs
+
+
+### Prerequisites
 
 Before you get started, make sure you have the following software installed on your computer:
 
@@ -6,86 +27,82 @@ Before you get started, make sure you have the following software installed on y
 - [PostrgeSQL](https://www.postgresql.org/)
 - [Nodemon](https://nodemon.io/)
 
+### Setup Instructions
 
-## Development Setup Instructions
-
-* Run `npm install`
-* Create a `.env` file at the root of the project and paste this line into the file:
-    ```
+1. Set up a database for the information.
+  * Create a new database named `pindo`.
+  * Use `database.sql` to create tables in `pindo`.
+  
+2. Make an .env file 
+  * Create a `.env` file at the root of the project and paste the following line into the file:
+      
     SERVER_SESSION_SECRET=superDuperSecret
-    ```
-    While you're in your new `.env` file, take the time to replace `superDuperSecret` with some long random string like `25POUbVtx6RKVNWszd9ERB9Bb6` to keep your application secure. Here's a site that can help you: [https://passwordsgenerator.net/](https://passwordsgenerator.net/). If you don't do this step, create a secret with less than eight characters, or leave it as `superDuperSecret`, you will get a warning.
-* Start postgres if not running already by using `brew services start postgresql`
-* Run `npm run server`
-* Run `npm run client`
-* Navigate to `localhost:3000`
+       
+  * Inside the `.env` file, replace `superDuperSecret` with a long random string to keep the application secure. Here's a site that can help you: [https://passwordsgenerator.net/](https://passwordsgenerator.net/). If you don't do this step, or create a secret with less than eight characters / leave it as `superDuperSecret`, you will get a warning.
+  
+3. Let's run some commands.
+   * Run `npm install`
+   * Start postgres if not running already with `brew services start postgresql`
+   * Run `npm run server`
+   * Run `npm run client` this should open up a new browser tab for you :)
+     * If no tab opens, navigate to `localhost:3000`
 
-## Debugging
+### Usage
 
-To debug, you will need to run the client-side separately from the server. Start the client by running the command `npm run client`. Start the debugging server by selecting the Debug button.
+A user may log in or register with a new account, once logged in they arrive on their home page where they can click 'create a project' and enter new project information which will populate a project card.
+  
+(All existing projects will also populate here as cards as well)
+  
+Upon clicking on the desired project a user will enter a project page with has a large scrollable/zoomable viewport, and the options to create notes/images/checklists. Upon clicking any option a new item will appear in the upper right corner of their view port. This item and can moved by clicking and holding down upon it and moving the cursor somewhere else on the board, releasing will set the new position.
 
-![VSCode Toolbar](documentation/images/vscode-toolbar.png)
+All items can be edited by clicking upon the upper right edit icon, additionally they can be brought to the front of the viewport by a simple click on the item.
 
-Then make sure `Launch Program` is selected from the dropdown, then click the green play arrow.
+### Built With / Technologies Used
 
-![VSCode Debug Bar](documentation/images/vscode-debug-bar.png)
+  - PinDo was built using the following technologies:
+      1. Node
+      2. Express
+      3. PostgreSQL
+      4. React
+      5. Redux
+  
+  - Some of more noteable libraries used were:
+      * axios
+      * material-ui
+      * react-card-flip
+      * react-draggable
+      * react-reveal
+      * react-router-dom
+      * reactjs-popup
+      * sweetalert2
 
+  - User authentication / authorization.
+      * bcryptjs
+      * passport
 
-## Testing Routes with Postman
+  - Styling
+      * material-ui/core
+      * material-ui/icons
+      * css (+ or - some javascript logic)
 
-To use Postman with this repo, you will need to set up requests in Postman to register a user and login a user at a minimum. 
+#### Future Goals
 
-Keep in mind that once you using the login route, Postman will manage your session cookie for you just like a browser, ensuring it is sent with each subsequent request. If you delete the `localhost` cookie in Postman, it will effectively log you out.
+  * These are some of the things that didn't quite get done in this 14 day sprint, but would greatly enhance PinDo from either a user or development perspective.
+  
+  - PinDo could greatly benefit from better way to import and store images. I would very much like to implement AWS to upload and store images, it would make the user experience of this project a lot cleaner as well. User given url's (unsafe and unpleasant) would be replaced with actually storing the image in the database, being able to drag and drop them into a 'dropzone'. 
 
-1. Start the server - `npm run server`
-2. [Import the sample routes JSON file](./PostmanPrimeSoloRoutes.json) by clicking `Import` in Postman. Select the file.
-3. Click `Collections` and `Send` the following three calls in order:
-    1. `POST /api/user/register` registers a new user, see body to change username/password
-    2. `POST /api/user/login` will login a user, see body to change username/password
-    3. `GET /api/user` will get user information, by default it's not very much
+  - Draggable and interchangeable tasks from one checklist to another, reorderable checklists. React-Beautiful-Dnd would be a fantastic library to dive into for this! Draggable items within and already draggable context should be able to be solved with clever usage of a .handle class with react-draggable.
 
-After running the login route above, you can try any other route you've created that requires a logged in user!
+  - Currently not all information is deleted from a project board when it gets deleted (boo), rather the project board is deleted from its corresponding table in the database. This won't take much time to turn into a transactional query to delete all of the corresponding notes/images/lists/tasks that are attached to that board. 
+  
+### Acknowledgement and Thanks
 
+   - Many thanks to Prime Digital Academy, your guidance and help throughout the past 4 months has been extraordinary, you're all fantastic and amazing people.
+  
+   - My wonderful girlfriend for being so excited to be able to use PinDo, to make something that someone will enjoy is to truely awesome, you're the best.
 
-## Production Build
+   - Thanks to Chris Ferdinandi at https://gomakethings.com, their scrollstop functionality helped innovate a solution to a user being able to create an item in view no matter the user's scroll status. This greatly helped me when I later had to update my code to account for zoom scaling later on as well. Rock on Chris.
 
-Before pushing to Heroku, run `npm run build` in terminal. This will create a build folder that contains the code Heroku will be pointed at. You can test this build by typing `npm start`. Keep in mind that `npm start` will let you preview the production build but will **not** auto update.
+#### Support
+  - If you have suggestions or issues, or are looking to get in touch, please email me at RobertEJohnson10@gmail.com.
 
-* Start postgres if not running already by using `brew services start postgresql`
-* Run `npm start`
-* Navigate to `localhost:5000`
-
-## Lay of the Land
-
-* `src/` contains the React application
-* `public/` contains static assets for the client-side
-* `build/` after you build the project, contains the transpiled code from `src/` and `public/` that will be viewed on the production site
-* `server/` contains the Express App
-
-This code is also heavily commented. We recommend reading through the comments, getting a lay of the land, and becoming comfortable with how the code works before you start making too many changes. If you're wondering where to start, consider reading through component file comments in the following order:
-
-* src/components
-  * App/App
-  * Footer/Footer
-  * Nav/Nav
-  * AboutPage/AboutPage
-  * InfoPage/InfoPage
-  * UserPage/UserPage
-  * LoginPage/LoginPage
-  * RegisterPage/RegisterPage
-  * LogOutButton/LogOutButton
-  * ProtectedRoute/ProtectedRoute
-
-## Deployment
-
-1. Create a new Heroku project
-1. Link the Heroku project to the project GitHub Repo
-1. Create an Heroku Postgres database
-1. Connect to the Heroku Postgres database from Postico
-1. Create the necessary tables
-1. Add an environment variable for `SERVER_SESSION_SECRET` with a nice random string for security
-1. In the deploy section, select manual deploy
-
-## Update Documentation
-
-Customize this ReadMe and the code comments in this project to read less like a starter repo and more like a project. Here is an example: https://gist.github.com/PurpleBooth/109311bb0361f32d87a2
