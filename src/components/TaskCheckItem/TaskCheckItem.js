@@ -43,7 +43,7 @@ class TaskCheckItem extends Component{
         return(
             <>
             <p style={{textAlign:'left', margin: '0px', paddingLeft: '15px', borderBottom: '1px solid lightblue', 
-            textDecoration: this.state.text_decoration}}>
+            textDecoration: this.state.text_decoration, cursor: 'default'}}>
                 <Checkbox
                     checked={this.state.completed}
                     onChange={this.updateTaskCompleted}

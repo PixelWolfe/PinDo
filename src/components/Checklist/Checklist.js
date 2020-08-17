@@ -169,7 +169,7 @@ handleCheck = (event)=>{
               </span>
               <br/>
               <br/>
-              <h3 style={{margin:'0px', marginTop: '5px', paddingBottom:'10px', borderBottom: '1px solid lightblue'}}>
+              <h3 style={{margin:'0px', marginTop: '5px', paddingBottom:'10px', borderBottom: '1px solid lightblue', cursor: 'default'}}>
               {
                 this.state.title === ''?
                 'Click the edit icon upper right!'

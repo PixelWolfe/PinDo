@@ -141,7 +141,7 @@ class Image extends Component{
                                     </span>
                                     <br/>
                                     <br/>
-                                    <h3 style={{margin:'0px'}}>
+                                    <h3 style={{margin:'0px', cursor: 'default'}}>
                                     {
                                         this.state.title === ''?
                                         'Click the edit icon upper right!'

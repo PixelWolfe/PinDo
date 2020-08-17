@@ -124,7 +124,7 @@ class Note extends Component{
                     </span>
                     <br/>
                     <br/>
-                    <h3 style={{margin:'0px'}}>
+                    <h3 style={{margin:'0px', cursor: 'default'}}>
                         {
                             this.state.title === ''?
                             'Click the edit icon upper right!'
@@ -132,7 +132,7 @@ class Note extends Component{
                             this.state.title
                         }
                     </h3>
-                    <p className='note-text'>
+                    <p className='note-text' style={{cursor: 'default'}}>
                     {
                         this.state.text === ''?
                         'Fill in the text and you\'re set!'
