@@ -57,7 +57,7 @@ CREATE TABLE "task" (
 CREATE TABLE "color" (
 	id SERIAL PRIMARY KEY,
 	color varchar(50)
-
+);
 
 INSERT INTO "color" (color) VALUES
 ('yellow'), ('blue'),('cyan'), ('purple'),('red'),('green');
