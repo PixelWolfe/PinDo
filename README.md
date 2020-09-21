@@ -18,6 +18,8 @@
 
 ### Screen Shots / Gifs
 
+Feel free to setup the project yourself the instructions below, otherwise here's a quick overview of some of the features in action. All viewports are also pannable.
+
 ![PinDo](/documentation/PinDo.gif)
 
 ### Prerequisites
@@ -94,9 +96,9 @@ All items can be edited by clicking upon the upper right edit icon, additionally
 
   - Draggable and interchangeable tasks from one checklist to another, reorderable checklists. React-Beautiful-Dnd would be a fantastic library to dive into for this! Draggable items within and already draggable context should be able to be solved with clever usage of a .handle class with react-draggable.
 
-  - Wrtie a couple more transactional queries to delete all of the corresponding notes/images/lists/tasks that are attached to a deleted board.
+  - Write a few more transactional queries to delete all of the corresponding notes/images/lists/tasks that are attached to a deleted board.
   
-  - A fully fleshed out 'about' page and a lot of css condensing and reworking with BEM methodology. 
+  - A fully fleshed out 'about' page and css condensing/refactoring with BEM methodology. 
 
 ### Acknowledgement and Thanks
 
